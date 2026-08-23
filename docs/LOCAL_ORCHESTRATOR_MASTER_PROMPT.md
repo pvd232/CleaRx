@@ -7,11 +7,11 @@
 | Document type | Agentic project handoff and execution specification |
 | Intended recipient | Primary local Codex orchestration agent |
 | Human owner | Repository owner/project lead |
-| Status | Audited; owner approval required before local bootstrap |
+| Status | Audited; execution authorized through the Phase 1 readiness checkpoint |
 | Canonical deployment target | One NVIDIA L4, 24 GB VRAM |
 | Local control environment | ChatGPT desktop local project on an 8-core, 8 GB Apple M1 |
 | Reference/training environment | A100 provisioned through Google Colab CLI |
-| Immediate authorized scope | Bootstrap orchestration package only |
+| Immediate authorized scope | Bootstrap-001, Phase 0, and the Phase 1 readiness checkpoint |
 
 ### Handoff declaration
 
@@ -20,6 +20,12 @@ This document is the complete operational handoff from the originating cloud pla
 The receiving agent shall act as the primary local orchestrator. It must work from the local Git repository opened in the ChatGPT desktop app. The checked-in repository—not the originating chat, not this document once superseded by later checked-in decisions, and not any agent's recollection—is the canonical project state.
 
 This is both a structured proposal and an executable management specification. Its purpose is to let the receiving agent create a safe orchestration system without needing follow-up reconstruction of the prior conversation.
+
+### Current owner execution authorization
+
+The owner authorized the primary local agent to execute `BOOTSTRAP-001`, continue through the complete Phase 0 gate when Bootstrap validation passes, and then enter Phase 1 only through the readiness checkpoint defined below. The agent may use the authenticated Colab CLI for packet-bound A100 jobs and the certified `mantra-g2` L4 host for packet-bound L4 measurements. Every remote job still requires a clean pinned commit, immutable packet ID, evidence manifest, and explicit teardown.
+
+This authorization does not include parallel worker dispatch, production Talker/MTP/Code2Wav graph implementation, Phase 1 operator development, Phase 2 integration, or Phase 3 optimization. The agent must stop at the Phase 1 readiness checkpoint and return the validated repository state, unresolved decisions, and proposed worker DAG to the owner.
 
 ### How to use this document
 
@@ -554,16 +560,16 @@ Bootstrap acceptance must prove:
 - remote wrappers reject a dirty tree and missing packet/commit data without provisioning anything;
 - no production runtime files are edited.
 
-At completion, stop and report:
+At completion, record and report the Bootstrap checkpoint:
 
 - file tree created;
 - validation commands and results;
 - rendered Phase 0 DAG;
 - ready/blocked packet list;
 - unresolved decisions;
-- the proposed first parallel wave.
+- the proposed first Phase 0 wave.
 
-Do not dispatch the wave until reviewed.
+The current owner authorization permits the primary agent to execute Phase 0 serially after this checkpoint if Bootstrap validation passes and no unresolved choice would weaken a frozen contract. Parallel worker dispatch still requires a separate owner instruction.
 
 ### Phase 0 — Evidence and contract formation
 
@@ -650,7 +656,7 @@ The goal is to replace assumptions with pinned source evidence, frozen interface
 
 P0-004 depends on validated outputs from P0-001, P0-002, P0-003B, P0-005B, P0-006B, and P0-007B. Freeze `abi_v0` only after the upstream lock, tensor manifest, generated fixtures, memory model, risk spikes, and evaluation contract are integrated and consistent. Production porting cannot begin before this gate passes.
 
-The first parallel wave after bootstrap should contain only:
+The first Phase 0 wave after bootstrap should contain only:
 
 - upstream/runtime audit;
 - model/tensor inventory;
@@ -659,11 +665,22 @@ The first parallel wave after bootstrap should contain only:
 - expert-cache and allocator benchmark design;
 - evaluation-contract design.
 
-Fixture generation, manifest-derived memory budgeting, deployment-acceptance binding, and representative risk spikes form the second wave after their declared inputs validate. The ABI packet runs only after those outputs and the frozen evaluation contract validate.
+Fixture generation, manifest-derived memory budgeting, deployment-acceptance binding, and representative risk spikes form the second wave after their declared inputs validate. The ABI packet runs only after those outputs and the frozen evaluation contract validate. The primary agent executes these packets serially under the current authorization; the wave grouping records dependency order rather than permission to dispatch workers.
 
 ### Phase 1 — Unoptimized native module correctness
 
 The goal is correct native execution with fixed fixtures, not L4 fit or real-time performance.
+
+#### Authorized Phase 1 readiness checkpoint
+
+After the Phase 0 gate passes, the primary agent may:
+
+1. materialize and validate the six Phase 1 work packets with disjoint write scopes and explicit dependencies on `abi_v0` and the frozen fixtures;
+2. create the common CMake library/test skeleton consumed by those packets;
+3. compile one fixture-only ABI smoke executable that crosses the frozen module boundary types without loading production weights; and
+4. test rejection of missing or incompatible synthetic GGUF metadata.
+
+The readiness checkpoint closes when the Phase 1 DAG validates, the common skeleton builds in the declared local environment, the fixture-only ABI smoke test passes, and the synthetic loader-rejection tests pass. Stop at that point. Production graph operators, full model loading, parallel Phase 1 worker dispatch, and performance claims begin only after the owner's next review.
 
 Parallel workstreams after `abi_v0`:
 
@@ -1223,7 +1240,7 @@ Now perform only `BOOTSTRAP-001`:
 6. Run the complete local bootstrap validation command.
 7. Review the generated package as a skeptical verifier.
 8. Report the outcome, the Phase 0 DAG, ready packets, blockers, exact validation evidence, and any assumptions needing confirmation.
-9. Stop. Do not start native porting or launch A100 jobs until the bootstrap package is reviewed.
+9. Commit and report the Bootstrap checkpoint. Under the current owner authorization, continue into Phase 0 only when all Bootstrap acceptance checks pass; launch A100 jobs only from validated Phase 0 packets and clean commits.
 
 The receiving agent must lead its bootstrap handoff with the outcome, link all created files, and keep operational state in files rather than only in its answer.
 
