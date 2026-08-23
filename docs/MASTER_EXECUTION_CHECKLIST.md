@@ -37,7 +37,7 @@ commit. Complete dependency producers before their consumers.
 | Tensor inventory | Not started | P0-002 | Validated tensor manifest and analysis |
 | Fixture contract and generated reference fixtures | Not started | P0-003A and P0-003B | Fixture validator and packet-bound A100 evidence |
 | Native ABI and ownership contract | Not started | P0-004 | Phase 0 integration gate |
-| L4 host and memory contract | Host exists; contract absent | P0-005A and P0-005B | Host profile and manifest-derived budget |
+| L4 host and memory contract | Host profile complete at `502d9eb`; memory budget pending | P0-005A and P0-005B | Valid P0-005A result `20260823T083617Z-l4` and later manifest-derived budget |
 | Expert-cache and allocator risk contract | Not started | P0-006A and P0-006B | Validated spike artifacts |
 | Evaluation and deployment acceptance contract | Not started | P0-007A and P0-007B | Frozen corpus, metrics, margins, and host binding |
 | Phase 1 work decomposition | Not started | Phase 1 readiness | Validated packet DAG with disjoint write scopes |
@@ -91,7 +91,7 @@ no production runtime implementation.
 - [x] Complete P0-001 and freeze exact upstream/runtime revisions.
 - [ ] Complete P0-002 and publish the complete tensor inventory.
 - [ ] Complete P0-003A and validate the fixture contract and harness.
-- [ ] Complete P0-005A using the live `mantra-g2` host profile.
+- [x] Complete P0-005A using the live `mantra-g2` host profile.
 - [ ] Complete P0-006A and validate the benchmark/result contracts.
 - [ ] Complete P0-007A and freeze the draft corpus, metrics, and margins.
 

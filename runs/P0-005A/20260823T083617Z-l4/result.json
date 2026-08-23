@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0.0",
+  "packet_id": "P0-005A",
+  "packet_sha256": "73a5fa8079684ceff0bf748d74712821f351bef0d4c8c11beafa7c7dfff49fe1",
+  "git_commit": "502d9eba2d3b4974ae0b39314dfd2f695fe3a80d",
+  "run_id": "20260823T083617Z-l4",
+  "environment": {
+    "kind": "l4",
+    "profile_id": "clearx-mantra-g2-l4-v1",
+    "instance": "mantra-g2-spot",
+    "zone": "us-west1-a"
+  },
+  "commands": [
+    {
+      "command": "ssh mantra-g2 '<capture environment> bash -s' < tools/benchmarks/capture_l4_host.sh",
+      "exit_code": 0
+    },
+    {
+      "command": "python tools/inventory/validate_l4_host_profile.py tests/fixtures/manifests/l4_host_profile.json",
+      "exit_code": 0
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/architecture/l4_host_profile.md",
+      "sha256": "244f8b49626c91be536162e8f503a63cd2516c651a970dc8f6a757dd54add92f",
+      "size_bytes": 5136
+    },
+    {
+      "path": "tests/fixtures/manifests/l4_host_profile.json",
+      "sha256": "816faa54a90c6c56f5f62bb563ba723fab4128eefe8d1897923fd5daaab72ad6",
+      "size_bytes": 2697
+    }
+  ],
+  "required_checks": {
+    "gpu_identity": true,
+    "cpu_and_ram": true,
+    "pcie_link": true,
+    "storage": true,
+    "driver_and_cuda": true,
+    "thermal_and_power": true
+  },
+  "outcome": "complete",
+  "deviations": [],
+  "started_at": "2026-08-23T08:31:00Z",
+  "finished_at": "2026-08-23T08:36:17Z"
+}

@@ -246,7 +246,7 @@
     "P0-005A": {
       "packet_path": "orchestration/work_packets/P0-005A.yaml",
       "packet_sha256": "73a5fa8079684ceff0bf748d74712821f351bef0d4c8c11beafa7c7dfff49fe1",
-      "status": "running",
+      "status": "complete",
       "history": [
         {
           "packet_sha256": "73a5fa8079684ceff0bf748d74712821f351bef0d4c8c11beafa7c7dfff49fe1",
@@ -271,6 +271,22 @@
           "timestamp": "2026-08-23T08:31:46.259428Z",
           "actor": "codex",
           "reason": "Begin certified L4 host profile capture."
+        },
+        {
+          "packet_sha256": "73a5fa8079684ceff0bf748d74712821f351bef0d4c8c11beafa7c7dfff49fe1",
+          "previous_state": "running",
+          "next_state": "validating",
+          "timestamp": "2026-08-23T08:36:18.007666Z",
+          "actor": "codex",
+          "reason": "Certified L4 profile and measurement contract passed validation."
+        },
+        {
+          "packet_sha256": "73a5fa8079684ceff0bf748d74712821f351bef0d4c8c11beafa7c7dfff49fe1",
+          "previous_state": "validating",
+          "next_state": "complete",
+          "timestamp": "2026-08-23T08:36:41.438155Z",
+          "actor": "codex",
+          "reason": "Validated P0-005A L4 profile receipt."
         }
       ]
     },
