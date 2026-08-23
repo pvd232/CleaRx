@@ -458,7 +458,7 @@
     "P0-006B": {
       "packet_path": "orchestration/work_packets/P0-006B.yaml",
       "packet_sha256": "beaf03d7542e7d1dcdd164eddeccac46fcc5ee5ba7e8d716f45ba87bfc405a08",
-      "status": "ready",
+      "status": "running",
       "history": [
         {
           "packet_sha256": "beaf03d7542e7d1dcdd164eddeccac46fcc5ee5ba7e8d716f45ba87bfc405a08",
@@ -475,6 +475,14 @@
           "timestamp": "2026-08-23T09:19:48.173862Z",
           "actor": "codex",
           "reason": "Tensor inventory, L4 memory budget, certified host, and cache benchmark contract are complete."
+        },
+        {
+          "packet_sha256": "beaf03d7542e7d1dcdd164eddeccac46fcc5ee5ba7e8d716f45ba87bfc405a08",
+          "previous_state": "ready",
+          "next_state": "running",
+          "timestamp": "2026-08-23T09:22:42.342517Z",
+          "actor": "codex",
+          "reason": "Begin certified L4 CUDA transfer measurement and manifest-derived allocator/cache simulation."
         }
       ]
     },
