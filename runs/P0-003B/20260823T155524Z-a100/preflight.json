@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "packet_id": "P0-003B",
+  "git_commit": "85dd471068aa7106e61e647180a46d9a7f262d26",
+  "colab_session": "run-14f6ee",
+  "local_client": {
+    "google_colab_cli": "0.6.0",
+    "jupyter_kernel_client": "0.9.0",
+    "python_certificate_bundle_installed": true
+  },
+  "remote": {
+    "torch_version": "2.11.0+cu128",
+    "cuda_version": "12.8",
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_total_bytes": 42405855232,
+    "disk_free_bytes": 202212909056,
+    "transformers_commit": "7d9754a05193eb79b1d86aa744b622b8068008cd",
+    "reference_class": "Qwen3OmniMoeForConditionalGeneration",
+    "model_repository": "Qwen/Qwen3-Omni-30B-A3B-Instruct",
+    "model_commit": "26291f793822fb6be9555850f06dfe95f2d7e695",
+    "model_config_sha256": "eab5093d47807aaf894119506b238b2b1cee70d08456e894fee9a012d88f2e0d",
+    "talker_layers": 20,
+    "residual_codebooks": 15,
+    "code2wav_quantizers": 16
+  },
+  "outcome": "complete",
+  "finished_at": "2026-08-23T15:55:24Z"
+}
