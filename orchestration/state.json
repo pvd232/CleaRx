@@ -217,7 +217,7 @@
     "P0-002": {
       "packet_path": "orchestration/work_packets/P0-002.yaml",
       "packet_sha256": "9c572e24816e5e76af84784dba288ea9cc8014d3baaca416de6e97d67d8e1fba",
-      "status": "ready",
+      "status": "running",
       "history": [
         {
           "packet_sha256": "9c572e24816e5e76af84784dba288ea9cc8014d3baaca416de6e97d67d8e1fba",
@@ -234,6 +234,14 @@
           "timestamp": "2026-08-23T08:10:41.191575Z",
           "actor": "codex",
           "reason": "Bootstrap dependency completed; Phase 0 first-wave packet authorized."
+        },
+        {
+          "packet_sha256": "9c572e24816e5e76af84784dba288ea9cc8014d3baaca416de6e97d67d8e1fba",
+          "previous_state": "ready",
+          "next_state": "running",
+          "timestamp": "2026-08-23T08:57:27.859737Z",
+          "actor": "codex",
+          "reason": "Pinned repository exposes range-readable safetensors shards; begin complete tensor inventory."
         }
       ]
     },
