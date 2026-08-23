@@ -458,7 +458,7 @@
     "P0-006B": {
       "packet_path": "orchestration/work_packets/P0-006B.yaml",
       "packet_sha256": "beaf03d7542e7d1dcdd164eddeccac46fcc5ee5ba7e8d716f45ba87bfc405a08",
-      "status": "running",
+      "status": "complete",
       "history": [
         {
           "packet_sha256": "beaf03d7542e7d1dcdd164eddeccac46fcc5ee5ba7e8d716f45ba87bfc405a08",
@@ -483,6 +483,22 @@
           "timestamp": "2026-08-23T09:22:42.342517Z",
           "actor": "codex",
           "reason": "Begin certified L4 CUDA transfer measurement and manifest-derived allocator/cache simulation."
+        },
+        {
+          "packet_sha256": "beaf03d7542e7d1dcdd164eddeccac46fcc5ee5ba7e8d716f45ba87bfc405a08",
+          "previous_state": "running",
+          "next_state": "validating",
+          "timestamp": "2026-08-23T09:25:32.317678Z",
+          "actor": "codex",
+          "reason": "Certified L4 CUDA spike, cache simulation, and allocator checks passed at commit 63868f5."
+        },
+        {
+          "packet_sha256": "beaf03d7542e7d1dcdd164eddeccac46fcc5ee5ba7e8d716f45ba87bfc405a08",
+          "previous_state": "validating",
+          "next_state": "complete",
+          "timestamp": "2026-08-23T09:25:56.108268Z",
+          "actor": "codex",
+          "reason": "Validated P0-006B result receipt."
         }
       ]
     },

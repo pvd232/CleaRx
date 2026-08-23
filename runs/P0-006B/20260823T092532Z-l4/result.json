@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0.0",
+  "packet_id": "P0-006B",
+  "packet_sha256": "beaf03d7542e7d1dcdd164eddeccac46fcc5ee5ba7e8d716f45ba87bfc405a08",
+  "git_commit": "63868f59b19eee6a9f18a0db9f914f3c63340f70",
+  "run_id": "20260823T092532Z-l4",
+  "environment": {
+    "kind": "l4",
+    "host_profile": "clearx-mantra-g2-l4-v1",
+    "gpu_uuid": "GPU-e2d6d9a2-3e87-2a3c-73fb-589e52f39d0e",
+    "cuda": "12.9",
+    "driver": "580.173.02",
+    "host_compiler": "g++-12"
+  },
+  "commands": [
+    {
+      "command": "nvcc -ccbin /usr/bin/g++-12 -O3 -std=c++17 -lineinfo cache_spike.cu -o cache_spike",
+      "exit_code": 0
+    },
+    {
+      "command": "cache_spike 1253376 > cache_spike.csv",
+      "exit_code": 0
+    },
+    {
+      "command": "python tools/benchmarks/validate_cache_spike.py expert_cache_spike.json",
+      "exit_code": 0
+    }
+  ],
+  "artifacts": [
+    {"path": "expert_cache_spike.json", "sha256": "dab844a2b50165bea6a8997051ffae25bb4478359361dddb52b163ea37c040f0", "size_bytes": 44450}
+  ],
+  "required_checks": {
+    "representative_shapes": true,
+    "transfer_measurements": true,
+    "allocator_simulation": true,
+    "limitations_recorded": true
+  },
+  "outcome": "complete",
+  "deviations": [],
+  "started_at": "2026-08-23T09:20:10Z",
+  "finished_at": "2026-08-23T09:25:32Z"
+}

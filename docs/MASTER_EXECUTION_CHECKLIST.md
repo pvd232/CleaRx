@@ -38,7 +38,7 @@ commit. Complete dependency producers before their consumers.
 | Fixture contract and generated reference fixtures | Not started | P0-003A and P0-003B | Fixture validator and packet-bound A100 evidence |
 | Native ABI and ownership contract | Not started | P0-004 | Phase 0 integration gate |
 | L4 host and memory contract | Host profile complete at `502d9eb`; manifest-derived budget complete at `15c358e` | P0-005A and P0-005B | Valid results `20260823T083617Z-l4` and `20260823T091916Z-mixed` |
-| Expert-cache and allocator risk contract | Benchmark contract complete at `f693c04`; manifest-derived spike pending | P0-006A and P0-006B | Valid P0-006A result `20260823T083903Z-local` and later spike artifacts |
+| Expert-cache and allocator risk contract | Benchmark contract complete at `f693c04`; certified L4 spike complete at `63868f5` | P0-006A and P0-006B | Valid results `20260823T083903Z-local` and `20260823T092532Z-l4` |
 | Evaluation and deployment acceptance contract | Evaluation contract complete at `31e5df6`; certified-host binding complete at `754f95e` | P0-007A and P0-007B | Valid results `20260823T084617Z-local` and `20260823T085543Z-local` |
 | Phase 1 work decomposition | Not started | Phase 1 readiness | Validated packet DAG with disjoint write scopes |
 | Common native build/test skeleton | Not started | Phase 1 readiness | Local configure, build, and test gate |
@@ -109,7 +109,7 @@ packet and all six packet states are `complete`.
 - [ ] Complete P0-003B from a clean A100 run and download fixture evidence.
 - [x] Complete P0-005B from the tensor manifest and certified L4 profile.
 - [x] Complete P0-007B and bind every later threshold to the certified host.
-- [ ] Complete P0-006B from the manifest, memory budget, and benchmark design.
+- [x] Complete P0-006B from the manifest, memory budget, and benchmark design.
 - [ ] Complete P0-004 last and freeze `abi_v0` after all upstream evidence validates.
 - [ ] Run the complete Phase 0 integration gate.
 
