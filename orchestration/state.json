@@ -193,7 +193,7 @@
     "BOOTSTRAP-005": {
       "packet_path": "orchestration/work_packets/BOOTSTRAP-005.yaml",
       "packet_sha256": "874043fe3f35620504bc2abf364aa6ed623572ca214869f26fba2060d89cc952",
-      "status": "running",
+      "status": "complete",
       "history": [
         {
           "packet_sha256": "874043fe3f35620504bc2abf364aa6ed623572ca214869f26fba2060d89cc952",
@@ -218,6 +218,22 @@
           "timestamp": "2026-08-23T15:45:29Z",
           "actor": "codex",
           "reason": "Implement the generated index schema, routing, identity joins, and exact coverage check."
+        },
+        {
+          "packet_sha256": "874043fe3f35620504bc2abf364aa6ed623572ca214869f26fba2060d89cc952",
+          "previous_state": "running",
+          "next_state": "validating",
+          "timestamp": "2026-08-23T15:48:53.451768Z",
+          "actor": "codex",
+          "reason": "Fixture-index routing and coverage acceptance passed against commit ab3e532."
+        },
+        {
+          "packet_sha256": "874043fe3f35620504bc2abf364aa6ed623572ca214869f26fba2060d89cc952",
+          "previous_state": "validating",
+          "next_state": "complete",
+          "timestamp": "2026-08-23T15:49:25.122459Z",
+          "actor": "codex",
+          "reason": "Validated Bootstrap-005 result receipt."
         }
       ]
     },

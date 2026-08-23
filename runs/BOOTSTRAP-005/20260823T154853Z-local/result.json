@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0.0",
+  "packet_id": "BOOTSTRAP-005",
+  "packet_sha256": "874043fe3f35620504bc2abf364aa6ed623572ca214869f26fba2060d89cc952",
+  "git_commit": "ab3e53244ae85da5e8bfb4a08b3ca9b4c42c16b2",
+  "run_id": "20260823T154853Z-local",
+  "environment": {
+    "kind": "local_m1",
+    "conda_environment": "clearx",
+    "python": "3.12.14"
+  },
+  "commands": [
+    {"command": "python -m pytest -q tests/orchestration/test_fixture_validation.py", "exit_code": 0},
+    {"command": "python scripts/validate_fixtures.py --contract-only", "exit_code": 0},
+    {"command": "python scripts/validate_bootstrap.py", "exit_code": 0},
+    {"command": "python -m pytest -q tests/orchestration", "exit_code": 0}
+  ],
+  "artifacts": [
+    {"path": "docs/architecture/bootstrap_fixture_index_gap.md", "sha256": "34398128a64329a97ab8e6995963df3868d13a65ae413c9b712434a2422ff248", "size_bytes": 2523},
+    {"path": "orchestration/plan.yaml", "sha256": "cbcb70d21a778202191412675f5c4d355843419c66c4b3e4fa5ff93423f8ad4b", "size_bytes": 4269},
+    {"path": "orchestration/state.json", "sha256": "70b8d869a242ca95963074b25dd2412a17593b0931f5d8e97e3793b8487f0552", "size_bytes": 31428},
+    {"path": "orchestration/schemas/fixture_index.schema.json", "sha256": "7b49c3610abd4c8c9fb8c5a450361d64658bf1e677808f29b61a47d2d91ca94b", "size_bytes": 1286},
+    {"path": "orchestration/work_packets/BOOTSTRAP-005.yaml", "sha256": "874043fe3f35620504bc2abf364aa6ed623572ca214869f26fba2060d89cc952", "size_bytes": 2258},
+    {"path": "scripts/validate_fixtures.py", "sha256": "3b66956ce17a3ec6e65fe4add671530c2118d16e42822da09a6d2c1a45778970", "size_bytes": 4959},
+    {"path": "tests/orchestration/test_fixture_validation.py", "sha256": "21536662459a20ef8901473823e26a8b66bc4bdb80af78547674cc77161d8dbc", "size_bytes": 8233},
+    {"path": "tests/orchestration/test_plan_validation.py", "sha256": "c30fff62b7b0c8e0b2310f85a94040ef78c8131f2542f923d1a2bbc273d24931", "size_bytes": 2595}
+  ],
+  "required_checks": {
+    "index_schema_validated": true,
+    "unrelated_manifests_excluded": true,
+    "envelope_identities_joined": true,
+    "boundary_case_coverage_exact": true
+  },
+  "outcome": "complete",
+  "deviations": [],
+  "started_at": "2026-08-23T15:45:27Z",
+  "finished_at": "2026-08-23T15:48:53Z"
+}
