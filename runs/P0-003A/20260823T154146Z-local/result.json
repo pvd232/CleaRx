@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0.0",
+  "packet_id": "P0-003A",
+  "packet_sha256": "e2ebf0ca7c1859dcf4229eb55aa9aa68d35807e8f5b9974fa66f5e6267467d3c",
+  "git_commit": "885bb6f4bdc18cfde45ab5e1e37e326107fb67f1",
+  "run_id": "20260823T154146Z-local",
+  "environment": {
+    "kind": "local_m1",
+    "conda_environment": "clearx",
+    "python": "3.12.14"
+  },
+  "commands": [
+    {
+      "command": "python scripts/validate_fixtures.py --contract-only",
+      "exit_code": 0
+    },
+    {
+      "command": "python tools/reference/fixture_harness.py --contract-only",
+      "exit_code": 0
+    },
+    {
+      "command": "python scripts/validate_bootstrap.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python -m pytest -q tests/orchestration",
+      "exit_code": 0
+    }
+  ],
+  "artifacts": [
+    {"path": "docs/architecture/fixture_contract.md", "sha256": "3114bb1501af78fd696c4f743d0f20ae9ce430dac160f2e93ec203e2b53d4a92", "size_bytes": 11697},
+    {"path": "tools/reference/fixture_harness.py", "sha256": "500892bd1db18800681dce67f9b1af000b12038de35113a66481a90f5b8157b7", "size_bytes": 16959}
+  ],
+  "required_checks": {
+    "all_boundaries_covered": true,
+    "adversarial_cases_declared": true,
+    "tolerances_named": true,
+    "provenance_required": true
+  },
+  "outcome": "complete",
+  "deviations": [],
+  "started_at": "2026-08-23T15:34:02Z",
+  "finished_at": "2026-08-23T15:41:46Z"
+}
