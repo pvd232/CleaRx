@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "plan_sha256": "666b93c0dcaa8738b8c425c58aeeb1f7a5c2d09165bd988fc103ca4f22f4ba94",
+  "plan_sha256": "ac0060cc82163b89177585dad1e03dfca507501993180c271382c54b034d7f05",
   "packets": {
     "BOOTSTRAP-001": {
       "packet_path": "orchestration/work_packets/BOOTSTRAP-001.yaml",
@@ -49,10 +49,41 @@
         }
       ]
     },
+    "BOOTSTRAP-002": {
+      "packet_path": "orchestration/work_packets/BOOTSTRAP-002.yaml",
+      "packet_sha256": "4076b7da6706b0b661135b43039a12218deea02e00969793962dfad5ccd6719c",
+      "status": "running",
+      "history": [
+        {
+          "packet_sha256": "4076b7da6706b0b661135b43039a12218deea02e00969793962dfad5ccd6719c",
+          "previous_state": null,
+          "next_state": "planned",
+          "timestamp": "2026-08-23T08:22:54Z",
+          "actor": "codex",
+          "reason": "Inspected Phase 0 commands revealed missing Bootstrap-owned validators."
+        },
+        {
+          "packet_sha256": "4076b7da6706b0b661135b43039a12218deea02e00969793962dfad5ccd6719c",
+          "previous_state": "planned",
+          "next_state": "ready",
+          "timestamp": "2026-08-23T08:22:55Z",
+          "actor": "codex",
+          "reason": "Bootstrap-001 is complete and the correction has no scientific dependencies."
+        },
+        {
+          "packet_sha256": "4076b7da6706b0b661135b43039a12218deea02e00969793962dfad5ccd6719c",
+          "previous_state": "ready",
+          "next_state": "running",
+          "timestamp": "2026-08-23T08:22:56Z",
+          "actor": "codex",
+          "reason": "Begin validator ownership correction."
+        }
+      ]
+    },
     "P0-001": {
       "packet_path": "orchestration/work_packets/P0-001.yaml",
       "packet_sha256": "3896d3661656766ef6e29b4db822bb2d3874a9f827019a087900c8574d6bc704",
-      "status": "ready",
+      "status": "failed",
       "history": [
         {
           "packet_sha256": "3896d3661656766ef6e29b4db822bb2d3874a9f827019a087900c8574d6bc704",
@@ -69,6 +100,22 @@
           "timestamp": "2026-08-23T08:10:41.031478Z",
           "actor": "codex",
           "reason": "Bootstrap dependency completed; Phase 0 first-wave packet authorized."
+        },
+        {
+          "packet_sha256": "3896d3661656766ef6e29b4db822bb2d3874a9f827019a087900c8574d6bc704",
+          "previous_state": "ready",
+          "next_state": "running",
+          "timestamp": "2026-08-23T08:12:05.486928Z",
+          "actor": "codex",
+          "reason": "Begin pinned upstream and runtime audit."
+        },
+        {
+          "packet_sha256": "3896d3661656766ef6e29b4db822bb2d3874a9f827019a087900c8574d6bc704",
+          "previous_state": "running",
+          "next_state": "failed",
+          "timestamp": "2026-08-23T08:19:52.341473Z",
+          "actor": "codex",
+          "reason": "Acceptance command points to a missing validator outside the packet write scope; Bootstrap correction required."
         }
       ]
     },

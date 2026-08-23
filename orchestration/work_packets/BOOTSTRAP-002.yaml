@@ -1,0 +1,54 @@
+schema_version: "1.0.0"
+id: BOOTSTRAP-002
+title: Supply Phase 0 acceptance validators
+phase: bootstrap
+objective: Create and test the shared validator entry points named by four immutable Phase 0 packets.
+rationale: Bootstrap-001 emitted packet commands without creating or assigning ownership for their validator files.
+depends_on: [BOOTSTRAP-001]
+execution:
+  environment: local_m1
+  write_scope:
+    - docs/architecture/bootstrap_validator_gap.md
+    - orchestration/plan.yaml
+    - orchestration/state.json
+    - orchestration/work_packets/BOOTSTRAP-002.yaml
+    - tools/contract_validation.py
+    - tools/inventory/
+    - tools/benchmarks/validate_cache_contract.py
+    - tests/orchestration/test_phase0_validator_entrypoints.py
+    - tests/orchestration/test_plan_validation.py
+    - runs/BOOTSTRAP-002/
+inputs:
+  - path: orchestration/schemas/benchmark.schema.json
+    sha256: cc71829b6811fe02de3ec6079c9b2df03c8f68b04e6affa239e130e59c5a7d0b
+outputs:
+  - docs/architecture/bootstrap_validator_gap.md
+  - orchestration/plan.yaml
+  - orchestration/state.json
+  - orchestration/work_packets/BOOTSTRAP-002.yaml
+  - tools/contract_validation.py
+  - tools/inventory/validate_upstream_lock.py
+  - tools/inventory/validate_l4_host_profile.py
+  - tools/benchmarks/validate_cache_contract.py
+  - tools/inventory/validate_evaluation_contract.py
+  - tests/orchestration/test_phase0_validator_entrypoints.py
+  - tests/orchestration/test_plan_validation.py
+acceptance:
+  commands:
+    - python -m pytest -q tests/orchestration/test_phase0_validator_entrypoints.py
+  required_checks:
+    - validator_paths_owned
+    - success_cases_pass
+    - malformed_records_rejected
+    - missing_evidence_rejected
+forbidden:
+  - changing_existing_phase0_packet_bytes
+  - weakening_phase0_acceptance_checks
+non_goals:
+  - producing_phase0_scientific_artifacts
+  - running_remote_compute
+escalation:
+  - validator_requires_a_new_scientific_choice
+evidence:
+  result_schema: orchestration/schemas/result.schema.json
+  result_path_template: runs/BOOTSTRAP-002/{run_id}/result.json

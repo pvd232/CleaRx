@@ -7,6 +7,12 @@ nodes:
     phase: bootstrap
     wave: bootstrap
     depends_on: []
+  - id: BOOTSTRAP-002
+    packet_path: orchestration/work_packets/BOOTSTRAP-002.yaml
+    packet_sha256: 4076b7da6706b0b661135b43039a12218deea02e00969793962dfad5ccd6719c
+    phase: bootstrap
+    wave: bootstrap-correction
+    depends_on: [BOOTSTRAP-001]
   - id: P0-001
     packet_path: orchestration/work_packets/P0-001.yaml
     packet_sha256: 3896d3661656766ef6e29b4db822bb2d3874a9f827019a087900c8574d6bc704
@@ -75,8 +81,8 @@ nodes:
     depends_on: [P0-001, P0-002, P0-003B, P0-005B, P0-006B, P0-007B]
 gates:
   - id: bootstrap-complete
-    requires: [BOOTSTRAP-001]
+    requires: [BOOTSTRAP-001, BOOTSTRAP-002]
   - id: phase0-first-complete
-    requires: [P0-001, P0-002, P0-003A, P0-005A, P0-006A, P0-007A]
+    requires: [BOOTSTRAP-002, P0-001, P0-002, P0-003A, P0-005A, P0-006A, P0-007A]
   - id: phase0-complete
-    requires: [P0-001, P0-002, P0-003A, P0-003B, P0-004, P0-005A, P0-005B, P0-006A, P0-006B, P0-007A, P0-007B]
+    requires: [BOOTSTRAP-002, P0-001, P0-002, P0-003A, P0-003B, P0-004, P0-005A, P0-005B, P0-006A, P0-006B, P0-007A, P0-007B]

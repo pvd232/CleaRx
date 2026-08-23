@@ -14,7 +14,8 @@ from orchestration_lib import ContractError, validate_all
 def test_current_package_is_valid(repo_copy: Path) -> None:
     """Accept the unmodified Bootstrap orchestration package."""
     plan, state, packets = validate_all(repo_copy)
-    assert len(plan["nodes"]) == len(state["packets"]) == len(packets) == 12
+    assert len(plan["nodes"]) == len(state["packets"]) == len(packets)
+    assert {"BOOTSTRAP-001", "BOOTSTRAP-002", "P0-001", "P0-004"} <= set(packets)
 
 
 def test_stale_packet_digest_is_rejected(repo_copy: Path) -> None:
