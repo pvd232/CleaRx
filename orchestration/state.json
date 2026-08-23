@@ -311,7 +311,7 @@
     "P0-003A": {
       "packet_path": "orchestration/work_packets/P0-003A.yaml",
       "packet_sha256": "e2ebf0ca7c1859dcf4229eb55aa9aa68d35807e8f5b9974fa66f5e6267467d3c",
-      "status": "ready",
+      "status": "running",
       "history": [
         {
           "packet_sha256": "e2ebf0ca7c1859dcf4229eb55aa9aa68d35807e8f5b9974fa66f5e6267467d3c",
@@ -344,6 +344,14 @@
           "timestamp": "2026-08-23T15:33:37.213042Z",
           "actor": "codex",
           "reason": "Bootstrap-004 now supplies strict fixture descriptor, provenance, tolerance, and harness acceptance contracts."
+        },
+        {
+          "packet_sha256": "e2ebf0ca7c1859dcf4229eb55aa9aa68d35807e8f5b9974fa66f5e6267467d3c",
+          "previous_state": "ready",
+          "next_state": "running",
+          "timestamp": "2026-08-23T15:34:02.484197Z",
+          "actor": "codex",
+          "reason": "Implement the complete boundary matrix and contract-only comparison harness under Bootstrap-004."
         }
       ]
     },
