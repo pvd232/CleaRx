@@ -1,0 +1,170 @@
+{
+  "schema_version": "1.0.0",
+  "benchmark_id": "clearx-expert-cache-allocator-v1",
+  "host_profile": "clearx-mantra-g2-l4-v1",
+  "workload": {
+    "claim_level": "design_only",
+    "representative_shape_source": "tensor_manifest.json#/tensors filtered to talker.experts",
+    "slot_pool_capacity_bytes": 1610612736,
+    "trace_schema": {
+      "format": "jsonl",
+      "required_fields": [
+        "layer",
+        "token_position",
+        "selected_experts",
+        "routing_weights",
+        "timestamp_ns"
+      ],
+      "field_types": {
+        "layer": "uint32",
+        "token_position": "uint64",
+        "selected_experts": "uint32[6]",
+        "routing_weights": "float32[6]",
+        "timestamp_ns": "uint64"
+      },
+      "optional_fields": {
+        "request_id": "utf8",
+        "phase": "utf8",
+        "source_commit": "sha1",
+        "tensor_manifest_sha256": "sha256"
+      },
+      "invariants": [
+        "selected_experts contains six distinct IDs for each layer and token position",
+        "routing_weights are finite, nonnegative, and ordered with selected_experts",
+        "timestamp_ns is monotonic within one request",
+        "layer and expert IDs resolve in tensor_manifest.json"
+      ]
+    },
+    "transfer_cases": [
+      {
+        "id": "control-8mib-cold",
+        "payload_source": "synthetic pinned bytes",
+        "payload_bytes": 8388608,
+        "initial_state": "not_resident",
+        "expected_path": "pinned_host_to_device"
+      },
+      {
+        "id": "control-64mib-cold",
+        "payload_source": "synthetic pinned bytes",
+        "payload_bytes": 67108864,
+        "initial_state": "not_resident",
+        "expected_path": "pinned_host_to_device"
+      },
+      {
+        "id": "manifest-expert-cold",
+        "payload_source": "tensor_manifest.json expert tensor byte sum",
+        "payload_bytes": null,
+        "initial_state": "not_resident",
+        "expected_path": "pinned_host_to_device"
+      },
+      {
+        "id": "manifest-expert-hit",
+        "payload_source": "tensor_manifest.json expert tensor byte sum",
+        "payload_bytes": null,
+        "initial_state": "resident",
+        "expected_path": "slot_lookup_without_transfer"
+      },
+      {
+        "id": "manifest-expert-evict-load",
+        "payload_source": "two tensor_manifest.json experts",
+        "payload_bytes": null,
+        "initial_state": "pool_full_target_absent",
+        "expected_path": "lease_wait_evict_transfer"
+      }
+    ],
+    "router_patterns": [
+      {
+        "id": "single-layer-repeat",
+        "purpose": "separate first-load cost from warm-hit lookup"
+      },
+      {
+        "id": "working-set-fits",
+        "purpose": "measure steady hits when active expert bytes fit the slot pool"
+      },
+      {
+        "id": "working-set-thrash",
+        "purpose": "force deterministic eviction when active expert bytes exceed the slot pool"
+      },
+      {
+        "id": "layer-interleaved",
+        "purpose": "exercise per-layer namespace isolation and transfer ordering"
+      }
+    ],
+    "allocator_events": [
+      "allocate",
+      "release",
+      "transfer_start",
+      "transfer_end",
+      "compute_start",
+      "compute_end"
+    ],
+    "allocator_event_fields": {
+      "event": "enum",
+      "timestamp_ns": "uint64",
+      "allocation_id": "utf8",
+      "owner": "enum[aut,whisper,talker_expert,staging]",
+      "device": "enum[cpu_pinned,cuda]",
+      "size_bytes": "uint64",
+      "stream_id": "uint32",
+      "request_id": "utf8"
+    },
+    "allocator_invariants": [
+      "each allocation_id has one allocate and one release",
+      "no transfer reads an allocation before allocate or after release",
+      "no compute event uses an expert before transfer_end",
+      "an expert slot cannot be evicted while its lease count is nonzero",
+      "simultaneous live bytes never exceed the configured arena or slot-pool capacity"
+    ],
+    "overlap_measurements": [
+      "h2d_duration_ns",
+      "compute_duration_ns",
+      "overlap_duration_ns",
+      "unhidden_transfer_ns"
+    ],
+    "result_fields": [
+      "source_commit",
+      "host_profile_sha256",
+      "tensor_manifest_sha256",
+      "trace_sha256",
+      "case_id",
+      "payload_bytes",
+      "warmup_index",
+      "repetition_index",
+      "h2d_duration_ns",
+      "compute_duration_ns",
+      "overlap_duration_ns",
+      "unhidden_transfer_ns",
+      "cache_hits",
+      "cache_misses",
+      "evictions",
+      "allocator_peak_bytes",
+      "pass"
+    ]
+  },
+  "metrics": [
+    "h2d_duration_ns",
+    "compute_duration_ns",
+    "overlap_duration_ns",
+    "unhidden_transfer_ns",
+    "cache_hit_rate",
+    "evictions",
+    "allocator_peak_bytes"
+  ],
+  "repetitions": 30,
+  "warmups": 5,
+  "thresholds": {
+    "measurement_validity": {
+      "all_allocations_released": true,
+      "timestamps_monotonic": true,
+      "payload_hash_verified": true
+    },
+    "policy_selection": "deferred until P0-006B records manifest-derived shapes and traces"
+  },
+  "paired_keys": [
+    "host_profile_sha256",
+    "tensor_manifest_sha256",
+    "trace_sha256",
+    "case_id",
+    "repetition_index"
+  ]
+}

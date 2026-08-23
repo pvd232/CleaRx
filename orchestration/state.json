@@ -308,7 +308,7 @@
     "P0-006A": {
       "packet_path": "orchestration/work_packets/P0-006A.yaml",
       "packet_sha256": "c81693a0dc3e264690e44c578c8d714f3992155ee86f9682c28c6775939f49c1",
-      "status": "ready",
+      "status": "running",
       "history": [
         {
           "packet_sha256": "c81693a0dc3e264690e44c578c8d714f3992155ee86f9682c28c6775939f49c1",
@@ -325,6 +325,14 @@
           "timestamp": "2026-08-23T08:10:41.654501Z",
           "actor": "codex",
           "reason": "Bootstrap dependency completed; Phase 0 first-wave packet authorized."
+        },
+        {
+          "packet_sha256": "c81693a0dc3e264690e44c578c8d714f3992155ee86f9682c28c6775939f49c1",
+          "previous_state": "ready",
+          "next_state": "running",
+          "timestamp": "2026-08-23T08:37:28.264268Z",
+          "actor": "codex",
+          "reason": "Begin expert-cache and allocator benchmark contract design."
         }
       ]
     },
