@@ -464,7 +464,7 @@
     "P0-007B": {
       "packet_path": "orchestration/work_packets/P0-007B.yaml",
       "packet_sha256": "33596091ae66a0a47c9d4ec6d23586b23bcf2d5ae07e51d0c9436f0186c36263",
-      "status": "ready",
+      "status": "running",
       "history": [
         {
           "packet_sha256": "33596091ae66a0a47c9d4ec6d23586b23bcf2d5ae07e51d0c9436f0186c36263",
@@ -481,6 +481,14 @@
           "timestamp": "2026-08-23T08:46:42.480934Z",
           "actor": "codex",
           "reason": "P0-005A and P0-007A dependencies completed."
+        },
+        {
+          "packet_sha256": "33596091ae66a0a47c9d4ec6d23586b23bcf2d5ae07e51d0c9436f0186c36263",
+          "previous_state": "ready",
+          "next_state": "running",
+          "timestamp": "2026-08-23T08:54:18.368525Z",
+          "actor": "codex",
+          "reason": "All certified-host and frozen-evaluation dependencies are complete; begin exact binding."
         }
       ]
     }

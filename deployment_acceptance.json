@@ -1,0 +1,84 @@
+{
+  "schema_version": "1.0.0",
+  "acceptance_id": "clearx-deployment-acceptance-v1",
+  "source_commit": "33c833f89d8524441be992b94c102ea9f926c48f",
+  "artifacts": {
+    "host_profile": {
+      "path": "tests/fixtures/manifests/l4_host_profile.json",
+      "sha256": "816faa54a90c6c56f5f62bb563ba723fab4128eefe8d1897923fd5daaab72ad6"
+    },
+    "evaluation_contract": {
+      "path": "docs/evaluation_contract.md",
+      "sha256": "86cf5fe56d6e0bb2d42b490af205c3970ecf13cd075d641411717ec95aba0b96"
+    },
+    "corpus": {
+      "path": "evaluation_corpus_manifest.json",
+      "sha256": "1c54fab40edff90a7fad0a57155bdb2e16f742b1209145cb2b179268d678b0b1"
+    },
+    "thresholds": {
+      "path": "benchmark_thresholds.json",
+      "sha256": "d98d64b5e372f2bb21a439206b0afcff48863096514c71d9c894231724d145a9"
+    }
+  },
+  "certified_host": {
+    "profile_id": "clearx-mantra-g2-l4-v1",
+    "gpu_uuid": "GPU-e2d6d9a2-3e87-2a3c-73fb-589e52f39d0e",
+    "machine_type": "g2-standard-12",
+    "zone": "us-west1-a"
+  },
+  "workloads": [
+    "codec-correctness",
+    "release-quality-paired",
+    "bounded-context-paired",
+    "l4-latency"
+  ],
+  "gates": {
+    "correctness": {
+      "metric": "codec_token_exact_match_rate",
+      "threshold_path": "thresholds.correctness",
+      "corpus_slices": ["short_clean_speech", "short_clean_speech_second_speaker", "long_speech_context", "long_speech_final_partial", "background_empty_final_partial", "background_noise", "final_partial_chunk_signal", "non_speech_tone"],
+      "sampling_ids": ["greedy-correctness"],
+      "workload_id": "codec-correctness"
+    },
+    "semantic": {
+      "metric": "asr_word_error_rate_delta",
+      "threshold_path": "thresholds.semantic",
+      "corpus_slices": ["short_clean_speech", "short_clean_speech_second_speaker", "long_speech_context", "long_speech_final_partial", "background_empty_final_partial", "background_noise", "final_partial_chunk_signal", "non_speech_tone"],
+      "sampling_ids": ["release-quality"],
+      "workload_id": "release-quality-paired"
+    },
+    "acoustic": {
+      "metric": "speaker_embedding_cosine_delta",
+      "threshold_path": "thresholds.acoustic",
+      "corpus_slices": ["short_clean_speech", "short_clean_speech_second_speaker", "long_speech_context", "long_speech_final_partial"],
+      "sampling_ids": ["release-quality"],
+      "workload_id": "release-quality-paired"
+    },
+    "material_improvement": {
+      "metric": "paired_task_success_delta",
+      "threshold_path": "thresholds.material_improvement",
+      "corpus_slices": ["short_clean_speech", "short_clean_speech_second_speaker", "long_speech_context", "long_speech_final_partial", "background_empty_final_partial", "background_noise", "final_partial_chunk_signal", "non_speech_tone"],
+      "sampling_ids": ["release-quality"],
+      "workload_id": "bounded-context-paired"
+    },
+    "latency": {
+      "metric": "audio_start_latency_ms_p95",
+      "threshold_path": "thresholds.latency",
+      "corpus_slices": ["short_clean_speech", "short_clean_speech_second_speaker", "long_speech_context", "long_speech_final_partial", "background_empty_final_partial", "background_noise", "final_partial_chunk_signal", "non_speech_tone"],
+      "sampling_ids": ["release-quality"],
+      "workload_id": "l4-latency"
+    }
+  },
+  "alternate_hosts": [
+    {
+      "profile_id": "colab-a100-session",
+      "classification": "exploratory_only",
+      "allowed_use": "reference fixture generation and non-certified comparison"
+    },
+    {
+      "profile_id": "local-m1-development",
+      "classification": "exploratory_only",
+      "allowed_use": "validator, schema, and orchestration development"
+    }
+  ]
+}
