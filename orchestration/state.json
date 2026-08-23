@@ -464,7 +464,7 @@
     "P0-007B": {
       "packet_path": "orchestration/work_packets/P0-007B.yaml",
       "packet_sha256": "33596091ae66a0a47c9d4ec6d23586b23bcf2d5ae07e51d0c9436f0186c36263",
-      "status": "running",
+      "status": "complete",
       "history": [
         {
           "packet_sha256": "33596091ae66a0a47c9d4ec6d23586b23bcf2d5ae07e51d0c9436f0186c36263",
@@ -489,6 +489,22 @@
           "timestamp": "2026-08-23T08:54:18.368525Z",
           "actor": "codex",
           "reason": "All certified-host and frozen-evaluation dependencies are complete; begin exact binding."
+        },
+        {
+          "packet_sha256": "33596091ae66a0a47c9d4ec6d23586b23bcf2d5ae07e51d0c9436f0186c36263",
+          "previous_state": "running",
+          "next_state": "validating",
+          "timestamp": "2026-08-23T08:55:43.737827Z",
+          "actor": "codex",
+          "reason": "Deployment acceptance validator passed at commit 754f95e."
+        },
+        {
+          "packet_sha256": "33596091ae66a0a47c9d4ec6d23586b23bcf2d5ae07e51d0c9436f0186c36263",
+          "previous_state": "validating",
+          "next_state": "complete",
+          "timestamp": "2026-08-23T08:56:11.042990Z",
+          "actor": "codex",
+          "reason": "Validated P0-007B result receipt."
         }
       ]
     }

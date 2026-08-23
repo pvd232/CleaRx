@@ -39,7 +39,7 @@ commit. Complete dependency producers before their consumers.
 | Native ABI and ownership contract | Not started | P0-004 | Phase 0 integration gate |
 | L4 host and memory contract | Host profile complete at `502d9eb`; memory budget pending | P0-005A and P0-005B | Valid P0-005A result `20260823T083617Z-l4` and later manifest-derived budget |
 | Expert-cache and allocator risk contract | Benchmark contract complete at `f693c04`; manifest-derived spike pending | P0-006A and P0-006B | Valid P0-006A result `20260823T083903Z-local` and later spike artifacts |
-| Evaluation and deployment acceptance contract | Evaluation contract complete at `31e5df6`; host binding pending | P0-007A and P0-007B | Valid P0-007A result `20260823T084617Z-local` and later deployment binding |
+| Evaluation and deployment acceptance contract | Evaluation contract complete at `31e5df6`; certified-host binding complete at `754f95e` | P0-007A and P0-007B | Valid results `20260823T084617Z-local` and `20260823T085543Z-local` |
 | Phase 1 work decomposition | Not started | Phase 1 readiness | Validated packet DAG with disjoint write scopes |
 | Common native build/test skeleton | Not started | Phase 1 readiness | Local configure, build, and test gate |
 
@@ -108,7 +108,7 @@ packet and all six packet states are `complete`.
 
 - [ ] Complete P0-003B from a clean A100 run and download fixture evidence.
 - [ ] Complete P0-005B from the tensor manifest and certified L4 profile.
-- [ ] Complete P0-007B and bind every later threshold to the certified host.
+- [x] Complete P0-007B and bind every later threshold to the certified host.
 - [ ] Complete P0-006B from the manifest, memory budget, and benchmark design.
 - [ ] Complete P0-004 last and freeze `abi_v0` after all upstream evidence validates.
 - [ ] Run the complete Phase 0 integration gate.
