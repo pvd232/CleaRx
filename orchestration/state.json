@@ -364,7 +364,7 @@
     "P0-005B": {
       "packet_path": "orchestration/work_packets/P0-005B.yaml",
       "packet_sha256": "3d2028606e6867c7ff67857dd335660bedb7834649df4ce1b492b6e936635628",
-      "status": "ready",
+      "status": "running",
       "history": [
         {
           "packet_sha256": "3d2028606e6867c7ff67857dd335660bedb7834649df4ce1b492b6e936635628",
@@ -381,6 +381,14 @@
           "timestamp": "2026-08-23T09:14:32.039774Z",
           "actor": "codex",
           "reason": "P0-002 tensor inventory and P0-005A certified host profile are complete."
+        },
+        {
+          "packet_sha256": "3d2028606e6867c7ff67857dd335660bedb7834649df4ce1b492b6e936635628",
+          "previous_state": "ready",
+          "next_state": "running",
+          "timestamp": "2026-08-23T09:19:06.576439Z",
+          "actor": "codex",
+          "reason": "Manifest-derived memory equations reconcile and remain beneath the certified 22 GiB operational gate."
         }
       ]
     },

@@ -1,0 +1,165 @@
+{
+  "budget_id": "clearx-l4-memory-budget-v1",
+  "estimation_contract": {
+    "BF16": "2 bytes per element; unchanged from source bytes",
+    "Q4_K_M": "Phase 0 planning surrogate of 144 bytes per 256-element Q4_K block, padded independently per final-dimension row",
+    "Q8_0": "34 bytes per 32-element block, padded independently per final-dimension row",
+    "limitation": "actual GGUF sizes, allocator peaks, and CUDA workspaces replace estimates only after Phase 1 conversion and native instrumentation"
+  },
+  "expert_policy": {
+    "l4_slot_pool_bytes": 1610612736,
+    "simultaneous_full_expert_residency": false,
+    "talker_authoritative_cpu_bytes": 3208642560
+  },
+  "hard_ceiling_bytes": 24152899584,
+  "host_profile_sha256": "816faa54a90c6c56f5f62bb563ba723fab4128eefe8d1897923fd5daaab72ad6",
+  "operational_peak_limit_bytes": 23622320128,
+  "phases": {
+    "barge_in": {
+      "categories": {
+        "fragmentation": 402653184,
+        "kv": 805306368,
+        "runtime": 268435456,
+        "staging": 268435456,
+        "weights": 19973611392,
+        "workspace": 536870912
+      },
+      "expected_bytes": 22255312768,
+      "measured_bytes": null,
+      "measurement_status": "pending_native_loader_and_phase_instrumentation",
+      "range_max_bytes": 22792183680,
+      "range_min_bytes": 21718441856
+    },
+    "context_rebuild": {
+      "categories": {
+        "fragmentation": 335544320,
+        "kv": 1342177280,
+        "runtime": 268435456,
+        "staging": 268435456,
+        "weights": 17174917120,
+        "workspace": 805306368
+      },
+      "expected_bytes": 20194816000,
+      "measured_bytes": null,
+      "measurement_status": "pending_native_loader_and_phase_instrumentation",
+      "range_max_bytes": 20731686912,
+      "range_min_bytes": 19657945088
+    },
+    "listening": {
+      "categories": {
+        "fragmentation": 268435456,
+        "kv": 805306368,
+        "runtime": 268435456,
+        "staging": 134217728,
+        "weights": 17906485376,
+        "workspace": 402653184
+      },
+      "expected_bytes": 19785533568,
+      "measured_bytes": null,
+      "measurement_status": "pending_native_loader_and_phase_instrumentation",
+      "range_max_bytes": 20188186752,
+      "range_min_bytes": 19382880384
+    },
+    "talker_startup": {
+      "categories": {
+        "fragmentation": 335544320,
+        "kv": 536870912,
+        "runtime": 268435456,
+        "staging": 268435456,
+        "weights": 19242043136,
+        "workspace": 536870912
+      },
+      "expected_bytes": 21188200192,
+      "measured_bytes": null,
+      "measurement_status": "pending_native_loader_and_phase_instrumentation",
+      "range_max_bytes": 21725071104,
+      "range_min_bytes": 20651329280
+    },
+    "talker_sustained_output": {
+      "categories": {
+        "fragmentation": 335544320,
+        "kv": 805306368,
+        "runtime": 268435456,
+        "staging": 268435456,
+        "weights": 19242043136,
+        "workspace": 402653184
+      },
+      "expected_bytes": 21322417920,
+      "measured_bytes": null,
+      "measurement_status": "pending_native_loader_and_phase_instrumentation",
+      "range_max_bytes": 21859288832,
+      "range_min_bytes": 20785547008
+    },
+    "thinker_prefill": {
+      "categories": {
+        "fragmentation": 335544320,
+        "kv": 1073741824,
+        "runtime": 268435456,
+        "staging": 268435456,
+        "weights": 17174917120,
+        "workspace": 805306368
+      },
+      "expected_bytes": 19926380544,
+      "measured_bytes": null,
+      "measurement_status": "pending_native_loader_and_phase_instrumentation",
+      "range_max_bytes": 20463251456,
+      "range_min_bytes": 19389509632
+    },
+    "voxzip_concurrent_listening": {
+      "categories": {
+        "fragmentation": 335544320,
+        "kv": 805306368,
+        "runtime": 268435456,
+        "staging": 268435456,
+        "weights": 17906485376,
+        "workspace": 536870912
+      },
+      "expected_bytes": 20121077888,
+      "measured_bytes": null,
+      "measurement_status": "pending_native_loader_and_phase_instrumentation",
+      "range_max_bytes": 20657948800,
+      "range_min_bytes": 19584206976
+    },
+    "voxzip_sequential_endpoint": {
+      "categories": {
+        "fragmentation": 268435456,
+        "kv": 805306368,
+        "runtime": 268435456,
+        "staging": 201326592,
+        "weights": 17906485376,
+        "workspace": 402653184
+      },
+      "expected_bytes": 19852642432,
+      "measured_bytes": null,
+      "measurement_status": "pending_native_loader_and_phase_instrumentation",
+      "range_max_bytes": 20255295616,
+      "range_min_bytes": 19449989248
+    }
+  },
+  "reserve_bytes": 530579456,
+  "schema_version": "1.0.0",
+  "source_commit": "3d37fda816fe44aa9221d0be3ee3a83941921da4",
+  "target_storage_categories": {
+    "aut": 731568256,
+    "code2wav": 432033154,
+    "mtp": 283140608,
+    "talker": 3382015232,
+    "thinker": 17174917120,
+    "vision": 0
+  },
+  "target_storage_total_bytes": 22003674370,
+  "tensor_bytes": 19973611392,
+  "tensor_categories": {
+    "aut": 731568256,
+    "code2wav": 0,
+    "mtp": 283140608,
+    "talker": 1783985408,
+    "thinker": 17174917120
+  },
+  "tensor_manifest_sha256": "2ff0be00e916e6b8ddf6fbf4bcd674694983e609433e9175a5fa2b17c362f90b",
+  "units": {
+    "binary_gib": 1073741824,
+    "bytes": 1,
+    "decimal_gb": 1000000000
+  }
+}
