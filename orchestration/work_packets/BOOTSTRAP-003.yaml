@@ -1,0 +1,54 @@
+schema_version: "1.0.0"
+id: BOOTSTRAP-003
+title: Supply derived Phase 0 validators
+phase: bootstrap
+objective: Create and test the four acceptance validators named by derived Phase 0 packets.
+rationale: Bootstrap-002 corrected first-wave validators but did not inspect every derived packet command.
+depends_on: [BOOTSTRAP-002]
+execution:
+  environment: local_m1
+  write_scope:
+    - docs/architecture/bootstrap_derived_validator_gap.md
+    - orchestration/plan.yaml
+    - orchestration/state.json
+    - orchestration/work_packets/BOOTSTRAP-003.yaml
+    - tools/inventory/validate_memory_budget.py
+    - tools/inventory/validate_abi_contract.py
+    - tools/inventory/validate_deployment_acceptance.py
+    - tools/benchmarks/validate_cache_spike.py
+    - tests/orchestration/test_derived_validator_entrypoints.py
+    - tests/orchestration/test_plan_validation.py
+    - runs/BOOTSTRAP-003/
+inputs:
+  - path: orchestration/schemas/benchmark.schema.json
+    sha256: cc71829b6811fe02de3ec6079c9b2df03c8f68b04e6affa239e130e59c5a7d0b
+outputs:
+  - docs/architecture/bootstrap_derived_validator_gap.md
+  - orchestration/plan.yaml
+  - orchestration/state.json
+  - orchestration/work_packets/BOOTSTRAP-003.yaml
+  - tools/inventory/validate_memory_budget.py
+  - tools/inventory/validate_abi_contract.py
+  - tools/inventory/validate_deployment_acceptance.py
+  - tools/benchmarks/validate_cache_spike.py
+  - tests/orchestration/test_derived_validator_entrypoints.py
+  - tests/orchestration/test_plan_validation.py
+acceptance:
+  commands:
+    - python -m pytest -q tests/orchestration/test_derived_validator_entrypoints.py
+  required_checks:
+    - derived_validator_paths_owned
+    - success_records_pass
+    - missing_identity_rejected
+    - missing_measurement_rejected
+forbidden:
+  - changing_existing_phase0_packet_bytes
+  - accepting_unbound_derived_artifacts
+non_goals:
+  - producing_derived_phase0_results
+  - changing_scientific_thresholds
+escalation:
+  - validator_requires_a_new_scientific_choice
+evidence:
+  result_schema: orchestration/schemas/result.schema.json
+  result_path_template: runs/BOOTSTRAP-003/{run_id}/result.json
