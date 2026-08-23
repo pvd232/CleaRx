@@ -240,7 +240,7 @@
     "BOOTSTRAP-006": {
       "packet_path": "orchestration/work_packets/BOOTSTRAP-006.yaml",
       "packet_sha256": "e968ed74d6060a960d4180e75713cec4c17166e85af48af1d3246b56b9257541",
-      "status": "running",
+      "status": "complete",
       "history": [
         {
           "packet_sha256": "e968ed74d6060a960d4180e75713cec4c17166e85af48af1d3246b56b9257541",
@@ -265,6 +265,22 @@
           "timestamp": "2026-08-23T16:19:22Z",
           "actor": "codex",
           "reason": "Partition model-reference evidence from later native synthetic-contract evidence."
+        },
+        {
+          "packet_sha256": "e968ed74d6060a960d4180e75713cec4c17166e85af48af1d3246b56b9257541",
+          "previous_state": "running",
+          "next_state": "validating",
+          "timestamp": "2026-08-23T16:21:54.846041Z",
+          "actor": "codex",
+          "reason": "Fixture-origin partition and exact model-reference coverage passed against commit a157e58."
+        },
+        {
+          "packet_sha256": "e968ed74d6060a960d4180e75713cec4c17166e85af48af1d3246b56b9257541",
+          "previous_state": "validating",
+          "next_state": "complete",
+          "timestamp": "2026-08-23T16:22:28.932551Z",
+          "actor": "codex",
+          "reason": "Validated Bootstrap-006 result receipt."
         }
       ]
     },

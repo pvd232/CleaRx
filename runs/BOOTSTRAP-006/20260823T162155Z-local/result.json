@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0.0",
+  "packet_id": "BOOTSTRAP-006",
+  "packet_sha256": "e968ed74d6060a960d4180e75713cec4c17166e85af48af1d3246b56b9257541",
+  "git_commit": "a157e587918e3101af17b0baa76cb06a048c2ca4",
+  "run_id": "20260823T162155Z-local",
+  "environment": {"kind": "local_m1", "conda_environment": "clearx", "python": "3.12.14"},
+  "commands": [
+    {"command": "python -m pytest -q tests/orchestration/test_fixture_validation.py", "exit_code": 0},
+    {"command": "python scripts/validate_fixtures.py --contract-only", "exit_code": 0},
+    {"command": "python scripts/validate_bootstrap.py", "exit_code": 0},
+    {"command": "python -m pytest -q tests/orchestration", "exit_code": 0}
+  ],
+  "artifacts": [
+    {"path": "docs/architecture/bootstrap_fixture_origin_gap.md", "sha256": "6b88623a12d62390d0b21d86a4350c347bcfdc09288a5e65d685423f7d7b2eaa", "size_bytes": 2062},
+    {"path": "docs/architecture/fixture_contract.md", "sha256": "7594845b09c4a450cd88696022e0376f635f0f3feff9a26f66e1e9f610b31bb1", "size_bytes": 12368},
+    {"path": "orchestration/plan.yaml", "sha256": "fa1d3a097f21bb1eea15154d075e008622c09a4bc7bb169a03506165e103c4db", "size_bytes": 4552},
+    {"path": "orchestration/state.json", "sha256": "71ddd36d003c24e067a5fbfa84017bae9375ec366240a183b36626a663e08ce6", "size_bytes": 33511},
+    {"path": "orchestration/work_packets/BOOTSTRAP-006.yaml", "sha256": "e968ed74d6060a960d4180e75713cec4c17166e85af48af1d3246b56b9257541", "size_bytes": 2340},
+    {"path": "scripts/validate_fixtures.py", "sha256": "574fe3d9e754dbfa3254c7cb72a62925f060ab1846a8fcee7b1f75cc50f4b3ee", "size_bytes": 4904},
+    {"path": "tools/reference/fixture_harness.py", "sha256": "3b5eefba31a9a25d63807cc4624f7d4e2ac584e04e880802aa52c9afdbf87333", "size_bytes": 18416},
+    {"path": "tests/orchestration/test_fixture_validation.py", "sha256": "db8b7cafd96b5ee8174fdfeb8342fdc22f3fcfb77d36082d97fa5c185ec04e05", "size_bytes": 8735},
+    {"path": "tests/orchestration/test_plan_validation.py", "sha256": "70ead4b848b70d379d3388a4666ffc88848422193062513e056c3cd54eff2953", "size_bytes": 2612}
+  ],
+  "required_checks": {
+    "declared_pairs_partitioned": true,
+    "model_reference_pairs_exact": true,
+    "native_only_pairs_preserved": true,
+    "index_uses_model_reference_set": true
+  },
+  "outcome": "complete",
+  "deviations": [],
+  "started_at": "2026-08-23T16:19:20Z",
+  "finished_at": "2026-08-23T16:21:55Z"
+}
