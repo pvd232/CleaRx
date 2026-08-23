@@ -1,0 +1,1559 @@
+{
+  "allocator_simulation": {
+    "arena_peak_bytes": 1677721600,
+    "events_valid": true,
+    "schedules": [
+      {
+        "capacity_bytes": 731568256,
+        "id": "aut_without_whisper",
+        "peak_bytes": 731568256,
+        "valid": true
+      },
+      {
+        "capacity_bytes": 18174920832,
+        "id": "aut_with_64mib_staging",
+        "peak_bytes": 798677120,
+        "valid": true
+      },
+      {
+        "capacity_bytes": 1879048192,
+        "id": "talker_expert_pool_with_64mib_staging",
+        "peak_bytes": 1677721600,
+        "valid": true
+      }
+    ]
+  },
+  "cache_hit_curve": [
+    {
+      "capacity_experts": 1285,
+      "evictions": 0,
+      "hit_rate": 0.5,
+      "hits": 64,
+      "misses": 64,
+      "working_set_experts": 64
+    },
+    {
+      "capacity_experts": 1285,
+      "evictions": 0,
+      "hit_rate": 0.5,
+      "hits": 1285,
+      "misses": 1285,
+      "working_set_experts": 1285
+    },
+    {
+      "capacity_experts": 1285,
+      "evictions": 1541,
+      "hit_rate": 0.0,
+      "hits": 0,
+      "misses": 2826,
+      "working_set_experts": 1413
+    }
+  ],
+  "contract_sha256": "3c944994467d5f38d26af16c2c3e7f860c506d65f127b6d2546c72c795c6006b",
+  "host_profile_sha256": "816faa54a90c6c56f5f62bb563ba723fab4128eefe8d1897923fd5daaab72ad6",
+  "limitations": [
+    "CUDA spike measures pinned-host transfer and an independent synthetic compute kernel, not Q8_0 dequantization or a production expert kernel.",
+    "LRU hit curves use deterministic synthetic router traces because model-generated routing traces do not exist before the native Talker path.",
+    "Allocator schedules validate byte lifetimes arithmetically; production cudaMallocAsync arena events remain a Phase 1 measurement.",
+    "These results establish transfer and capacity feasibility only and do not claim end-to-end real-time generation."
+  ],
+  "measurement_validity": {
+    "cuda_events_used": true,
+    "host_profile_id": "clearx-mantra-g2-l4-v1",
+    "payload_hash_verified": true,
+    "recorded_repetitions_per_case": 30,
+    "warmups_per_case": 5
+  },
+  "memory_budget_sha256": "72d4afb1e667e03eebd0fc9008960b30fc0fd75ce997dab4fcd35cdf69cd976d",
+  "raw_cuda_csv_sha256": "6ce7b29f19f3ef172911dbeba34aea5266a7f96fd40918b9356db81d5941619b",
+  "representative_shapes": [
+    {
+      "bytes": 1253376,
+      "expert_id": 0,
+      "layer": 0,
+      "shapes": {
+        "down_proj": [
+          1024,
+          384
+        ],
+        "gate_proj": [
+          384,
+          1024
+        ],
+        "up_proj": [
+          384,
+          1024
+        ]
+      },
+      "source": "tensor_manifest.json",
+      "target_dtype": "Q8_0",
+      "tensor_names": [
+        "talker.model.layers.0.mlp.experts.0.down_proj.weight",
+        "talker.model.layers.0.mlp.experts.0.gate_proj.weight",
+        "talker.model.layers.0.mlp.experts.0.up_proj.weight"
+      ]
+    },
+    {
+      "bytes": 1253376,
+      "expert_id": 1,
+      "layer": 0,
+      "shapes": {
+        "down_proj": [
+          1024,
+          384
+        ],
+        "gate_proj": [
+          384,
+          1024
+        ],
+        "up_proj": [
+          384,
+          1024
+        ]
+      },
+      "source": "tensor_manifest.json",
+      "target_dtype": "Q8_0",
+      "tensor_names": [
+        "talker.model.layers.0.mlp.experts.1.down_proj.weight",
+        "talker.model.layers.0.mlp.experts.1.gate_proj.weight",
+        "talker.model.layers.0.mlp.experts.1.up_proj.weight"
+      ]
+    },
+    {
+      "bytes": 1253376,
+      "expert_id": 66,
+      "layer": 7,
+      "shapes": {
+        "down_proj": [
+          1024,
+          384
+        ],
+        "gate_proj": [
+          384,
+          1024
+        ],
+        "up_proj": [
+          384,
+          1024
+        ]
+      },
+      "source": "tensor_manifest.json",
+      "target_dtype": "Q8_0",
+      "tensor_names": [
+        "talker.model.layers.7.mlp.experts.66.down_proj.weight",
+        "talker.model.layers.7.mlp.experts.66.gate_proj.weight",
+        "talker.model.layers.7.mlp.experts.66.up_proj.weight"
+      ]
+    }
+  ],
+  "router_trace_sha256": "78c80159cf5888e94d7ebd5467fef3edd3d85d3d6e47dd0ac0051df065a8f58e",
+  "schema_version": "1.0.0",
+  "slot_pool_target_bytes": 1610612736,
+  "source_commit": "a0c7d0d108b4999c48c6677571b743b5d1819460",
+  "spike_id": "clearx-l4-expert-cache-spike-v1",
+  "tensor_manifest_sha256": "2ff0be00e916e6b8ddf6fbf4bcd674694983e609433e9175a5fa2b17c362f90b",
+  "transfer_measurements": [
+    {
+      "case_id": "control-8mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 779072,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 8388608,
+      "repetition_index": 0,
+      "unhidden_transfer_ns": 779072
+    },
+    {
+      "case_id": "control-8mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 777472,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 8388608,
+      "repetition_index": 1,
+      "unhidden_transfer_ns": 777472
+    },
+    {
+      "case_id": "control-8mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 773536,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 8388608,
+      "repetition_index": 2,
+      "unhidden_transfer_ns": 773536
+    },
+    {
+      "case_id": "control-8mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 775712,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 8388608,
+      "repetition_index": 3,
+      "unhidden_transfer_ns": 775712
+    },
+    {
+      "case_id": "control-8mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 759136,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 8388608,
+      "repetition_index": 4,
+      "unhidden_transfer_ns": 759136
+    },
+    {
+      "case_id": "control-8mib-cold",
+      "compute_duration_ns": 115712,
+      "h2d_duration_ns": 735808,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 8388608,
+      "repetition_index": 5,
+      "unhidden_transfer_ns": 735808
+    },
+    {
+      "case_id": "control-8mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 751040,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 8388608,
+      "repetition_index": 6,
+      "unhidden_transfer_ns": 751040
+    },
+    {
+      "case_id": "control-8mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 715264,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 8388608,
+      "repetition_index": 7,
+      "unhidden_transfer_ns": 715264
+    },
+    {
+      "case_id": "control-8mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 686944,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 8388608,
+      "repetition_index": 8,
+      "unhidden_transfer_ns": 686944
+    },
+    {
+      "case_id": "control-8mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 686336,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 8388608,
+      "repetition_index": 9,
+      "unhidden_transfer_ns": 686336
+    },
+    {
+      "case_id": "control-8mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 687520,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 8388608,
+      "repetition_index": 10,
+      "unhidden_transfer_ns": 687520
+    },
+    {
+      "case_id": "control-8mib-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 686560,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 8388608,
+      "repetition_index": 11,
+      "unhidden_transfer_ns": 686560
+    },
+    {
+      "case_id": "control-8mib-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 685312,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 8388608,
+      "repetition_index": 12,
+      "unhidden_transfer_ns": 685312
+    },
+    {
+      "case_id": "control-8mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 684864,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 8388608,
+      "repetition_index": 13,
+      "unhidden_transfer_ns": 684864
+    },
+    {
+      "case_id": "control-8mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 684640,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 8388608,
+      "repetition_index": 14,
+      "unhidden_transfer_ns": 684640
+    },
+    {
+      "case_id": "control-8mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 687744,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 8388608,
+      "repetition_index": 15,
+      "unhidden_transfer_ns": 687744
+    },
+    {
+      "case_id": "control-8mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 686784,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 8388608,
+      "repetition_index": 16,
+      "unhidden_transfer_ns": 686784
+    },
+    {
+      "case_id": "control-8mib-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 685792,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 8388608,
+      "repetition_index": 17,
+      "unhidden_transfer_ns": 685792
+    },
+    {
+      "case_id": "control-8mib-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 688736,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 8388608,
+      "repetition_index": 18,
+      "unhidden_transfer_ns": 688736
+    },
+    {
+      "case_id": "control-8mib-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 697248,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 8388608,
+      "repetition_index": 19,
+      "unhidden_transfer_ns": 697248
+    },
+    {
+      "case_id": "control-8mib-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 693760,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 8388608,
+      "repetition_index": 20,
+      "unhidden_transfer_ns": 693760
+    },
+    {
+      "case_id": "control-8mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 687936,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 8388608,
+      "repetition_index": 21,
+      "unhidden_transfer_ns": 687936
+    },
+    {
+      "case_id": "control-8mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 685248,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 8388608,
+      "repetition_index": 22,
+      "unhidden_transfer_ns": 685248
+    },
+    {
+      "case_id": "control-8mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 686624,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 8388608,
+      "repetition_index": 23,
+      "unhidden_transfer_ns": 686624
+    },
+    {
+      "case_id": "control-8mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 685472,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 8388608,
+      "repetition_index": 24,
+      "unhidden_transfer_ns": 685472
+    },
+    {
+      "case_id": "control-8mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 686016,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 8388608,
+      "repetition_index": 25,
+      "unhidden_transfer_ns": 686016
+    },
+    {
+      "case_id": "control-8mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 687328,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 8388608,
+      "repetition_index": 26,
+      "unhidden_transfer_ns": 687328
+    },
+    {
+      "case_id": "control-8mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 688640,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 8388608,
+      "repetition_index": 27,
+      "unhidden_transfer_ns": 688640
+    },
+    {
+      "case_id": "control-8mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 684768,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 8388608,
+      "repetition_index": 28,
+      "unhidden_transfer_ns": 684768
+    },
+    {
+      "case_id": "control-8mib-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 686368,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 8388608,
+      "repetition_index": 29,
+      "unhidden_transfer_ns": 686368
+    },
+    {
+      "case_id": "control-64mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 6056416,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 67108864,
+      "repetition_index": 0,
+      "unhidden_transfer_ns": 6056416
+    },
+    {
+      "case_id": "control-64mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 5763104,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 67108864,
+      "repetition_index": 1,
+      "unhidden_transfer_ns": 5763104
+    },
+    {
+      "case_id": "control-64mib-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 5447008,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 67108864,
+      "repetition_index": 2,
+      "unhidden_transfer_ns": 5447008
+    },
+    {
+      "case_id": "control-64mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 5469152,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 67108864,
+      "repetition_index": 3,
+      "unhidden_transfer_ns": 5469152
+    },
+    {
+      "case_id": "control-64mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 5454368,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 67108864,
+      "repetition_index": 4,
+      "unhidden_transfer_ns": 5454368
+    },
+    {
+      "case_id": "control-64mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 5582976,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 67108864,
+      "repetition_index": 5,
+      "unhidden_transfer_ns": 5582976
+    },
+    {
+      "case_id": "control-64mib-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 6039712,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 67108864,
+      "repetition_index": 6,
+      "unhidden_transfer_ns": 6039712
+    },
+    {
+      "case_id": "control-64mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 6162592,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 67108864,
+      "repetition_index": 7,
+      "unhidden_transfer_ns": 6162592
+    },
+    {
+      "case_id": "control-64mib-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 6172960,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 67108864,
+      "repetition_index": 8,
+      "unhidden_transfer_ns": 6172960
+    },
+    {
+      "case_id": "control-64mib-cold",
+      "compute_duration_ns": 115712,
+      "h2d_duration_ns": 6145216,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 67108864,
+      "repetition_index": 9,
+      "unhidden_transfer_ns": 6145216
+    },
+    {
+      "case_id": "control-64mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 6134880,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 67108864,
+      "repetition_index": 10,
+      "unhidden_transfer_ns": 6134880
+    },
+    {
+      "case_id": "control-64mib-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 5983232,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 67108864,
+      "repetition_index": 11,
+      "unhidden_transfer_ns": 5983232
+    },
+    {
+      "case_id": "control-64mib-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 5445696,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 67108864,
+      "repetition_index": 12,
+      "unhidden_transfer_ns": 5445696
+    },
+    {
+      "case_id": "control-64mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 5472064,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 67108864,
+      "repetition_index": 13,
+      "unhidden_transfer_ns": 5472064
+    },
+    {
+      "case_id": "control-64mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 5449408,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 67108864,
+      "repetition_index": 14,
+      "unhidden_transfer_ns": 5449408
+    },
+    {
+      "case_id": "control-64mib-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 5786368,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 67108864,
+      "repetition_index": 15,
+      "unhidden_transfer_ns": 5786368
+    },
+    {
+      "case_id": "control-64mib-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 6183264,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 67108864,
+      "repetition_index": 16,
+      "unhidden_transfer_ns": 6183264
+    },
+    {
+      "case_id": "control-64mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 6251424,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 67108864,
+      "repetition_index": 17,
+      "unhidden_transfer_ns": 6251424
+    },
+    {
+      "case_id": "control-64mib-cold",
+      "compute_duration_ns": 115712,
+      "h2d_duration_ns": 6160320,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 67108864,
+      "repetition_index": 18,
+      "unhidden_transfer_ns": 6160320
+    },
+    {
+      "case_id": "control-64mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 6171968,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 67108864,
+      "repetition_index": 19,
+      "unhidden_transfer_ns": 6171968
+    },
+    {
+      "case_id": "control-64mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 6112928,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 67108864,
+      "repetition_index": 20,
+      "unhidden_transfer_ns": 6112928
+    },
+    {
+      "case_id": "control-64mib-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 5626016,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 67108864,
+      "repetition_index": 21,
+      "unhidden_transfer_ns": 5626016
+    },
+    {
+      "case_id": "control-64mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 5452448,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 67108864,
+      "repetition_index": 22,
+      "unhidden_transfer_ns": 5452448
+    },
+    {
+      "case_id": "control-64mib-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 5461696,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 67108864,
+      "repetition_index": 23,
+      "unhidden_transfer_ns": 5461696
+    },
+    {
+      "case_id": "control-64mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 5586496,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 67108864,
+      "repetition_index": 24,
+      "unhidden_transfer_ns": 5586496
+    },
+    {
+      "case_id": "control-64mib-cold",
+      "compute_duration_ns": 114752,
+      "h2d_duration_ns": 6003776,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 67108864,
+      "repetition_index": 25,
+      "unhidden_transfer_ns": 6003776
+    },
+    {
+      "case_id": "control-64mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 6215744,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 67108864,
+      "repetition_index": 26,
+      "unhidden_transfer_ns": 6215744
+    },
+    {
+      "case_id": "control-64mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 6227552,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 67108864,
+      "repetition_index": 27,
+      "unhidden_transfer_ns": 6227552
+    },
+    {
+      "case_id": "control-64mib-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 6181920,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 67108864,
+      "repetition_index": 28,
+      "unhidden_transfer_ns": 6181920
+    },
+    {
+      "case_id": "control-64mib-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 6127520,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 67108864,
+      "repetition_index": 29,
+      "unhidden_transfer_ns": 6127520
+    },
+    {
+      "case_id": "manifest-expert-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 134624,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 0,
+      "unhidden_transfer_ns": 134624
+    },
+    {
+      "case_id": "manifest-expert-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 121824,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 1,
+      "unhidden_transfer_ns": 121824
+    },
+    {
+      "case_id": "manifest-expert-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 112512,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 2,
+      "unhidden_transfer_ns": 112512
+    },
+    {
+      "case_id": "manifest-expert-cold",
+      "compute_duration_ns": 112640,
+      "h2d_duration_ns": 111200,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 3,
+      "unhidden_transfer_ns": 111200
+    },
+    {
+      "case_id": "manifest-expert-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 128288,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 4,
+      "unhidden_transfer_ns": 128288
+    },
+    {
+      "case_id": "manifest-expert-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 115520,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 5,
+      "unhidden_transfer_ns": 115520
+    },
+    {
+      "case_id": "manifest-expert-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 117472,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 6,
+      "unhidden_transfer_ns": 117472
+    },
+    {
+      "case_id": "manifest-expert-cold",
+      "compute_duration_ns": 112640,
+      "h2d_duration_ns": 114528,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 7,
+      "unhidden_transfer_ns": 114528
+    },
+    {
+      "case_id": "manifest-expert-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 125344,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 8,
+      "unhidden_transfer_ns": 125344
+    },
+    {
+      "case_id": "manifest-expert-cold",
+      "compute_duration_ns": 112640,
+      "h2d_duration_ns": 114752,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 9,
+      "unhidden_transfer_ns": 114752
+    },
+    {
+      "case_id": "manifest-expert-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 118304,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 10,
+      "unhidden_transfer_ns": 118304
+    },
+    {
+      "case_id": "manifest-expert-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 119008,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 11,
+      "unhidden_transfer_ns": 119008
+    },
+    {
+      "case_id": "manifest-expert-cold",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 133728,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 12,
+      "unhidden_transfer_ns": 133728
+    },
+    {
+      "case_id": "manifest-expert-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 113184,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 13,
+      "unhidden_transfer_ns": 113184
+    },
+    {
+      "case_id": "manifest-expert-cold",
+      "compute_duration_ns": 112640,
+      "h2d_duration_ns": 114880,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 14,
+      "unhidden_transfer_ns": 114880
+    },
+    {
+      "case_id": "manifest-expert-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 129376,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 15,
+      "unhidden_transfer_ns": 129376
+    },
+    {
+      "case_id": "manifest-expert-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 107776,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 16,
+      "unhidden_transfer_ns": 107776
+    },
+    {
+      "case_id": "manifest-expert-cold",
+      "compute_duration_ns": 112640,
+      "h2d_duration_ns": 106240,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 17,
+      "unhidden_transfer_ns": 106240
+    },
+    {
+      "case_id": "manifest-expert-cold",
+      "compute_duration_ns": 112640,
+      "h2d_duration_ns": 106144,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 18,
+      "unhidden_transfer_ns": 106144
+    },
+    {
+      "case_id": "manifest-expert-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 106816,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 19,
+      "unhidden_transfer_ns": 106816
+    },
+    {
+      "case_id": "manifest-expert-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 106752,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 20,
+      "unhidden_transfer_ns": 106752
+    },
+    {
+      "case_id": "manifest-expert-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 106624,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 21,
+      "unhidden_transfer_ns": 106624
+    },
+    {
+      "case_id": "manifest-expert-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 106528,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 22,
+      "unhidden_transfer_ns": 106528
+    },
+    {
+      "case_id": "manifest-expert-cold",
+      "compute_duration_ns": 112640,
+      "h2d_duration_ns": 107520,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 23,
+      "unhidden_transfer_ns": 107520
+    },
+    {
+      "case_id": "manifest-expert-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 106496,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 24,
+      "unhidden_transfer_ns": 106496
+    },
+    {
+      "case_id": "manifest-expert-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 106240,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 25,
+      "unhidden_transfer_ns": 106240
+    },
+    {
+      "case_id": "manifest-expert-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 106784,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 26,
+      "unhidden_transfer_ns": 106784
+    },
+    {
+      "case_id": "manifest-expert-cold",
+      "compute_duration_ns": 112640,
+      "h2d_duration_ns": 108064,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 27,
+      "unhidden_transfer_ns": 108064
+    },
+    {
+      "case_id": "manifest-expert-cold",
+      "compute_duration_ns": 112640,
+      "h2d_duration_ns": 107840,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 28,
+      "unhidden_transfer_ns": 107840
+    },
+    {
+      "case_id": "manifest-expert-cold",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 106976,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 29,
+      "unhidden_transfer_ns": 106976
+    },
+    {
+      "case_id": "manifest-expert-hit",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 0,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 0,
+      "unhidden_transfer_ns": 0
+    },
+    {
+      "case_id": "manifest-expert-hit",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 0,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 1,
+      "unhidden_transfer_ns": 0
+    },
+    {
+      "case_id": "manifest-expert-hit",
+      "compute_duration_ns": 115744,
+      "h2d_duration_ns": 0,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 2,
+      "unhidden_transfer_ns": 0
+    },
+    {
+      "case_id": "manifest-expert-hit",
+      "compute_duration_ns": 116672,
+      "h2d_duration_ns": 0,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 3,
+      "unhidden_transfer_ns": 0
+    },
+    {
+      "case_id": "manifest-expert-hit",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 0,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 4,
+      "unhidden_transfer_ns": 0
+    },
+    {
+      "case_id": "manifest-expert-hit",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 0,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 5,
+      "unhidden_transfer_ns": 0
+    },
+    {
+      "case_id": "manifest-expert-hit",
+      "compute_duration_ns": 115712,
+      "h2d_duration_ns": 0,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 6,
+      "unhidden_transfer_ns": 0
+    },
+    {
+      "case_id": "manifest-expert-hit",
+      "compute_duration_ns": 115712,
+      "h2d_duration_ns": 0,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 7,
+      "unhidden_transfer_ns": 0
+    },
+    {
+      "case_id": "manifest-expert-hit",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 0,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 8,
+      "unhidden_transfer_ns": 0
+    },
+    {
+      "case_id": "manifest-expert-hit",
+      "compute_duration_ns": 115712,
+      "h2d_duration_ns": 0,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 9,
+      "unhidden_transfer_ns": 0
+    },
+    {
+      "case_id": "manifest-expert-hit",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 0,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 10,
+      "unhidden_transfer_ns": 0
+    },
+    {
+      "case_id": "manifest-expert-hit",
+      "compute_duration_ns": 116736,
+      "h2d_duration_ns": 0,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 11,
+      "unhidden_transfer_ns": 0
+    },
+    {
+      "case_id": "manifest-expert-hit",
+      "compute_duration_ns": 115712,
+      "h2d_duration_ns": 0,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 12,
+      "unhidden_transfer_ns": 0
+    },
+    {
+      "case_id": "manifest-expert-hit",
+      "compute_duration_ns": 122880,
+      "h2d_duration_ns": 0,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 13,
+      "unhidden_transfer_ns": 0
+    },
+    {
+      "case_id": "manifest-expert-hit",
+      "compute_duration_ns": 116736,
+      "h2d_duration_ns": 0,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 14,
+      "unhidden_transfer_ns": 0
+    },
+    {
+      "case_id": "manifest-expert-hit",
+      "compute_duration_ns": 115712,
+      "h2d_duration_ns": 0,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 15,
+      "unhidden_transfer_ns": 0
+    },
+    {
+      "case_id": "manifest-expert-hit",
+      "compute_duration_ns": 115712,
+      "h2d_duration_ns": 0,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 16,
+      "unhidden_transfer_ns": 0
+    },
+    {
+      "case_id": "manifest-expert-hit",
+      "compute_duration_ns": 115712,
+      "h2d_duration_ns": 0,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 17,
+      "unhidden_transfer_ns": 0
+    },
+    {
+      "case_id": "manifest-expert-hit",
+      "compute_duration_ns": 115712,
+      "h2d_duration_ns": 0,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 18,
+      "unhidden_transfer_ns": 0
+    },
+    {
+      "case_id": "manifest-expert-hit",
+      "compute_duration_ns": 115712,
+      "h2d_duration_ns": 0,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 19,
+      "unhidden_transfer_ns": 0
+    },
+    {
+      "case_id": "manifest-expert-hit",
+      "compute_duration_ns": 116736,
+      "h2d_duration_ns": 0,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 20,
+      "unhidden_transfer_ns": 0
+    },
+    {
+      "case_id": "manifest-expert-hit",
+      "compute_duration_ns": 116736,
+      "h2d_duration_ns": 0,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 21,
+      "unhidden_transfer_ns": 0
+    },
+    {
+      "case_id": "manifest-expert-hit",
+      "compute_duration_ns": 115712,
+      "h2d_duration_ns": 0,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 22,
+      "unhidden_transfer_ns": 0
+    },
+    {
+      "case_id": "manifest-expert-hit",
+      "compute_duration_ns": 115712,
+      "h2d_duration_ns": 0,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 23,
+      "unhidden_transfer_ns": 0
+    },
+    {
+      "case_id": "manifest-expert-hit",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 0,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 24,
+      "unhidden_transfer_ns": 0
+    },
+    {
+      "case_id": "manifest-expert-hit",
+      "compute_duration_ns": 115712,
+      "h2d_duration_ns": 0,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 25,
+      "unhidden_transfer_ns": 0
+    },
+    {
+      "case_id": "manifest-expert-hit",
+      "compute_duration_ns": 113664,
+      "h2d_duration_ns": 0,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 26,
+      "unhidden_transfer_ns": 0
+    },
+    {
+      "case_id": "manifest-expert-hit",
+      "compute_duration_ns": 115712,
+      "h2d_duration_ns": 0,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 27,
+      "unhidden_transfer_ns": 0
+    },
+    {
+      "case_id": "manifest-expert-hit",
+      "compute_duration_ns": 116736,
+      "h2d_duration_ns": 0,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 28,
+      "unhidden_transfer_ns": 0
+    },
+    {
+      "case_id": "manifest-expert-hit",
+      "compute_duration_ns": 114688,
+      "h2d_duration_ns": 0,
+      "overlap_duration_ns": 0,
+      "payload_bytes": 1253376,
+      "repetition_index": 29,
+      "unhidden_transfer_ns": 0
+    },
+    {
+      "case_id": "manifest-expert-evict-load",
+      "compute_duration_ns": 117760,
+      "h2d_duration_ns": 107584,
+      "overlap_duration_ns": 97344,
+      "payload_bytes": 1253376,
+      "repetition_index": 0,
+      "unhidden_transfer_ns": 10240
+    },
+    {
+      "case_id": "manifest-expert-evict-load",
+      "compute_duration_ns": 116736,
+      "h2d_duration_ns": 107488,
+      "overlap_duration_ns": 96224,
+      "payload_bytes": 1253376,
+      "repetition_index": 1,
+      "unhidden_transfer_ns": 11264
+    },
+    {
+      "case_id": "manifest-expert-evict-load",
+      "compute_duration_ns": 117760,
+      "h2d_duration_ns": 106080,
+      "overlap_duration_ns": 95840,
+      "payload_bytes": 1253376,
+      "repetition_index": 2,
+      "unhidden_transfer_ns": 10240
+    },
+    {
+      "case_id": "manifest-expert-evict-load",
+      "compute_duration_ns": 116736,
+      "h2d_duration_ns": 106976,
+      "overlap_duration_ns": 96736,
+      "payload_bytes": 1253376,
+      "repetition_index": 3,
+      "unhidden_transfer_ns": 10240
+    },
+    {
+      "case_id": "manifest-expert-evict-load",
+      "compute_duration_ns": 116736,
+      "h2d_duration_ns": 108384,
+      "overlap_duration_ns": 98144,
+      "payload_bytes": 1253376,
+      "repetition_index": 4,
+      "unhidden_transfer_ns": 10240
+    },
+    {
+      "case_id": "manifest-expert-evict-load",
+      "compute_duration_ns": 116736,
+      "h2d_duration_ns": 109216,
+      "overlap_duration_ns": 97984,
+      "payload_bytes": 1253376,
+      "repetition_index": 5,
+      "unhidden_transfer_ns": 11232
+    },
+    {
+      "case_id": "manifest-expert-evict-load",
+      "compute_duration_ns": 116736,
+      "h2d_duration_ns": 108544,
+      "overlap_duration_ns": 98304,
+      "payload_bytes": 1253376,
+      "repetition_index": 6,
+      "unhidden_transfer_ns": 10240
+    },
+    {
+      "case_id": "manifest-expert-evict-load",
+      "compute_duration_ns": 117760,
+      "h2d_duration_ns": 109568,
+      "overlap_duration_ns": 99328,
+      "payload_bytes": 1253376,
+      "repetition_index": 7,
+      "unhidden_transfer_ns": 10240
+    },
+    {
+      "case_id": "manifest-expert-evict-load",
+      "compute_duration_ns": 116736,
+      "h2d_duration_ns": 108064,
+      "overlap_duration_ns": 96800,
+      "payload_bytes": 1253376,
+      "repetition_index": 8,
+      "unhidden_transfer_ns": 11264
+    },
+    {
+      "case_id": "manifest-expert-evict-load",
+      "compute_duration_ns": 118784,
+      "h2d_duration_ns": 107680,
+      "overlap_duration_ns": 96416,
+      "payload_bytes": 1253376,
+      "repetition_index": 9,
+      "unhidden_transfer_ns": 11264
+    },
+    {
+      "case_id": "manifest-expert-evict-load",
+      "compute_duration_ns": 117760,
+      "h2d_duration_ns": 107552,
+      "overlap_duration_ns": 96320,
+      "payload_bytes": 1253376,
+      "repetition_index": 10,
+      "unhidden_transfer_ns": 11232
+    },
+    {
+      "case_id": "manifest-expert-evict-load",
+      "compute_duration_ns": 117760,
+      "h2d_duration_ns": 106752,
+      "overlap_duration_ns": 96512,
+      "payload_bytes": 1253376,
+      "repetition_index": 11,
+      "unhidden_transfer_ns": 10240
+    },
+    {
+      "case_id": "manifest-expert-evict-load",
+      "compute_duration_ns": 116736,
+      "h2d_duration_ns": 106816,
+      "overlap_duration_ns": 96576,
+      "payload_bytes": 1253376,
+      "repetition_index": 12,
+      "unhidden_transfer_ns": 10240
+    },
+    {
+      "case_id": "manifest-expert-evict-load",
+      "compute_duration_ns": 118784,
+      "h2d_duration_ns": 107456,
+      "overlap_duration_ns": 97216,
+      "payload_bytes": 1253376,
+      "repetition_index": 13,
+      "unhidden_transfer_ns": 10240
+    },
+    {
+      "case_id": "manifest-expert-evict-load",
+      "compute_duration_ns": 118784,
+      "h2d_duration_ns": 107680,
+      "overlap_duration_ns": 97440,
+      "payload_bytes": 1253376,
+      "repetition_index": 14,
+      "unhidden_transfer_ns": 10240
+    },
+    {
+      "case_id": "manifest-expert-evict-load",
+      "compute_duration_ns": 117760,
+      "h2d_duration_ns": 108352,
+      "overlap_duration_ns": 97088,
+      "payload_bytes": 1253376,
+      "repetition_index": 15,
+      "unhidden_transfer_ns": 11264
+    },
+    {
+      "case_id": "manifest-expert-evict-load",
+      "compute_duration_ns": 116736,
+      "h2d_duration_ns": 107808,
+      "overlap_duration_ns": 96544,
+      "payload_bytes": 1253376,
+      "repetition_index": 16,
+      "unhidden_transfer_ns": 11264
+    },
+    {
+      "case_id": "manifest-expert-evict-load",
+      "compute_duration_ns": 117760,
+      "h2d_duration_ns": 107040,
+      "overlap_duration_ns": 96800,
+      "payload_bytes": 1253376,
+      "repetition_index": 17,
+      "unhidden_transfer_ns": 10240
+    },
+    {
+      "case_id": "manifest-expert-evict-load",
+      "compute_duration_ns": 116800,
+      "h2d_duration_ns": 107200,
+      "overlap_duration_ns": 96960,
+      "payload_bytes": 1253376,
+      "repetition_index": 18,
+      "unhidden_transfer_ns": 10240
+    },
+    {
+      "case_id": "manifest-expert-evict-load",
+      "compute_duration_ns": 117760,
+      "h2d_duration_ns": 107040,
+      "overlap_duration_ns": 96800,
+      "payload_bytes": 1253376,
+      "repetition_index": 19,
+      "unhidden_transfer_ns": 10240
+    },
+    {
+      "case_id": "manifest-expert-evict-load",
+      "compute_duration_ns": 116736,
+      "h2d_duration_ns": 107136,
+      "overlap_duration_ns": 96896,
+      "payload_bytes": 1253376,
+      "repetition_index": 20,
+      "unhidden_transfer_ns": 10240
+    },
+    {
+      "case_id": "manifest-expert-evict-load",
+      "compute_duration_ns": 117760,
+      "h2d_duration_ns": 107072,
+      "overlap_duration_ns": 95808,
+      "payload_bytes": 1253376,
+      "repetition_index": 21,
+      "unhidden_transfer_ns": 11264
+    },
+    {
+      "case_id": "manifest-expert-evict-load",
+      "compute_duration_ns": 115712,
+      "h2d_duration_ns": 107456,
+      "overlap_duration_ns": 97280,
+      "payload_bytes": 1253376,
+      "repetition_index": 22,
+      "unhidden_transfer_ns": 10176
+    },
+    {
+      "case_id": "manifest-expert-evict-load",
+      "compute_duration_ns": 117856,
+      "h2d_duration_ns": 105248,
+      "overlap_duration_ns": 96032,
+      "payload_bytes": 1253376,
+      "repetition_index": 23,
+      "unhidden_transfer_ns": 9216
+    },
+    {
+      "case_id": "manifest-expert-evict-load",
+      "compute_duration_ns": 117760,
+      "h2d_duration_ns": 106368,
+      "overlap_duration_ns": 96128,
+      "payload_bytes": 1253376,
+      "repetition_index": 24,
+      "unhidden_transfer_ns": 10240
+    },
+    {
+      "case_id": "manifest-expert-evict-load",
+      "compute_duration_ns": 117760,
+      "h2d_duration_ns": 106048,
+      "overlap_duration_ns": 95808,
+      "payload_bytes": 1253376,
+      "repetition_index": 25,
+      "unhidden_transfer_ns": 10240
+    },
+    {
+      "case_id": "manifest-expert-evict-load",
+      "compute_duration_ns": 117760,
+      "h2d_duration_ns": 107296,
+      "overlap_duration_ns": 96032,
+      "payload_bytes": 1253376,
+      "repetition_index": 26,
+      "unhidden_transfer_ns": 11264
+    },
+    {
+      "case_id": "manifest-expert-evict-load",
+      "compute_duration_ns": 117760,
+      "h2d_duration_ns": 106048,
+      "overlap_duration_ns": 92736,
+      "payload_bytes": 1253376,
+      "repetition_index": 27,
+      "unhidden_transfer_ns": 13312
+    },
+    {
+      "case_id": "manifest-expert-evict-load",
+      "compute_duration_ns": 117760,
+      "h2d_duration_ns": 107040,
+      "overlap_duration_ns": 96800,
+      "payload_bytes": 1253376,
+      "repetition_index": 28,
+      "unhidden_transfer_ns": 10240
+    },
+    {
+      "case_id": "manifest-expert-evict-load",
+      "compute_duration_ns": 117760,
+      "h2d_duration_ns": 106912,
+      "overlap_duration_ns": 96672,
+      "payload_bytes": 1253376,
+      "repetition_index": 29,
+      "unhidden_transfer_ns": 10240
+    }
+  ],
+  "transfer_summary": {
+    "control-64mib-cold": {
+      "median_compute_duration_ns": 114688.0,
+      "median_h2d_decimal_gbps": 11.144423276711862,
+      "median_h2d_duration_ns": 6021744.0,
+      "median_overlap_duration_ns": 0.0,
+      "median_overlap_fraction_of_h2d": 0.0,
+      "median_unhidden_transfer_ns": 6021744.0,
+      "p95_h2d_duration_ns": 6227552,
+      "payload_bytes": 67108864
+    },
+    "control-8mib-cold": {
+      "median_compute_duration_ns": 114688.0,
+      "median_h2d_decimal_gbps": 12.202960618191975,
+      "median_h2d_duration_ns": 687424.0,
+      "median_overlap_duration_ns": 0.0,
+      "median_overlap_fraction_of_h2d": 0.0,
+      "median_unhidden_transfer_ns": 687424.0,
+      "p95_h2d_duration_ns": 777472,
+      "payload_bytes": 8388608
+    },
+    "manifest-expert-cold": {
+      "median_compute_duration_ns": 113664.0,
+      "median_h2d_decimal_gbps": 11.205263910742383,
+      "median_h2d_duration_ns": 111856.0,
+      "median_overlap_duration_ns": 0.0,
+      "median_overlap_fraction_of_h2d": 0.0,
+      "median_unhidden_transfer_ns": 111856.0,
+      "p95_h2d_duration_ns": 133728,
+      "payload_bytes": 1253376
+    },
+    "manifest-expert-evict-load": {
+      "median_compute_duration_ns": 117760.0,
+      "median_h2d_decimal_gbps": 11.686707444427869,
+      "median_h2d_duration_ns": 107248.0,
+      "median_overlap_duration_ns": 96768.0,
+      "median_overlap_fraction_of_h2d": 0.9022825600477398,
+      "median_unhidden_transfer_ns": 10240.0,
+      "p95_h2d_duration_ns": 109216,
+      "payload_bytes": 1253376
+    },
+    "manifest-expert-hit": {
+      "median_compute_duration_ns": 115712.0,
+      "median_h2d_decimal_gbps": null,
+      "median_h2d_duration_ns": 0.0,
+      "median_overlap_duration_ns": 0.0,
+      "median_overlap_fraction_of_h2d": null,
+      "median_unhidden_transfer_ns": 0.0,
+      "p95_h2d_duration_ns": 0,
+      "payload_bytes": 1253376
+    }
+  }
+}
