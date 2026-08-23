@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0.0",
+  "fixture_id": "bootstrap-smoke",
+  "producer_commit": "0000000000000000000000000000000000000000",
+  "seed": 0,
+  "sampling": {},
+  "artifacts": [
+    {
+      "path": "tests/fixtures/native/bootstrap_smoke.txt",
+      "sha256": "959a59dd2a9e285b0859c4518e0f3eaabf4bf1e9932ae4c4f80142f39869def8",
+      "dtype": "utf8",
+      "shape": [25]
+    }
+  ]
+}

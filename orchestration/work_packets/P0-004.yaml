@@ -1,0 +1,32 @@
+schema_version: "1.0.0"
+id: P0-004
+title: Freeze native ABI and ownership contract
+phase: 0
+objective: Define versioned typed module boundaries, ownership, lifetime, device, synchronization, errors, cancellation, and loader rejection.
+depends_on: [P0-001, P0-002, P0-003B, P0-005B, P0-006B, P0-007B]
+execution:
+  environment: local_m1
+  write_scope: [docs/architecture/abi_v0.md, include/clearx/abi/, tests/native/abi/, runs/P0-004/]
+inputs:
+  - path: upstream.lock
+    producer_packet: P0-001
+  - path: tensor_manifest.json
+    producer_packet: P0-002
+  - path: tests/fixtures/reference/manifest.json
+    producer_packet: P0-003B
+  - path: l4_memory_budget.json
+    producer_packet: P0-005B
+  - path: expert_cache_spike.json
+    producer_packet: P0-006B
+  - path: deployment_acceptance.json
+    producer_packet: P0-007B
+outputs: [docs/architecture/abi_v0.md]
+acceptance:
+  commands: [python tools/inventory/validate_abi_contract.py docs/architecture/abi_v0.md]
+  required_checks: [all_crossings_typed, ownership_complete, cancellation_complete, metadata_versioned]
+forbidden: [implementing_model_graphs, weakening_frozen_precision]
+non_goals: [performance_optimization, phase1_worker_dispatch]
+escalation: [fixture_boundary_conflicts_with_upstream, ownership_cycle_detected]
+evidence:
+  result_schema: orchestration/schemas/result.schema.json
+  result_path_template: runs/P0-004/{run_id}/result.json

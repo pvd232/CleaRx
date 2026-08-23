@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://clearx.local/schemas/fixture.schema.json",
+  "title": "CleaRx reference fixture manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "fixture_id", "producer_commit", "seed", "artifacts"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "fixture_id": {"type": "string", "minLength": 1},
+    "producer_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "seed": {"type": "integer", "minimum": 0},
+    "sampling": {"type": "object"},
+    "artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256", "dtype", "shape"],
+        "properties": {
+          "path": {"$ref": "#/$defs/repo_path"},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "dtype": {"type": "string", "minLength": 1},
+          "shape": {"type": "array", "items": {"type": "integer", "minimum": 0}}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "repo_path": {"type": "string", "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+"}
+  }
+}

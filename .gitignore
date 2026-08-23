@@ -1,2 +1,11 @@
 # Generated artifacts from the archived KWIC example.
 /unrelated/build/
+
+# CleaRx local build and execution payloads.
+/build/
+/runs/**/artifacts/
+/runs/**/stdout.log
+/runs/**/stderr.log
+/.pytest_cache/
+/**/__pycache__/
+*.pyc

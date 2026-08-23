@@ -1,0 +1,22 @@
+schema_version: "1.0.0"
+id: P0-003A
+title: Define reference fixture contract
+phase: 0
+objective: Define fixture schemas, boundary coverage, generator inputs, tolerances, and local validation without model-derived outputs.
+depends_on: [BOOTSTRAP-001]
+execution:
+  environment: local_m1
+  write_scope: [docs/architecture/fixture_contract.md, tools/reference/fixture_harness.py, tests/fixtures/manifests/fixture_contract_examples/, runs/P0-003A/]
+inputs:
+  - path: orchestration/schemas/fixture.schema.json
+    sha256: 4c1868f87acd644c633cc6ecd3b150c24a926fa6cd771d12a9cde455d6541561
+outputs: [docs/architecture/fixture_contract.md, tools/reference/fixture_harness.py]
+acceptance:
+  commands: [python scripts/validate_fixtures.py --contract-only]
+  required_checks: [all_boundaries_covered, adversarial_cases_declared, tolerances_named, provenance_required]
+forbidden: [generating_model_outputs, changing_native_abi]
+non_goals: [running_a100, selecting_runtime_optimizations]
+escalation: [boundary_cannot_be_observed, deterministic_reference_unavailable]
+evidence:
+  result_schema: orchestration/schemas/result.schema.json
+  result_path_template: runs/P0-003A/{run_id}/result.json

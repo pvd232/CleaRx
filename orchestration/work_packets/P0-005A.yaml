@@ -1,0 +1,23 @@
+schema_version: "1.0.0"
+id: P0-005A
+title: Define and capture L4 host profile
+phase: 0
+objective: Define the L4 measurement contract and capture the certified mantra-g2 host profile.
+depends_on: [BOOTSTRAP-001]
+execution:
+  environment: l4
+  write_scope: [docs/architecture/l4_host_profile.md, tools/benchmarks/capture_l4_host.sh, tests/fixtures/manifests/l4_host_profile.json, runs/P0-005A/]
+inputs:
+  - path: docs/architecture/execution_environments.md
+    sha256: 7275204f18c497ee35dfbb4da3cba30dc4dc02e7e112d7250c15e053aa48ea62
+outputs: [docs/architecture/l4_host_profile.md, tests/fixtures/manifests/l4_host_profile.json]
+acceptance:
+  commands: [python tools/inventory/validate_l4_host_profile.py tests/fixtures/manifests/l4_host_profile.json]
+  required_checks: [gpu_identity, cpu_and_ram, pcie_link, storage, driver_and_cuda, thermal_and_power]
+  measurements: [phase_live_sets, allocator_peak, process_rss]
+forbidden: [substituting_a100_measurements, claiming_fit_without_instrumentation]
+non_goals: [loading_full_model, optimizing_runtime]
+escalation: [host_profile_changes_during_run, required_counter_unavailable]
+evidence:
+  result_schema: orchestration/schemas/result.schema.json
+  result_path_template: runs/P0-005A/{run_id}/result.json

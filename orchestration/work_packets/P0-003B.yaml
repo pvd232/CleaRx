@@ -1,0 +1,26 @@
+schema_version: "1.0.0"
+id: P0-003B
+title: Generate reference module fixtures
+phase: 0
+objective: Generate deterministic reference fixtures at frozen native module boundaries from the pinned implementation.
+depends_on: [P0-001, P0-002, P0-003A]
+execution:
+  environment: a100
+  write_scope: [tests/fixtures/reference/, tools/reference/generate_reference_fixtures.py, runs/P0-003B/]
+inputs:
+  - path: upstream.lock
+    producer_packet: P0-001
+  - path: tensor_manifest.json
+    producer_packet: P0-002
+  - path: docs/architecture/fixture_contract.md
+    producer_packet: P0-003A
+outputs: [tests/fixtures/reference/manifest.json]
+acceptance:
+  commands: [python scripts/validate_fixtures.py]
+  required_checks: [checksums_present, tensor_shapes_present, deterministic_seed_recorded, provenance_bound]
+forbidden: [changing_native_abi, editing_ggml_runtime]
+non_goals: [optimizing_reference_inference, changing_sampling_semantics]
+escalation: [fixed_seed_is_nondeterministic, required_model_artifact_unavailable]
+evidence:
+  result_schema: orchestration/schemas/result.schema.json
+  result_path_template: runs/P0-003B/{run_id}/result.json

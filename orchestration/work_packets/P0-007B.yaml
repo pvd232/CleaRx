@@ -1,0 +1,24 @@
+schema_version: "1.0.0"
+id: P0-007B
+title: Bind deployment acceptance to certified host
+phase: 0
+objective: Bind every later correctness, fidelity, latency, and material-improvement gate to a named workload and certified host profile.
+depends_on: [P0-005A, P0-007A]
+execution:
+  environment: mixed
+  write_scope: [docs/deployment_acceptance.md, deployment_acceptance.json, runs/P0-007B/]
+inputs:
+  - path: tests/fixtures/manifests/l4_host_profile.json
+    producer_packet: P0-005A
+  - path: docs/evaluation_contract.md
+    producer_packet: P0-007A
+outputs: [docs/deployment_acceptance.md, deployment_acceptance.json]
+acceptance:
+  commands: [python tools/inventory/validate_deployment_acceptance.py deployment_acceptance.json]
+  required_checks: [all_terms_resolve, host_digest_bound, workloads_named, thresholds_frozen]
+forbidden: [accepting_exploratory_host_as_certified, changing_margins_after_measurement]
+non_goals: [running_phase1_models, optimizing_l4]
+escalation: [host_cannot_measure_required_metric, threshold_contract_conflict]
+evidence:
+  result_schema: orchestration/schemas/result.schema.json
+  result_path_template: runs/P0-007B/{run_id}/result.json

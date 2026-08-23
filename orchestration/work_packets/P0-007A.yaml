@@ -1,0 +1,22 @@
+schema_version: "1.0.0"
+id: P0-007A
+title: Define evaluation contract
+phase: 0
+objective: Freeze corpus identity, paired comparisons, metrics, margins, thresholds, workload, seeds, and failure attribution.
+depends_on: [BOOTSTRAP-001]
+execution:
+  environment: local_m1
+  write_scope: [docs/evaluation_contract.md, evaluation_corpus_manifest.json, benchmark_thresholds.json, runs/P0-007A/]
+inputs:
+  - path: orchestration/schemas/benchmark.schema.json
+    sha256: cc71829b6811fe02de3ec6079c9b2df03c8f68b04e6affa239e130e59c5a7d0b
+outputs: [docs/evaluation_contract.md, evaluation_corpus_manifest.json, benchmark_thresholds.json]
+acceptance:
+  commands: [python tools/inventory/validate_evaluation_contract.py]
+  required_checks: [corpus_versioned, paired_keys_present, margins_named, confidence_rules_named, failure_attribution_present]
+forbidden: [using_undefined_materiality, changing_metrics_after_results]
+non_goals: [running_model_evaluation, choosing_context_policy]
+escalation: [corpus_license_unresolved, equivalence_margin_lacks_basis]
+evidence:
+  result_schema: orchestration/schemas/result.schema.json
+  result_path_template: runs/P0-007A/{run_id}/result.json

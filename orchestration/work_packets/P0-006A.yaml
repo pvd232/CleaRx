@@ -1,0 +1,22 @@
+schema_version: "1.0.0"
+id: P0-006A
+title: Define expert-cache and allocator benchmarks
+phase: 0
+objective: Define representative inputs, trace format, allocator simulation, measurements, and result contracts.
+depends_on: [BOOTSTRAP-001]
+execution:
+  environment: local_m1
+  write_scope: [docs/architecture/expert_cache_benchmark.md, tools/benchmarks/cache_contract/, tests/fixtures/manifests/expert_cache_contract.json, runs/P0-006A/]
+inputs:
+  - path: orchestration/schemas/benchmark.schema.json
+    sha256: cc71829b6811fe02de3ec6079c9b2df03c8f68b04e6affa239e130e59c5a7d0b
+outputs: [docs/architecture/expert_cache_benchmark.md, tests/fixtures/manifests/expert_cache_contract.json]
+acceptance:
+  commands: [python tools/benchmarks/validate_cache_contract.py]
+  required_checks: [trace_schema, pinned_transfer_cases, allocator_events, overlap_measurements]
+forbidden: [claiming_representative_results, selecting_policy_without_trace]
+non_goals: [running_full_model, implementing_production_cache]
+escalation: [required_cuda_counter_unavailable, representative_shape_undefined]
+evidence:
+  result_schema: orchestration/schemas/result.schema.json
+  result_path_template: runs/P0-006A/{run_id}/result.json

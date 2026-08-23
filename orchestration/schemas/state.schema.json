@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://clearx.local/schemas/state.schema.json",
+  "title": "CleaRx orchestration lifecycle state",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "plan_sha256", "packets"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "plan_sha256": {"$ref": "#/$defs/sha256"},
+    "packets": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["packet_path", "packet_sha256", "status", "history"],
+        "properties": {
+          "packet_path": {"$ref": "#/$defs/repo_path"},
+          "packet_sha256": {"$ref": "#/$defs/sha256"},
+          "status": {"$ref": "#/$defs/status"},
+          "history": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["packet_sha256", "previous_state", "next_state", "timestamp", "actor", "reason"],
+              "properties": {
+                "packet_sha256": {"$ref": "#/$defs/sha256"},
+                "previous_state": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/status"}]},
+                "next_state": {"$ref": "#/$defs/status"},
+                "timestamp": {"type": "string", "format": "date-time"},
+                "actor": {"type": "string", "minLength": 1},
+                "reason": {"type": "string", "minLength": 1}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "repo_path": {"type": "string", "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+"},
+    "status": {"enum": ["planned", "blocked", "ready", "running", "validating", "complete", "failed", "cancelled"]}
+  }
+}

@@ -1,0 +1,24 @@
+schema_version: "1.0.0"
+id: P0-005B
+title: Build manifest-derived L4 memory budget
+phase: 0
+objective: Calculate phase-specific expected, range, and measured memory fields from the tensor manifest and certified host contract.
+depends_on: [P0-002, P0-005A]
+execution:
+  environment: mixed
+  write_scope: [l4_memory_budget.json, docs/architecture/memory_model.md, tools/inventory/build_memory_budget.py, runs/P0-005B/]
+inputs:
+  - path: tensor_manifest.json
+    producer_packet: P0-002
+  - path: tests/fixtures/manifests/l4_host_profile.json
+    producer_packet: P0-005A
+outputs: [l4_memory_budget.json, docs/architecture/memory_model.md]
+acceptance:
+  commands: [python tools/inventory/validate_memory_budget.py l4_memory_budget.json]
+  required_checks: [tensor_sum_reconciles, units_explicit, every_phase_present, reserve_present]
+forbidden: [using_parameter_count_estimates_as_final, hiding_runtime_overhead]
+non_goals: [proving_realtime_latency, implementing_allocator]
+escalation: [manifest_exceeds_hard_ceiling, phase_live_set_undefined]
+evidence:
+  result_schema: orchestration/schemas/result.schema.json
+  result_path_template: runs/P0-005B/{run_id}/result.json

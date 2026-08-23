@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://clearx.local/schemas/plan.schema.json",
+  "title": "CleaRx orchestration plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "authority", "nodes", "gates"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "authority": {"type": "string", "minLength": 1},
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "packet_path", "packet_sha256", "phase", "wave", "depends_on"],
+        "properties": {
+          "id": {"type": "string"},
+          "packet_path": {"$ref": "#/$defs/repo_path"},
+          "packet_sha256": {"$ref": "#/$defs/sha256"},
+          "phase": {"oneOf": [{"type": "integer", "minimum": 0}, {"const": "bootstrap"}]},
+          "wave": {"type": "string", "minLength": 1},
+          "depends_on": {"type": "array", "uniqueItems": true, "items": {"type": "string"}}
+        }
+      }
+    },
+    "gates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "requires"],
+        "properties": {"id": {"type": "string"}, "requires": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}}}
+      }
+    }
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "repo_path": {"type": "string", "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+"}
+  }
+}

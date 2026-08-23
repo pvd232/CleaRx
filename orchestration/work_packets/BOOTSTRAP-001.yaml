@@ -1,0 +1,48 @@
+schema_version: "1.0.0"
+id: BOOTSTRAP-001
+title: Create the orchestration package
+phase: bootstrap
+objective: Create and validate the schemas, immutable packet DAG, lifecycle state, validators, tests, and remote wrapper skeletons.
+rationale: Phase work requires machine-enforced ownership and evidence before execution.
+depends_on: []
+execution:
+  environment: local_m1
+  write_scope:
+    - .gitignore
+    - AGENTS.md
+    - docs/decisions.md
+    - docs/architecture/execution_environments.md
+    - orchestration/
+    - scripts/
+    - tests/orchestration/
+    - tests/fixtures/
+inputs:
+  - path: docs/LOCAL_ORCHESTRATOR_MASTER_PROMPT.md
+    sha256: d0ba1d2fa0957284ff18f634d5f333d2068b05901140823fc1581bce5c9af3df
+  - path: environment.yml
+    sha256: 4b785d07147d3e210e440b26dabbcbbf4eff4102de3e65a38809ffbc8c929567
+outputs:
+  - orchestration/plan.yaml
+  - orchestration/state.json
+  - scripts/validate_bootstrap.py
+acceptance:
+  commands:
+    - python scripts/validate_bootstrap.py
+  required_checks:
+    - schemas_valid
+    - packets_valid
+    - dag_acyclic
+    - state_valid
+    - invalid_fixtures_rejected
+    - remote_preflight_safe
+forbidden:
+  - editing_production_runtime
+  - launching_remote_compute
+non_goals:
+  - implementing_model_modules
+  - generating_reference_model_fixtures
+escalation:
+  - audited_contract_cannot_be_represented_without_semantic_change
+evidence:
+  result_schema: orchestration/schemas/result.schema.json
+  result_path_template: runs/BOOTSTRAP-001/{run_id}/result.json

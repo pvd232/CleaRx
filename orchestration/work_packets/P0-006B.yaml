@@ -1,0 +1,27 @@
+schema_version: "1.0.0"
+id: P0-006B
+title: Run manifest-derived risk spikes
+phase: 0
+objective: Execute representative expert-cache and shared-arena spikes from the manifest and memory contract.
+depends_on: [P0-002, P0-005B, P0-006A]
+execution:
+  environment: l4
+  write_scope: [expert_cache_spike.json, tools/benchmarks/run_cache_spike/, runs/P0-006B/]
+inputs:
+  - path: tensor_manifest.json
+    producer_packet: P0-002
+  - path: l4_memory_budget.json
+    producer_packet: P0-005B
+  - path: tests/fixtures/manifests/expert_cache_contract.json
+    producer_packet: P0-006A
+outputs: [expert_cache_spike.json]
+acceptance:
+  commands: [python tools/benchmarks/validate_cache_spike.py expert_cache_spike.json]
+  required_checks: [representative_shapes, transfer_measurements, allocator_simulation, limitations_recorded]
+  measurements: [dma_latency, overlap, cache_hit_curve, arena_peak]
+forbidden: [claiming_end_to_end_realtime, changing_slot_pool_target]
+non_goals: [production_cache_implementation, model_quality_evaluation]
+escalation: [spike_exceeds_memory_ceiling, measurements_not_repeatable]
+evidence:
+  result_schema: orchestration/schemas/result.schema.json
+  result_path_template: runs/P0-006B/{run_id}/result.json

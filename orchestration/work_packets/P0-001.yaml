@@ -1,0 +1,22 @@
+schema_version: "1.0.0"
+id: P0-001
+title: Freeze upstream and runtime revisions
+phase: 0
+objective: Pin authoritative upstream revisions and publish the native runtime gap matrix.
+depends_on: [BOOTSTRAP-001]
+execution:
+  environment: local_m1
+  write_scope: [upstream.lock, docs/architecture/runtime_gap_matrix.md, runs/P0-001/]
+inputs:
+  - path: docs/LOCAL_ORCHESTRATOR_MASTER_PROMPT.md
+    sha256: d0ba1d2fa0957284ff18f634d5f333d2068b05901140823fc1581bce5c9af3df
+outputs: [upstream.lock, docs/architecture/runtime_gap_matrix.md]
+acceptance:
+  commands: [python tools/inventory/validate_upstream_lock.py]
+  required_checks: [commits_resolve, sources_authoritative, gaps_cite_symbols]
+forbidden: [editing_upstream_sources, inferring_support_from_loader_names]
+non_goals: [porting_missing_modules, choosing_optimizations]
+escalation: [authoritative_revision_unavailable, upstream_contract_conflict]
+evidence:
+  result_schema: orchestration/schemas/result.schema.json
+  result_path_template: runs/P0-001/{run_id}/result.json

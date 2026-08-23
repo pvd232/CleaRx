@@ -1,0 +1,22 @@
+schema_version: "1.0.0"
+id: P0-002
+title: Inventory model tensors
+phase: 0
+objective: Produce the complete source-to-GGUF tensor manifest and human-readable inventory.
+depends_on: [BOOTSTRAP-001]
+execution:
+  environment: mixed
+  write_scope: [tensor_manifest.json, docs/architecture/tensor_inventory.md, tools/inventory/, runs/P0-002/]
+inputs:
+  - path: docs/LOCAL_ORCHESTRATOR_MASTER_PROMPT.md
+    sha256: d0ba1d2fa0957284ff18f634d5f333d2068b05901140823fc1581bce5c9af3df
+outputs: [tensor_manifest.json, docs/architecture/tensor_inventory.md]
+acceptance:
+  commands: [python tools/inventory/validate_tensor_manifest.py tensor_manifest.json]
+  required_checks: [all_modules_covered, shapes_and_dtypes_present, source_hashes_present, backend_placement_present]
+forbidden: [downloading_weights_into_git, inventing_unreleased_tensor_shapes]
+non_goals: [converting_weights, measuring_runtime_memory]
+escalation: [official_config_disagrees_with_checkpoint, required_metadata_missing]
+evidence:
+  result_schema: orchestration/schemas/result.schema.json
+  result_path_template: runs/P0-002/{run_id}/result.json
