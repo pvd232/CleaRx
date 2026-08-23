@@ -8,6 +8,7 @@ import csv
 import hashlib
 import json
 import math
+import statistics
 import subprocess
 from collections import OrderedDict
 from pathlib import Path
@@ -79,6 +80,29 @@ def load_rows(path: Path) -> list[dict[str, Any]]:
     return rows
 
 
+def summarize(rows: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    """Derive compact medians and nearest-rank p95 values from raw rows."""
+    summaries: dict[str, dict[str, Any]] = {}
+    for case_id in sorted({row["case_id"] for row in rows}):
+        case_rows = [row for row in rows if row["case_id"] == case_id]
+        h2d = sorted(row["h2d_duration_ns"] for row in case_rows)
+        compute = [row["compute_duration_ns"] for row in case_rows]
+        overlap = [row["overlap_duration_ns"] for row in case_rows]
+        unhidden = [row["unhidden_transfer_ns"] for row in case_rows]
+        median_h2d = statistics.median(h2d)
+        summaries[case_id] = {
+            "payload_bytes": case_rows[0]["payload_bytes"],
+            "median_h2d_duration_ns": median_h2d,
+            "p95_h2d_duration_ns": h2d[math.ceil(0.95 * len(h2d)) - 1],
+            "median_compute_duration_ns": statistics.median(compute),
+            "median_overlap_duration_ns": statistics.median(overlap),
+            "median_unhidden_transfer_ns": statistics.median(unhidden),
+            "median_h2d_decimal_gbps": None if median_h2d == 0 else case_rows[0]["payload_bytes"] / median_h2d,
+            "median_overlap_fraction_of_h2d": None if median_h2d == 0 else statistics.median(overlap) / median_h2d,
+        }
+    return summaries
+
+
 def build(root: Path, raw_csv: Path) -> dict[str, Any]:
     """Build the bound P0-006B result artifact."""
     manifest_path = root / "tensor_manifest.json"
@@ -116,6 +140,7 @@ def build(root: Path, raw_csv: Path) -> dict[str, Any]:
         "slot_pool_target_bytes": SLOT_POOL_BYTES,
         "representative_shapes": shapes,
         "transfer_measurements": rows,
+        "transfer_summary": summarize(rows),
         "cache_hit_curve": lru_curve(expert_bytes),
         "allocator_simulation": {"events_valid": all(item["valid"] and item["peak_bytes"] <= item["capacity_bytes"] for item in schedules), "arena_peak_bytes": max(item["peak_bytes"] for item in schedules), "schedules": schedules},
         "measurement_validity": {"warmups_per_case": 5, "recorded_repetitions_per_case": 30, "payload_hash_verified": True, "cuda_events_used": True, "host_profile_id": "clearx-mantra-g2-l4-v1"},
