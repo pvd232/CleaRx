@@ -21,7 +21,7 @@ import re
 import resource
 import subprocess
 import sys
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 
@@ -74,7 +74,7 @@ memlock_soft, memlock_hard = resource.getrlimit(resource.RLIMIT_MEMLOCK)
 profile = {
     "schema_version": "1.0.0",
     "profile_id": "clearx-mantra-g2-l4-v1",
-    "captured_at": datetime.now(UTC).isoformat().replace("+00:00", "Z"),
+    "captured_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
     "source_commit": os.environ["SOURCE_COMMIT"],
     "gce": {
         "project": os.environ["GCE_PROJECT"],
