@@ -308,7 +308,7 @@
     "P0-006A": {
       "packet_path": "orchestration/work_packets/P0-006A.yaml",
       "packet_sha256": "c81693a0dc3e264690e44c578c8d714f3992155ee86f9682c28c6775939f49c1",
-      "status": "running",
+      "status": "complete",
       "history": [
         {
           "packet_sha256": "c81693a0dc3e264690e44c578c8d714f3992155ee86f9682c28c6775939f49c1",
@@ -333,6 +333,22 @@
           "timestamp": "2026-08-23T08:37:28.264268Z",
           "actor": "codex",
           "reason": "Begin expert-cache and allocator benchmark contract design."
+        },
+        {
+          "packet_sha256": "c81693a0dc3e264690e44c578c8d714f3992155ee86f9682c28c6775939f49c1",
+          "previous_state": "running",
+          "next_state": "validating",
+          "timestamp": "2026-08-23T08:39:03.339907Z",
+          "actor": "codex",
+          "reason": "Expert-cache and allocator contract passed acceptance validation."
+        },
+        {
+          "packet_sha256": "c81693a0dc3e264690e44c578c8d714f3992155ee86f9682c28c6775939f49c1",
+          "previous_state": "validating",
+          "next_state": "complete",
+          "timestamp": "2026-08-23T08:39:22.722595Z",
+          "actor": "codex",
+          "reason": "Validated P0-006A benchmark-contract receipt."
         }
       ]
     },

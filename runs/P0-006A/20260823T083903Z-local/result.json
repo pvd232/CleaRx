@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0.0",
+  "packet_id": "P0-006A",
+  "packet_sha256": "c81693a0dc3e264690e44c578c8d714f3992155ee86f9682c28c6775939f49c1",
+  "git_commit": "f693c04f616cbe211c310393c22604c1bf759245",
+  "run_id": "20260823T083903Z-local",
+  "environment": {
+    "kind": "local_m1",
+    "conda_environment": "clearx"
+  },
+  "commands": [
+    {
+      "command": "python tools/benchmarks/validate_cache_contract.py",
+      "exit_code": 0
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/architecture/expert_cache_benchmark.md",
+      "sha256": "a7214cfb2e56be14d1aacbf77d9e4fbf187e87cb8ecca9464c58c31e5cb76844",
+      "size_bytes": 5341
+    },
+    {
+      "path": "tests/fixtures/manifests/expert_cache_contract.json",
+      "sha256": "3c944994467d5f38d26af16c2c3e7f860c506d65f127b6d2546c72c795c6006b",
+      "size_bytes": 5135
+    }
+  ],
+  "required_checks": {
+    "trace_schema": true,
+    "pinned_transfer_cases": true,
+    "allocator_events": true,
+    "overlap_measurements": true
+  },
+  "outcome": "complete",
+  "deviations": [],
+  "started_at": "2026-08-23T08:37:00Z",
+  "finished_at": "2026-08-23T08:39:03Z"
+}
