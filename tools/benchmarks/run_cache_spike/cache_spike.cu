@@ -41,7 +41,7 @@ Timing measure(std::size_t payload_bytes, bool copy, bool overlap, std::uint8_t 
     CUDA_CHECK(cudaEventRecord(copy_done, copy_stream));
     if (!overlap && copy) CUDA_CHECK(cudaStreamWaitEvent(compute_stream, copy_done));
     CUDA_CHECK(cudaEventRecord(compute_start, compute_stream));
-    busy_kernel<<<256, 256, 0, compute_stream>>>(compute_values, compute_count, 2048);
+    busy_kernel<<<256, 256, 0, compute_stream>>>(compute_values, compute_count, 16384);
     CUDA_CHECK(cudaGetLastError());
     CUDA_CHECK(cudaEventRecord(compute_done, compute_stream));
     CUDA_CHECK(cudaEventSynchronize(copy_done));
@@ -58,10 +58,10 @@ Timing measure(std::size_t payload_bytes, bool copy, bool overlap, std::uint8_t 
     CUDA_CHECK(cudaEventDestroy(compute_start));
     CUDA_CHECK(cudaEventDestroy(compute_done));
     return {
-        static_cast<std::uint64_t>(std::llround(copy_ms * 1.0e6)),
+        copy ? static_cast<std::uint64_t>(std::llround(copy_ms * 1.0e6)) : 0,
         static_cast<std::uint64_t>(std::llround(compute_ms * 1.0e6)),
-        static_cast<std::uint64_t>(std::llround(overlap_ms * 1.0e6)),
-        static_cast<std::uint64_t>(std::llround(unhidden_ms * 1.0e6)),
+        copy ? static_cast<std::uint64_t>(std::llround(overlap_ms * 1.0e6)) : 0,
+        copy ? static_cast<std::uint64_t>(std::llround(unhidden_ms * 1.0e6)) : 0,
     };
 }
 
