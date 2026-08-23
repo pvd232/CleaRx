@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0.0",
+  "packet_id": "P0-007A",
+  "packet_sha256": "7f6d18296e52d56a9c35d002d5a37876d89456ca6cde91dcb5d2360715d482b4",
+  "git_commit": "31e5df6b84bad43b09f1a5cde9b568ad03e96ff2",
+  "run_id": "20260823T084617Z-local",
+  "environment": {
+    "kind": "local_m1",
+    "conda_environment": "clearx"
+  },
+  "commands": [
+    {
+      "command": "python tools/inventory/validate_evaluation_contract.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python <inline verifier for all 22 remote audio SHA-256 identities>",
+      "exit_code": 0
+    },
+    {
+      "command": "python <inline verifier for all four deterministic synthetic WAV identities>",
+      "exit_code": 0
+    },
+    {
+      "command": "python <inline verifier for FSDD and Wikimedia license records>",
+      "exit_code": 0
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/evaluation_contract.md",
+      "sha256": "86cf5fe56d6e0bb2d42b490af205c3970ecf13cd075d641411717ec95aba0b96",
+      "size_bytes": 6398
+    },
+    {
+      "path": "evaluation_corpus_manifest.json",
+      "sha256": "1c54fab40edff90a7fad0a57155bdb2e16f742b1209145cb2b179268d678b0b1",
+      "size_bytes": 13896
+    },
+    {
+      "path": "benchmark_thresholds.json",
+      "sha256": "d98d64b5e372f2bb21a439206b0afcff48863096514c71d9c894231724d145a9",
+      "size_bytes": 3215
+    }
+  ],
+  "required_checks": {
+    "corpus_versioned": true,
+    "paired_keys_present": true,
+    "margins_named": true,
+    "confidence_rules_named": true,
+    "failure_attribution_present": true
+  },
+  "outcome": "complete",
+  "deviations": [],
+  "started_at": "2026-08-23T08:40:00Z",
+  "finished_at": "2026-08-23T08:46:17Z"
+}

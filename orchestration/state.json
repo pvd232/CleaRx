@@ -370,7 +370,7 @@
     "P0-007A": {
       "packet_path": "orchestration/work_packets/P0-007A.yaml",
       "packet_sha256": "7f6d18296e52d56a9c35d002d5a37876d89456ca6cde91dcb5d2360715d482b4",
-      "status": "running",
+      "status": "complete",
       "history": [
         {
           "packet_sha256": "7f6d18296e52d56a9c35d002d5a37876d89456ca6cde91dcb5d2360715d482b4",
@@ -395,13 +395,29 @@
           "timestamp": "2026-08-23T08:42:26.973937Z",
           "actor": "codex",
           "reason": "Begin versioned evaluation corpus and threshold contract."
+        },
+        {
+          "packet_sha256": "7f6d18296e52d56a9c35d002d5a37876d89456ca6cde91dcb5d2360715d482b4",
+          "previous_state": "running",
+          "next_state": "validating",
+          "timestamp": "2026-08-23T08:46:18.207102Z",
+          "actor": "codex",
+          "reason": "Evaluation corpus bytes, licenses, metrics, margins, confidence rules, and failure attribution passed validation."
+        },
+        {
+          "packet_sha256": "7f6d18296e52d56a9c35d002d5a37876d89456ca6cde91dcb5d2360715d482b4",
+          "previous_state": "validating",
+          "next_state": "complete",
+          "timestamp": "2026-08-23T08:46:42.309328Z",
+          "actor": "codex",
+          "reason": "Validated P0-007A evaluation-contract receipt."
         }
       ]
     },
     "P0-007B": {
       "packet_path": "orchestration/work_packets/P0-007B.yaml",
       "packet_sha256": "33596091ae66a0a47c9d4ec6d23586b23bcf2d5ae07e51d0c9436f0186c36263",
-      "status": "planned",
+      "status": "ready",
       "history": [
         {
           "packet_sha256": "33596091ae66a0a47c9d4ec6d23586b23bcf2d5ae07e51d0c9436f0186c36263",
@@ -410,6 +426,14 @@
           "timestamp": "2026-08-23T07:50:00Z",
           "actor": "orchestrator",
           "reason": "Packet entered the validated plan."
+        },
+        {
+          "packet_sha256": "33596091ae66a0a47c9d4ec6d23586b23bcf2d5ae07e51d0c9436f0186c36263",
+          "previous_state": "planned",
+          "next_state": "ready",
+          "timestamp": "2026-08-23T08:46:42.480934Z",
+          "actor": "codex",
+          "reason": "P0-005A and P0-007A dependencies completed."
         }
       ]
     }

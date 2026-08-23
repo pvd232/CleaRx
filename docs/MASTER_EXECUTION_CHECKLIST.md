@@ -39,7 +39,7 @@ commit. Complete dependency producers before their consumers.
 | Native ABI and ownership contract | Not started | P0-004 | Phase 0 integration gate |
 | L4 host and memory contract | Host profile complete at `502d9eb`; memory budget pending | P0-005A and P0-005B | Valid P0-005A result `20260823T083617Z-l4` and later manifest-derived budget |
 | Expert-cache and allocator risk contract | Benchmark contract complete at `f693c04`; manifest-derived spike pending | P0-006A and P0-006B | Valid P0-006A result `20260823T083903Z-local` and later spike artifacts |
-| Evaluation and deployment acceptance contract | Not started | P0-007A and P0-007B | Frozen corpus, metrics, margins, and host binding |
+| Evaluation and deployment acceptance contract | Evaluation contract complete at `31e5df6`; host binding pending | P0-007A and P0-007B | Valid P0-007A result `20260823T084617Z-local` and later deployment binding |
 | Phase 1 work decomposition | Not started | Phase 1 readiness | Validated packet DAG with disjoint write scopes |
 | Common native build/test skeleton | Not started | Phase 1 readiness | Local configure, build, and test gate |
 
@@ -93,7 +93,7 @@ no production runtime implementation.
 - [ ] Complete P0-003A and validate the fixture contract and harness.
 - [x] Complete P0-005A using the live `mantra-g2` host profile.
 - [x] Complete P0-006A and validate the benchmark/result contracts.
-- [ ] Complete P0-007A and freeze the draft corpus, metrics, and margins.
+- [x] Complete P0-007A and freeze the draft corpus, metrics, and margins.
 
 **Acceptance gate:** every first-wave result validates against its immutable
 packet and all six packet states are `complete`.
