@@ -81,6 +81,18 @@ SCHEDULER_STATE_CODES: Final = {
     "cancelling": 4,
     "rebuilding": 5,
 }
+SYNTHETIC_NATIVE_PAIRS: Final = frozenset(
+    {
+        ("thinker.accepted_hidden", "context_reconstruction"),
+        ("handoff.thinker_to_talker", "context_reconstruction"),
+        ("scheduler.turn_trace", "turn_end"),
+        ("scheduler.turn_trace", "long_turn"),
+        ("scheduler.turn_trace", "interruption"),
+        ("scheduler.turn_trace", "cancellation"),
+        ("scheduler.turn_trace", "repeated_phase_transition"),
+        ("scheduler.turn_trace", "context_reconstruction"),
+    }
+)
 
 
 @dataclass(frozen=True)
@@ -191,6 +203,12 @@ def build_boundary_matrix() -> tuple[BoundarySpec, ...]:
 BOUNDARY_MATRIX: Final = build_boundary_matrix()
 
 
+def required_model_fixture_pairs() -> set[tuple[str, str]]:
+    """Return boundary-case pairs observable in the pinned PyTorch reference."""
+    declared = {(boundary.boundary_id, case_id) for boundary in BOUNDARY_MATRIX for case_id in boundary.case_ids}
+    return declared - SYNTHETIC_NATIVE_PAIRS
+
+
 def validate_contract() -> None:
     """Reject incomplete boundary, case, profile, shape, or provenance contracts."""
     boundary_ids = [boundary.boundary_id for boundary in BOUNDARY_MATRIX]
@@ -249,6 +267,13 @@ def validate_contract() -> None:
         required_ids.update(f"mtp.residual.{residual_step:02d}.{suffix}" for suffix in ("logits", "token"))
     if set(boundary_ids) != required_ids:
         raise ValueError("boundary matrix differs from the complete required set")
+    declared_pairs = {(boundary.boundary_id, case_id) for boundary in BOUNDARY_MATRIX for case_id in boundary.case_ids}
+    if not SYNTHETIC_NATIVE_PAIRS < declared_pairs:
+        raise ValueError("native-only fixture pairs must be a strict subset of declared pairs")
+    if any(boundary_id != "scheduler.turn_trace" and case_id != "context_reconstruction" for boundary_id, case_id in SYNTHETIC_NATIVE_PAIRS):
+        raise ValueError("native-only fixture pairs exceed scheduler or reconstruction scope")
+    if required_model_fixture_pairs() | SYNTHETIC_NATIVE_PAIRS != declared_pairs:
+        raise ValueError("fixture origin partition is incomplete")
     schema = json.loads((ROOT / "orchestration/schemas/fixture_descriptor.schema.json").read_text(encoding="utf-8"))
     schema_provenance = set(schema["properties"]["provenance"]["required"])
     if REQUIRED_PROVENANCE_FIELDS != schema_provenance:

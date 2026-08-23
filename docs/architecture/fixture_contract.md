@@ -2,8 +2,9 @@
 
 ## Status and scope
 
-P0-003A defines the model-boundary observations that P0-003B must generate.
-P0-003B will supply the model-derived values. The executable source of truth is
+P0-003A defines both PyTorch reference observations and native-runtime contract
+cases. P0-003B supplies values for the PyTorch-observable pairs. P0-004 owns
+synthetic scheduler and bounded-context reconstruction traces. The executable source of truth is
 [`fixture_harness.py`](../../tools/reference/fixture_harness.py); this document
 explains its boundary matrix, generator inputs, persisted evidence, and local
 comparison rules.
@@ -147,7 +148,8 @@ The generator must:
 4. observe the named values while preserving the model operation that produces
    them;
 5. widen each BF16 observation directly to float32;
-6. write one descriptor and envelope per boundary-case pair, then write a
+6. write one descriptor and envelope per pair returned by
+   `required_model_fixture_pairs()`, then write a
    top-level `tests/fixtures/reference/manifest.json` index; and
 7. rerun `python scripts/validate_fixtures.py` before returning success.
 
@@ -178,6 +180,14 @@ Every adversarial descriptor has class `adversarial` and at least one of these
 tags. The nominal case carries an empty tag array. The contract-only harness fails when a tag,
 case assignment, layer, residual step, handoff, profile, or coordinate domain
 is missing.
+
+The harness partitions declared pairs by evidence source. P0-003B generates 154
+`model_reference` pairs. Eight `synthetic_native` pairs cover the scheduler
+trace cases plus context reconstruction at `thinker.accepted_hidden` and
+`handoff.thinker_to_talker`. The pinned PyTorch implementation exposes the
+model tensor handoffs and codec path. The future native runtime supplies the
+scheduler state machine and bounded-context rebuild operation, so its ABI tests
+will generate those eight traces after P0-004 freezes their concrete inputs.
 
 ## Local validation
 

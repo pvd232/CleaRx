@@ -19,10 +19,10 @@ def validate_manifest(root: Path, manifest_path: Path) -> None:
 def required_fixture_pairs(root: Path) -> set[tuple[str, str]]:
     """Load the boundary-case cross product frozen by P0-003A."""
     sys.path.insert(0, str(root / "tools" / "reference"))
-    from fixture_harness import BOUNDARY_MATRIX, validate_contract
+    from fixture_harness import required_model_fixture_pairs, validate_contract
 
     validate_contract()
-    return {(boundary.boundary_id, case_id) for boundary in BOUNDARY_MATRIX for case_id in boundary.case_ids}
+    return required_model_fixture_pairs()
 
 
 def validate_reference_index(

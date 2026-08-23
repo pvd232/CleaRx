@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "plan_sha256": "cbcb70d21a778202191412675f5c4d355843419c66c4b3e4fa5ff93423f8ad4b",
+  "plan_sha256": "fa1d3a097f21bb1eea15154d075e008622c09a4bc7bb169a03506165e103c4db",
   "packets": {
     "BOOTSTRAP-001": {
       "packet_path": "orchestration/work_packets/BOOTSTRAP-001.yaml",
@@ -234,6 +234,37 @@
           "timestamp": "2026-08-23T15:49:25.122459Z",
           "actor": "codex",
           "reason": "Validated Bootstrap-005 result receipt."
+        }
+      ]
+    },
+    "BOOTSTRAP-006": {
+      "packet_path": "orchestration/work_packets/BOOTSTRAP-006.yaml",
+      "packet_sha256": "e968ed74d6060a960d4180e75713cec4c17166e85af48af1d3246b56b9257541",
+      "status": "running",
+      "history": [
+        {
+          "packet_sha256": "e968ed74d6060a960d4180e75713cec4c17166e85af48af1d3246b56b9257541",
+          "previous_state": null,
+          "next_state": "planned",
+          "timestamp": "2026-08-23T16:19:20Z",
+          "actor": "codex",
+          "reason": "The A100 probe proved eight declared cases lack an observable operation in the pinned PyTorch model."
+        },
+        {
+          "packet_sha256": "e968ed74d6060a960d4180e75713cec4c17166e85af48af1d3246b56b9257541",
+          "previous_state": "planned",
+          "next_state": "ready",
+          "timestamp": "2026-08-23T16:19:21Z",
+          "actor": "codex",
+          "reason": "Bootstrap-005 is complete and the fixture-origin correction has direct execution evidence."
+        },
+        {
+          "packet_sha256": "e968ed74d6060a960d4180e75713cec4c17166e85af48af1d3246b56b9257541",
+          "previous_state": "ready",
+          "next_state": "running",
+          "timestamp": "2026-08-23T16:19:22Z",
+          "actor": "codex",
+          "reason": "Partition model-reference evidence from later native synthetic-contract evidence."
         }
       ]
     },

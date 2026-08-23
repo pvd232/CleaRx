@@ -12,7 +12,7 @@ import pytest
 
 from conftest import initialize_git
 from orchestration_lib import ContractError
-from validate_fixtures import validate_manifest, validate_reference_index
+from validate_fixtures import required_fixture_pairs, validate_manifest, validate_reference_index
 
 
 def rewrite_descriptor(repo: Path, mutate: object) -> Path:
@@ -146,6 +146,15 @@ def test_reference_index_joins_envelope_and_coverage(repo_copy: Path) -> None:
     """Accept an index whose hash, boundary, case, generator, and coverage join."""
     index_path, pair = build_reference_index(repo_copy)
     assert validate_reference_index(repo_copy, index_path, {pair}) == 1
+
+
+def test_model_reference_coverage_excludes_native_only_pairs(repo_copy: Path) -> None:
+    """Require every observable pair while reserving scheduler and rebuild traces for native ABI tests."""
+    pairs = required_fixture_pairs(repo_copy)
+    assert len(pairs) == 154
+    assert ("talker.layer.19.hidden", "nominal_short") in pairs
+    assert ("scheduler.turn_trace", "interruption") not in pairs
+    assert ("thinker.accepted_hidden", "context_reconstruction") not in pairs
 
 
 def test_reference_index_coverage_gap_is_rejected(repo_copy: Path) -> None:

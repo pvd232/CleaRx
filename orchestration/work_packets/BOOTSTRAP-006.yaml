@@ -1,0 +1,57 @@
+schema_version: "1.0.0"
+id: BOOTSTRAP-006
+title: Separate model-reference and native-contract fixtures
+phase: bootstrap
+objective: Require P0-003B evidence only for pairs observable in the pinned PyTorch implementation while preserving native scheduler and reconstruction cases.
+rationale: The full A100 probe proved model execution and showed that eight declared cases have no PyTorch operation to observe.
+depends_on: [BOOTSTRAP-005]
+execution:
+  environment: local_m1
+  write_scope:
+    - docs/architecture/bootstrap_fixture_origin_gap.md
+    - docs/architecture/fixture_contract.md
+    - orchestration/plan.yaml
+    - orchestration/state.json
+    - orchestration/work_packets/BOOTSTRAP-006.yaml
+    - scripts/validate_fixtures.py
+    - tools/reference/fixture_harness.py
+    - tests/orchestration/test_fixture_validation.py
+    - tests/orchestration/test_plan_validation.py
+    - runs/BOOTSTRAP-006/
+inputs:
+  - path: runs/P0-003B/20260823T161735Z-a100/load_probe.json
+    sha256: e23a9a32dee0509742654c1b152263c9bdf2e20bdfcc64f7d0a737cd007fdb3f
+  - path: orchestration/work_packets/P0-003B.yaml
+    sha256: 67c180e9aa904113c1f4815e2254825131723766039814016849cb3c14150414
+outputs:
+  - docs/architecture/bootstrap_fixture_origin_gap.md
+  - docs/architecture/fixture_contract.md
+  - orchestration/plan.yaml
+  - orchestration/state.json
+  - orchestration/work_packets/BOOTSTRAP-006.yaml
+  - scripts/validate_fixtures.py
+  - tools/reference/fixture_harness.py
+  - tests/orchestration/test_fixture_validation.py
+  - tests/orchestration/test_plan_validation.py
+acceptance:
+  commands:
+    - python -m pytest -q tests/orchestration/test_fixture_validation.py
+    - python scripts/validate_fixtures.py --contract-only
+  required_checks:
+    - declared_pairs_partitioned
+    - model_reference_pairs_exact
+    - native_only_pairs_preserved
+    - index_uses_model_reference_set
+forbidden:
+  - labeling_synthetic_scheduler_trace_as_model_output
+  - dropping_native_adversarial_cases
+  - changing_numeric_tolerance_profiles
+non_goals:
+  - generating_reference_arrays
+  - freezing_native_abi_structs
+escalation:
+  - observed_model_boundary_lacks_a_stable_hook
+  - native_only_pair_is_required_for_pytorch_correctness
+evidence:
+  result_schema: orchestration/schemas/result.schema.json
+  result_path_template: runs/BOOTSTRAP-006/{run_id}/result.json
