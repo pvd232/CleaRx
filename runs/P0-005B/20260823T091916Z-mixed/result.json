@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0.0",
+  "packet_id": "P0-005B",
+  "packet_sha256": "3d2028606e6867c7ff67857dd335660bedb7834649df4ce1b492b6e936635628",
+  "git_commit": "15c358ecb612aca06910fd704f527953c7932c94",
+  "run_id": "20260823T091916Z-mixed",
+  "environment": {
+    "kind": "mixed",
+    "calculation_host": "local_m1",
+    "certified_measurement_host": "clearx-mantra-g2-l4-v1",
+    "measurement_status": "pending_native_loader_and_phase_instrumentation"
+  },
+  "commands": [
+    {
+      "command": "python tools/inventory/build_memory_budget.py l4_memory_budget.json",
+      "exit_code": 0
+    },
+    {
+      "command": "python tools/inventory/validate_memory_budget.py l4_memory_budget.json",
+      "exit_code": 0
+    }
+  ],
+  "artifacts": [
+    {"path": "l4_memory_budget.json", "sha256": "72d4afb1e667e03eebd0fc9008960b30fc0fd75ce997dab4fcd35cdf69cd976d", "size_bytes": 5348},
+    {"path": "docs/architecture/memory_model.md", "sha256": "ccf030266d049ca6cab1dc00d31bf3edf24be56a2a3fd4afe770b6c5f39d3f1c", "size_bytes": 4961}
+  ],
+  "required_checks": {
+    "tensor_sum_reconciles": true,
+    "units_explicit": true,
+    "every_phase_present": true,
+    "reserve_present": true
+  },
+  "outcome": "complete",
+  "deviations": [],
+  "started_at": "2026-08-23T09:14:20Z",
+  "finished_at": "2026-08-23T09:19:16Z"
+}

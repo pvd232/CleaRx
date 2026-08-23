@@ -364,7 +364,7 @@
     "P0-005B": {
       "packet_path": "orchestration/work_packets/P0-005B.yaml",
       "packet_sha256": "3d2028606e6867c7ff67857dd335660bedb7834649df4ce1b492b6e936635628",
-      "status": "running",
+      "status": "complete",
       "history": [
         {
           "packet_sha256": "3d2028606e6867c7ff67857dd335660bedb7834649df4ce1b492b6e936635628",
@@ -389,6 +389,22 @@
           "timestamp": "2026-08-23T09:19:06.576439Z",
           "actor": "codex",
           "reason": "Manifest-derived memory equations reconcile and remain beneath the certified 22 GiB operational gate."
+        },
+        {
+          "packet_sha256": "3d2028606e6867c7ff67857dd335660bedb7834649df4ce1b492b6e936635628",
+          "previous_state": "running",
+          "next_state": "validating",
+          "timestamp": "2026-08-23T09:19:16.644259Z",
+          "actor": "codex",
+          "reason": "Memory-budget validator and independent category reconciliation passed at commit 15c358e."
+        },
+        {
+          "packet_sha256": "3d2028606e6867c7ff67857dd335660bedb7834649df4ce1b492b6e936635628",
+          "previous_state": "validating",
+          "next_state": "complete",
+          "timestamp": "2026-08-23T09:19:47.984712Z",
+          "actor": "codex",
+          "reason": "Validated P0-005B result receipt."
         }
       ]
     },
@@ -442,7 +458,7 @@
     "P0-006B": {
       "packet_path": "orchestration/work_packets/P0-006B.yaml",
       "packet_sha256": "beaf03d7542e7d1dcdd164eddeccac46fcc5ee5ba7e8d716f45ba87bfc405a08",
-      "status": "planned",
+      "status": "ready",
       "history": [
         {
           "packet_sha256": "beaf03d7542e7d1dcdd164eddeccac46fcc5ee5ba7e8d716f45ba87bfc405a08",
@@ -451,6 +467,14 @@
           "timestamp": "2026-08-23T07:50:00Z",
           "actor": "orchestrator",
           "reason": "Packet entered the validated plan."
+        },
+        {
+          "packet_sha256": "beaf03d7542e7d1dcdd164eddeccac46fcc5ee5ba7e8d716f45ba87bfc405a08",
+          "previous_state": "planned",
+          "next_state": "ready",
+          "timestamp": "2026-08-23T09:19:48.173862Z",
+          "actor": "codex",
+          "reason": "Tensor inventory, L4 memory budget, certified host, and cache benchmark contract are complete."
         }
       ]
     },
