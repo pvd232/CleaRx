@@ -146,7 +146,7 @@
     "BOOTSTRAP-004": {
       "packet_path": "orchestration/work_packets/BOOTSTRAP-004.yaml",
       "packet_sha256": "0cee2cdd523883e1f3779b032accf19d15c36adf68a12ba7ad374675908ec71c",
-      "status": "running",
+      "status": "complete",
       "history": [
         {
           "packet_sha256": "0cee2cdd523883e1f3779b032accf19d15c36adf68a12ba7ad374675908ec71c",
@@ -171,6 +171,22 @@
           "timestamp": "2026-08-23T15:26:43Z",
           "actor": "codex",
           "reason": "Begin strict fixture descriptor, tolerance, provenance, and acceptance implementation."
+        },
+        {
+          "packet_sha256": "0cee2cdd523883e1f3779b032accf19d15c36adf68a12ba7ad374675908ec71c",
+          "previous_state": "running",
+          "next_state": "validating",
+          "timestamp": "2026-08-23T15:32:30.467163Z",
+          "actor": "codex",
+          "reason": "All declared acceptance checks passed against commit 7e4990d."
+        },
+        {
+          "packet_sha256": "0cee2cdd523883e1f3779b032accf19d15c36adf68a12ba7ad374675908ec71c",
+          "previous_state": "validating",
+          "next_state": "complete",
+          "timestamp": "2026-08-23T15:33:37.009570Z",
+          "actor": "codex",
+          "reason": "Validated Bootstrap-004 result receipt."
         }
       ]
     },
@@ -295,7 +311,7 @@
     "P0-003A": {
       "packet_path": "orchestration/work_packets/P0-003A.yaml",
       "packet_sha256": "e2ebf0ca7c1859dcf4229eb55aa9aa68d35807e8f5b9974fa66f5e6267467d3c",
-      "status": "blocked",
+      "status": "ready",
       "history": [
         {
           "packet_sha256": "e2ebf0ca7c1859dcf4229eb55aa9aa68d35807e8f5b9974fa66f5e6267467d3c",
@@ -320,6 +336,14 @@
           "timestamp": "2026-08-23T09:27:17.381936Z",
           "actor": "codex",
           "reason": "Frozen fixture schema and acceptance command cannot express or verify boundary identity, named numeric tolerances, or full upstream/tensor/generator/schema provenance; owner-approved tolerance profiles and a bootstrap acceptance correction are required."
+        },
+        {
+          "packet_sha256": "e2ebf0ca7c1859dcf4229eb55aa9aa68d35807e8f5b9974fa66f5e6267467d3c",
+          "previous_state": "blocked",
+          "next_state": "ready",
+          "timestamp": "2026-08-23T15:33:37.213042Z",
+          "actor": "codex",
+          "reason": "Bootstrap-004 now supplies strict fixture descriptor, provenance, tolerance, and harness acceptance contracts."
         }
       ]
     },

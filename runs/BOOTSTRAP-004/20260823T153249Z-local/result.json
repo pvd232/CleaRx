@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0.0",
+  "packet_id": "BOOTSTRAP-004",
+  "packet_sha256": "0cee2cdd523883e1f3779b032accf19d15c36adf68a12ba7ad374675908ec71c",
+  "git_commit": "7e4990de4fc7b212dc09e0562079d342c94ef87e",
+  "run_id": "20260823T153249Z-local",
+  "environment": {
+    "kind": "local_m1",
+    "conda_environment": "clearx",
+    "python": "3.12.14"
+  },
+  "commands": [
+    {
+      "command": "python -m pytest -q tests/orchestration/test_fixture_validation.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python scripts/validate_fixtures.py --contract-only",
+      "exit_code": 0
+    },
+    {
+      "command": "python scripts/validate_bootstrap.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python -m pytest -q tests/orchestration",
+      "exit_code": 0
+    }
+  ],
+  "artifacts": [
+    {"path": "docs/architecture/bootstrap_fixture_contract_gap.md", "sha256": "ff0f2010dc4257187db4d63f979559faa2e412f13af6b7d59e5d84849d3952c1", "size_bytes": 6781},
+    {"path": "orchestration/plan.yaml", "sha256": "c1d3bce5ef13c60c08ef40e6f03d32025a53eb931d4c948f3cb13148daee1ac8", "size_bytes": 3987},
+    {"path": "orchestration/state.json", "sha256": "0ce5b639669d65ec25d6ab8f5a88ab3f149587e0bd56315a1a959febe32c5314", "size_bytes": 27083},
+    {"path": "orchestration/schemas/fixture_descriptor.schema.json", "sha256": "9e4840a7bf491657ae1aed42933f51fedd8d3664e5550e8a024c400e12ed214f", "size_bytes": 5979},
+    {"path": "orchestration/work_packets/BOOTSTRAP-004.yaml", "sha256": "0cee2cdd523883e1f3779b032accf19d15c36adf68a12ba7ad374675908ec71c", "size_bytes": 2730},
+    {"path": "scripts/fixture_contract.py", "sha256": "31943b5e2befe25c9cdad118d9017c331aab31e5ca94a6cbdde257375d7d13b6", "size_bytes": 7180},
+    {"path": "scripts/generate_fixture_contract_smoke.py", "sha256": "e9c56b92575a0d6ca882dfcd1f5780c82ad2b65d0ae215efc74ee21f92d6f3f8", "size_bytes": 504},
+    {"path": "scripts/validate_fixtures.py", "sha256": "12591dfde6f54032fb187a0e912826551309c615fedcfbf86f3c57956d5903d5", "size_bytes": 1596},
+    {"path": "tests/fixtures/manifests/fixture_contract_examples/bootstrap_smoke.json", "sha256": "ed71ecae467c2ab5685318ad2a2c45e1cf9653e2ea73f30b8ae2d1593e20bd33", "size_bytes": 828},
+    {"path": "tests/fixtures/native/bootstrap_smoke.descriptor.json", "sha256": "a487538b324959d1b15139b2ff21564f6e79fc1712ca1d5ad0b1b8f8da4e4c78", "size_bytes": 2262},
+    {"path": "tests/orchestration/test_fixture_validation.py", "sha256": "b77f143d4425106a28cb455afb599b84c733afa120fc8f76d21e63aa094144d5", "size_bytes": 5059},
+    {"path": "tests/orchestration/test_plan_validation.py", "sha256": "83dfd9d69f95f36937e3a641f2d2e49cce462120f01883e71c7e1cf802961973", "size_bytes": 2578}
+  ],
+  "required_checks": {
+    "strict_descriptor_present": true,
+    "provenance_hashes_recomputed": true,
+    "tolerance_profile_frozen": true,
+    "artifact_metadata_joined": true,
+    "p0_harness_invoked": true
+  },
+  "outcome": "complete",
+  "deviations": [],
+  "started_at": "2026-08-23T15:26:41Z",
+  "finished_at": "2026-08-23T15:32:49Z"
+}
