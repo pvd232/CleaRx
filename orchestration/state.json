@@ -264,7 +264,7 @@
     "P0-003A": {
       "packet_path": "orchestration/work_packets/P0-003A.yaml",
       "packet_sha256": "e2ebf0ca7c1859dcf4229eb55aa9aa68d35807e8f5b9974fa66f5e6267467d3c",
-      "status": "ready",
+      "status": "blocked",
       "history": [
         {
           "packet_sha256": "e2ebf0ca7c1859dcf4229eb55aa9aa68d35807e8f5b9974fa66f5e6267467d3c",
@@ -281,6 +281,14 @@
           "timestamp": "2026-08-23T08:10:41.343848Z",
           "actor": "codex",
           "reason": "Bootstrap dependency completed; Phase 0 first-wave packet authorized."
+        },
+        {
+          "packet_sha256": "e2ebf0ca7c1859dcf4229eb55aa9aa68d35807e8f5b9974fa66f5e6267467d3c",
+          "previous_state": "ready",
+          "next_state": "blocked",
+          "timestamp": "2026-08-23T09:27:17.381936Z",
+          "actor": "codex",
+          "reason": "Frozen fixture schema and acceptance command cannot express or verify boundary identity, named numeric tolerances, or full upstream/tensor/generator/schema provenance; owner-approved tolerance profiles and a bootstrap acceptance correction are required."
         }
       ]
     },
