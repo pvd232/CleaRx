@@ -217,7 +217,7 @@
     "P0-002": {
       "packet_path": "orchestration/work_packets/P0-002.yaml",
       "packet_sha256": "9c572e24816e5e76af84784dba288ea9cc8014d3baaca416de6e97d67d8e1fba",
-      "status": "running",
+      "status": "complete",
       "history": [
         {
           "packet_sha256": "9c572e24816e5e76af84784dba288ea9cc8014d3baaca416de6e97d67d8e1fba",
@@ -242,6 +242,22 @@
           "timestamp": "2026-08-23T08:57:27.859737Z",
           "actor": "codex",
           "reason": "Pinned repository exposes range-readable safetensors shards; begin complete tensor inventory."
+        },
+        {
+          "packet_sha256": "9c572e24816e5e76af84784dba288ea9cc8014d3baaca416de6e97d67d8e1fba",
+          "previous_state": "running",
+          "next_state": "validating",
+          "timestamp": "2026-08-23T09:13:55.309079Z",
+          "actor": "codex",
+          "reason": "Complete tensor manifest and full-checkpoint checksum validation passed at commit 0d4ae2b."
+        },
+        {
+          "packet_sha256": "9c572e24816e5e76af84784dba288ea9cc8014d3baaca416de6e97d67d8e1fba",
+          "previous_state": "validating",
+          "next_state": "complete",
+          "timestamp": "2026-08-23T09:14:18.786843Z",
+          "actor": "codex",
+          "reason": "Validated P0-002 result receipt."
         }
       ]
     },
@@ -348,7 +364,7 @@
     "P0-005B": {
       "packet_path": "orchestration/work_packets/P0-005B.yaml",
       "packet_sha256": "3d2028606e6867c7ff67857dd335660bedb7834649df4ce1b492b6e936635628",
-      "status": "planned",
+      "status": "ready",
       "history": [
         {
           "packet_sha256": "3d2028606e6867c7ff67857dd335660bedb7834649df4ce1b492b6e936635628",
@@ -357,6 +373,14 @@
           "timestamp": "2026-08-23T07:50:00Z",
           "actor": "orchestrator",
           "reason": "Packet entered the validated plan."
+        },
+        {
+          "packet_sha256": "3d2028606e6867c7ff67857dd335660bedb7834649df4ce1b492b6e936635628",
+          "previous_state": "planned",
+          "next_state": "ready",
+          "timestamp": "2026-08-23T09:14:32.039774Z",
+          "actor": "codex",
+          "reason": "P0-002 tensor inventory and P0-005A certified host profile are complete."
         }
       ]
     },

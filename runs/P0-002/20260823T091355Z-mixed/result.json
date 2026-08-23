@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0.0",
+  "packet_id": "P0-002",
+  "packet_sha256": "9c572e24816e5e76af84784dba288ea9cc8014d3baaca416de6e97d67d8e1fba",
+  "git_commit": "0d4ae2bd2c9426a2be035c48091e80267d301670",
+  "run_id": "20260823T091355Z-mixed",
+  "environment": {
+    "kind": "mixed",
+    "generation_host": "clearx-mantra-g2-l4-v1",
+    "validation_host": "local_m1",
+    "source_model_bytes_in_git": false
+  },
+  "commands": [
+    {
+      "command": "python tools/inventory/generate_tensor_manifest.py /home/machina/clearx-work/model /home/machina/clearx-work/tensor_manifest.json",
+      "exit_code": 0
+    },
+    {
+      "command": "python tools/inventory/validate_tensor_manifest.py tensor_manifest.json",
+      "exit_code": 0
+    }
+  ],
+  "artifacts": [
+    {"path": "tensor_manifest.json", "sha256": "2ff0be00e916e6b8ddf6fbf4bcd674694983e609433e9175a5fa2b17c362f90b", "size_bytes": 30675193},
+    {"path": "docs/architecture/tensor_inventory.md", "sha256": "44a7a2f5f97394541498075d496bf173566c8ed49c65a4aaf6d1400403b82b71", "size_bytes": 5374}
+  ],
+  "required_checks": {
+    "all_modules_covered": true,
+    "shapes_and_dtypes_present": true,
+    "source_hashes_present": true,
+    "backend_placement_present": true
+  },
+  "outcome": "complete",
+  "deviations": [],
+  "started_at": "2026-08-23T08:57:20Z",
+  "finished_at": "2026-08-23T09:13:55Z"
+}

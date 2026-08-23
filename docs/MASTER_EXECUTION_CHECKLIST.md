@@ -34,7 +34,7 @@ commit. Complete dependency producers before their consumers.
 | Clean L4 deployment host | Verified live | Infrastructure foundation | GCE instance, disk, GPU, SSH, and backup-image inspections |
 | Schemas, validators, state machine, and packet DAG | Complete at `4541b7f`; first-wave and derived validator ownership corrected at `3a4b079` and `c55f3a5` | Bootstrap-001 through Bootstrap-003 | Valid results `20260823T081011Z-local`, `20260823T082530Z-local`, and `20260823T085305Z-local` |
 | Pinned upstream/runtime contract | Complete at `902d871` | P0-001 | Valid result `20260823T083005Z-local` |
-| Tensor inventory | Not started | P0-002 | Validated tensor manifest and analysis |
+| Tensor inventory | Complete at `0d4ae2b` | P0-002 | Valid result `20260823T091355Z-mixed`; 28,010 source tensors and 15 shards reconcile |
 | Fixture contract and generated reference fixtures | Not started | P0-003A and P0-003B | Fixture validator and packet-bound A100 evidence |
 | Native ABI and ownership contract | Not started | P0-004 | Phase 0 integration gate |
 | L4 host and memory contract | Host profile complete at `502d9eb`; memory budget pending | P0-005A and P0-005B | Valid P0-005A result `20260823T083617Z-l4` and later manifest-derived budget |
@@ -91,7 +91,7 @@ no production runtime implementation.
 **Depends on:** Phase A
 
 - [x] Complete P0-001 and freeze exact upstream/runtime revisions.
-- [ ] Complete P0-002 and publish the complete tensor inventory.
+- [x] Complete P0-002 and publish the complete tensor inventory.
 - [ ] Complete P0-003A and validate the fixture contract and harness.
 - [x] Complete P0-005A using the live `mantra-g2` host profile.
 - [x] Complete P0-006A and validate the benchmark/result contracts.
