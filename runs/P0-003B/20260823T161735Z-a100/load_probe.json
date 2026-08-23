@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0.0",
+  "packet_id": "P0-003B",
+  "controller_commit": "99c4d858638456563c2c808a6d61bafa5b525e3f",
+  "colab_session": "clearx-p0-003b",
+  "environment": {
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_total_bytes": 42405855232,
+    "host_memory_total_kb": 87528512,
+    "disk_free_bytes_before_download": 202365607936,
+    "torch_version": "2.11.0+cu128",
+    "cuda_version": "12.8"
+  },
+  "model": {
+    "repository": "Qwen/Qwen3-Omni-30B-A3B-Instruct",
+    "commit": "26291f793822fb6be9555850f06dfe95f2d7e695",
+    "transformers_commit": "7d9754a05193eb79b1d86aa744b622b8068008cd",
+    "dtype": "bfloat16",
+    "attention_implementation": "sdpa"
+  },
+  "automatic_map_probe": {
+    "load_seconds": 442.081805229187,
+    "gpu_allocated_bytes": 39194892288,
+    "gpu_reserved_bytes": 39961231360,
+    "gpu_modules": 32,
+    "cpu_modules": 24,
+    "talker_device": "cpu",
+    "code2wav_device": "cpu",
+    "inference_outcome": "failed",
+    "failure": "Talker generation produced a meta-device tensor while the wrapper expected cuda:0."
+  },
+  "explicit_map_probe": {
+    "load_seconds": 305.0326373577118,
+    "gpu_allocated_bytes": 35208610304,
+    "gpu_reserved_bytes": 37274779648,
+    "gpu_thinker_layers": [0, 20],
+    "cpu_thinker_layers": [21, 47],
+    "talker_device": "cuda:0",
+    "code2wav_device": "cuda:0",
+    "inference_seconds": 26.692381858825684,
+    "thinker_max_new_tokens": 2,
+    "talker_max_new_tokens": 2,
+    "text_shape": [1, 13],
+    "audio_shape": [1, 1, 1365],
+    "audio_dtype": "torch.float32",
+    "gpu_peak_allocated_bytes": 36511910400,
+    "outcome": "complete"
+  },
+  "observations": [
+    "talker_max_new_tokens=1 reaches an upstream empty-stack edge case before waveform decode.",
+    "talker_max_new_tokens=2 produces one complete primary-plus-residual codec frame and waveform output.",
+    "The pinned PyTorch model has no native scheduler, interruption, cancellation, or bounded-context reconstruction operation to observe."
+  ],
+  "finished_at": "2026-08-23T16:17:35Z"
+}
