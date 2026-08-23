@@ -1,0 +1,101 @@
+{
+  "schema_version": "1.0.0",
+  "profile_id": "clearx-mantra-g2-l4-v1",
+  "captured_at": "2026-08-23T08:34:03.350315Z",
+  "source_commit": "dbab49a27f6ac4716d5948762f3714ec3ffb287a",
+  "gce": {
+    "project": "mantra-477901",
+    "instance": "mantra-g2-spot",
+    "zone": "us-west1-a",
+    "machine_type": "g2-standard-12",
+    "provisioning_model": "SPOT",
+    "boot_disk_gib": 375,
+    "boot_disk_auto_delete": true,
+    "instance_termination_action": "STOP",
+    "source_image": "common-cu129-ubuntu-2204-nvidia-580-v20260818"
+  },
+  "os": {
+    "pretty_name": "Ubuntu 22.04.5 LTS",
+    "id": "ubuntu",
+    "version_id": "22.04"
+  },
+  "cpu": {
+    "architecture": "x86_64",
+    "logical_cpus": 12,
+    "model": "Intel(R) Xeon(R) CPU @ 2.20GHz",
+    "threads_per_core": 2,
+    "cores_per_socket": 6,
+    "sockets": 1,
+    "numa_nodes": 1
+  },
+  "memory": {
+    "total_bytes": 50511646720,
+    "available_bytes_at_capture": 49428234240,
+    "memlock_soft_bytes": 6313955328,
+    "memlock_hard_bytes": 6313955328
+  },
+  "gpu": {
+    "name": "NVIDIA L4",
+    "uuid": "GPU-e2d6d9a2-3e87-2a3c-73fb-589e52f39d0e",
+    "memory_total_mib": 23034,
+    "driver_version": "580.173.02",
+    "performance_state": "P8"
+  },
+  "pcie": {
+    "bus_id": "0000:00:03.0",
+    "generation_current": 1,
+    "generation_max": 3,
+    "width_current": 16,
+    "width_max": 16,
+    "numa_node": 0
+  },
+  "storage": {
+    "device": "/dev/nvme0n1p1",
+    "filesystem": "ext4",
+    "size_bytes": 390040887296,
+    "available_bytes": 371945881600,
+    "gce_disk_type": "pd-ssd"
+  },
+  "software": {
+    "kernel": "6.8.0-1066-gcp",
+    "cuda": "12.9",
+    "nvcc": "12.9.41",
+    "driver": "580.173.02",
+    "driver_cuda_capability": "13.0",
+    "compiler": "GCC 12.3.0"
+  },
+  "thermal_power": {
+    "power_limit_w": 72.0,
+    "temperature_c": 44,
+    "performance_state": "P8",
+    "persistence_mode": true,
+    "compute_mode": "Default"
+  },
+  "measurement_contract": {
+    "phases": [
+      "listening",
+      "voxzip_concurrent_listening",
+      "voxzip_sequential_endpoint",
+      "thinker_prefill",
+      "talker_startup",
+      "talker_sustained_output",
+      "barge_in",
+      "context_rebuild"
+    ],
+    "metrics": [
+      "phase_live_sets",
+      "allocator_peak",
+      "process_rss"
+    ],
+    "sampling_interval_ms": 100
+  },
+  "sources": {
+    "gce": "gcloud compute instances describe plus gcloud compute disks describe",
+    "gpu": "nvidia-smi query-gpu",
+    "pcie": "nvidia-smi PCIe link query plus sysfs NUMA node",
+    "cpu": "lscpu -J",
+    "memory": "/proc/meminfo plus RLIMIT_MEMLOCK",
+    "storage": "findmnt plus statvfs",
+    "software": "/etc/os-release, uname, nvcc, gcc, and nvidia-smi"
+  }
+}
