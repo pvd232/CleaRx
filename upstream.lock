@@ -1,0 +1,106 @@
+{
+  "schema_version": "1.0.0",
+  "frozen_at": "2026-08-23T08:28:00Z",
+  "repositories": [
+    {
+      "id": "llama.cpp",
+      "url": "https://github.com/ggml-org/llama.cpp.git",
+      "commit": "6657ded4faa3b8450221119fc6b4d002e35104a2",
+      "commit_time": "2026-08-23T10:38:29+03:00",
+      "role": "native GGUF runtime, conversion scripts, GGML, and multimodal input",
+      "evidence_symbols": [
+        {"path": "include/llama.h", "symbol": "llama_model_load_from_file"},
+        {"path": "tools/mtmd/models/qwen3a.cpp", "symbol": "clip_graph_qwen3a::build"},
+        {"path": "tools/mtmd/models/qwen3tts-gen.cpp", "symbol": "clip_graph_qwen3tts_gen::code2wav::decode"},
+        {"path": "ggml/include/ggml-backend.h", "symbol": "ggml_backend_tensor_copy_async"}
+      ]
+    },
+    {
+      "id": "whisper.cpp",
+      "url": "https://github.com/ggml-org/whisper.cpp.git",
+      "commit": "233fe1fc9b48a09e361d3594520838ca266537fe",
+      "commit_time": "2026-08-22T07:14:11+02:00",
+      "role": "optional Phase 4 transcript and timestamp producer",
+      "evidence_symbols": [
+        {"path": "include/whisper.h", "symbol": "whisper_full"},
+        {"path": "include/whisper.h", "symbol": "whisper_full_get_token_t0"}
+      ]
+    },
+    {
+      "id": "qwen3-omni",
+      "url": "https://github.com/QwenLM/Qwen3-Omni.git",
+      "commit": "e4235853125589c789f06a2dd83e9f4126df5e9d",
+      "commit_time": "2026-04-23T18:58:01+08:00",
+      "role": "official usage contract and model release guidance",
+      "evidence_symbols": [
+        {"path": "README.md", "symbol": "Qwen3OmniMoeForConditionalGeneration.from_pretrained"},
+        {"path": "README.md", "symbol": "model.disable_talker"}
+      ]
+    },
+    {
+      "id": "transformers",
+      "url": "https://github.com/huggingface/transformers.git",
+      "commit": "7d9754a05193eb79b1d86aa744b622b8068008cd",
+      "commit_time": "2026-02-16T19:37:36+01:00",
+      "role": "pinned Qwen3-Omni PyTorch reference implementation at tag v5.2.0",
+      "evidence_symbols": [
+        {"path": "src/transformers/models/qwen3_omni_moe/modeling_qwen3_omni_moe.py", "symbol": "Qwen3OmniMoeTalkerForConditionalGeneration"},
+        {"path": "src/transformers/models/qwen3_omni_moe/modeling_qwen3_omni_moe.py", "symbol": "Qwen3OmniMoeCode2Wav"},
+        {"path": "src/transformers/models/qwen3_omni_moe/modeling_qwen3_omni_moe.py", "symbol": "Qwen3OmniMoeForConditionalGeneration.generate"}
+      ]
+    },
+    {
+      "id": "qwen-model",
+      "url": "https://huggingface.co/Qwen/Qwen3-Omni-30B-A3B-Instruct",
+      "commit": "26291f793822fb6be9555850f06dfe95f2d7e695",
+      "commit_time": "2025-09-22T14:17:52Z",
+      "role": "official weights, tokenizer, configuration, and tensor index",
+      "evidence_symbols": [
+        {"path": "config.json", "symbol": "talker_config"},
+        {"path": "config.json", "symbol": "code2wav_config"},
+        {"path": "config.json", "symbol": "enable_audio_output"}
+      ]
+    },
+    {
+      "id": "qwen-gguf",
+      "url": "https://huggingface.co/ggml-org/Qwen3-Omni-30B-A3B-Instruct-GGUF",
+      "commit": "6e35a28f4a19b18730f8949b0c579c6429649ab8",
+      "commit_time": "2026-04-13T00:07:43Z",
+      "role": "published Thinker and multimodal-projector GGUF artifacts",
+      "evidence_symbols": [
+        {"path": "README.md", "symbol": "convert_hf_to_gguf.py"},
+        {"path": "Qwen3-Omni-30B-A3B-Instruct-Q4_K_M.gguf", "symbol": "d9e2876556e7873e02c0359f832432ee2d67ab7dd0cee3efe0f77fd7a1f4dd85"}
+      ]
+    }
+  ],
+  "file_identities": [
+    {"repository": "llama.cpp", "path": "convert_hf_to_gguf.py", "sha256": "e38975e1c68d98ac1664dfd530616eb35c72294382a4dd873d4746b23f27779f"},
+    {"repository": "llama.cpp", "path": "gguf-py/gguf/gguf_writer.py", "sha256": "23bcb88a4842b356f720370ef477429afa200ce36266e0334fa5ec401d35e9aa"},
+    {"repository": "qwen-model", "path": "config.json", "sha256": "eab5093d47807aaf894119506b238b2b1cee70d08456e894fee9a012d88f2e0d"},
+    {"repository": "qwen-model", "path": "tokenizer_config.json", "sha256": "dc3c31c3bdaedd5016382bb3cbe07323026775ad51f5a4fb564505992ae4a670"},
+    {"repository": "qwen-model", "path": "vocab.json", "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"},
+    {"repository": "qwen-model", "path": "merges.txt", "sha256": "599bab54075088774b1733fde865d5bd747cbcc7a547c5bc12610e874e26f5e3"},
+    {"repository": "qwen-model", "path": "model.safetensors.index.json", "sha256": "03ffe9a54efe9007ceb788c2b036f5c589094918c4582add4e92bc17e1cba838"},
+    {"repository": "qwen-model", "path": "generation_config.json", "sha256": "7fa40989be8e43c078907810c41c25d33747523afce3d5a34d5850f930c886cb"},
+    {"repository": "qwen-gguf", "path": "Qwen3-Omni-30B-A3B-Instruct-Q4_K_M.gguf", "sha256": "d9e2876556e7873e02c0359f832432ee2d67ab7dd0cee3efe0f77fd7a1f4dd85"},
+    {"repository": "qwen-gguf", "path": "mmproj-Qwen3-Omni-30B-A3B-Instruct-bf16.gguf", "sha256": "f0dfe825fb692d426362b1ac79678fc08daa4758f7151526cad110515f122883"}
+  ],
+  "toolchains": {
+    "local_m1": {
+      "os": "macOS arm64",
+      "compiler": "Apple clang 21.0.0 (clang-2100.1.1.101)",
+      "cmake": "3.30.5",
+      "ninja": "1.13.2",
+      "python": "3.12.14"
+    },
+    "l4": {
+      "gce_image": "common-cu129-ubuntu-2204-nvidia-580-v20260818",
+      "os": "Ubuntu 22.04.5 LTS",
+      "kernel": "6.8.0-1066-gcp",
+      "compiler": "GCC 12.3.0",
+      "cuda": "12.9",
+      "nvcc": "12.9.41",
+      "driver": "580.173.02"
+    }
+  }
+}

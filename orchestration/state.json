@@ -99,7 +99,7 @@
     "P0-001": {
       "packet_path": "orchestration/work_packets/P0-001.yaml",
       "packet_sha256": "3896d3661656766ef6e29b4db822bb2d3874a9f827019a087900c8574d6bc704",
-      "status": "ready",
+      "status": "running",
       "history": [
         {
           "packet_sha256": "3896d3661656766ef6e29b4db822bb2d3874a9f827019a087900c8574d6bc704",
@@ -140,6 +140,14 @@
           "timestamp": "2026-08-23T08:26:00.223772Z",
           "actor": "codex",
           "reason": "Bootstrap-002 supplied the previously missing acceptance validator."
+        },
+        {
+          "packet_sha256": "3896d3661656766ef6e29b4db822bb2d3874a9f827019a087900c8574d6bc704",
+          "previous_state": "ready",
+          "next_state": "running",
+          "timestamp": "2026-08-23T08:27:11.094734Z",
+          "actor": "codex",
+          "reason": "Resume upstream audit after Bootstrap-002 validator correction."
         }
       ]
     },
