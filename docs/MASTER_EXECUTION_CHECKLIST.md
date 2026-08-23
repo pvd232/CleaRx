@@ -32,7 +32,7 @@ commit. Complete dependency producers before their consumers.
 | Local project environment | Verified locally | Environment foundation | `conda run -n clearx` resolves the declared Python and tools |
 | Colab control-plane access | Verified with ADC | Environment foundation | `colab --auth=adc sessions` exits successfully |
 | Clean L4 deployment host | Verified live | Infrastructure foundation | GCE instance, disk, GPU, SSH, and backup-image inspections |
-| Schemas, validators, state machine, and packet DAG | Not implemented | Bootstrap-001 | Complete local Bootstrap validation command |
+| Schemas, validators, state machine, and packet DAG | Complete at `4541b7f` | Bootstrap-001 | Valid result `20260823T081011Z-local` and complete lifecycle state |
 | Pinned upstream/runtime contract | Not started | P0-001 | Validated lock and runtime gap matrix |
 | Tensor inventory | Not started | P0-002 | Validated tensor manifest and analysis |
 | Fixture contract and generated reference fixtures | Not started | P0-003A and P0-003B | Fixture validator and packet-bound A100 evidence |
@@ -65,13 +65,13 @@ commit. Complete dependency producers before their consumers.
 
 **Owned contract:** [Bootstrap-001](LOCAL_ORCHESTRATOR_MASTER_PROMPT.md#bootstrap-001--create-the-orchestration-package)
 
-- [ ] Create root operating rules, decisions, and execution-environment documentation.
-- [ ] Create plan, packet, result, fixture, benchmark, and state schemas.
-- [ ] Create `plan.yaml`, immutable Bootstrap/Phase 0 packets, and initialized state.
-- [ ] Implement plan, result, fixture, packet-run, and remote-wrapper entry points.
-- [ ] Add valid and invalid orchestration fixtures and tests for every required rejection.
-- [ ] Run the complete Bootstrap validation command from the `clearx` environment.
-- [ ] Review the package against the handoff and commit the validated checkpoint.
+- [x] Create root operating rules, decisions, and execution-environment documentation.
+- [x] Create plan, packet, result, fixture, benchmark, and state schemas.
+- [x] Create `plan.yaml`, immutable Bootstrap/Phase 0 packets, and initialized state.
+- [x] Implement plan, result, fixture, packet-run, and remote-wrapper entry points.
+- [x] Add valid and invalid orchestration fixtures and tests for every required rejection.
+- [x] Run the complete Bootstrap validation command from the `clearx` environment.
+- [x] Review the package against the handoff and commit the validated checkpoint.
 
 **Acceptance gate**
 

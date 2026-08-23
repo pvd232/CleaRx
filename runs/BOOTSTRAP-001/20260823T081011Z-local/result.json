@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0.0",
+  "packet_id": "BOOTSTRAP-001",
+  "packet_sha256": "c30fe705e6d2aea8601152e6f619f1f556ce474ea74472f5b1ed26ce0c9f86c5",
+  "git_commit": "4541b7f06c6edc5bb78d7a52d7dccbd263712e14",
+  "run_id": "20260823T081011Z-local",
+  "environment": {
+    "kind": "local_m1",
+    "conda_environment": "clearx",
+    "python": "3.12.14"
+  },
+  "commands": [
+    {
+      "command": "python scripts/validate_bootstrap.py",
+      "exit_code": 0
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "orchestration/plan.yaml",
+      "sha256": "666b93c0dcaa8738b8c425c58aeeb1f7a5c2d09165bd988fc103ca4f22f4ba94",
+      "size_bytes": 3137
+    },
+    {
+      "path": "orchestration/state.json",
+      "sha256": "aa9e2addae5f6c3b1520d31967d56aec47affba63127031f11a18149dd2646a2",
+      "size_bytes": 5988
+    },
+    {
+      "path": "scripts/validate_bootstrap.py",
+      "sha256": "8b644425da5b7c00d0b36959c867ef9912b30d685eda1b57c150bc69c9fe33bf",
+      "size_bytes": 959
+    }
+  ],
+  "required_checks": {
+    "schemas_valid": true,
+    "packets_valid": true,
+    "dag_acyclic": true,
+    "state_valid": true,
+    "invalid_fixtures_rejected": true,
+    "remote_preflight_safe": true
+  },
+  "outcome": "complete",
+  "deviations": [],
+  "started_at": "2026-08-23T08:00:00Z",
+  "finished_at": "2026-08-23T08:10:11Z"
+}
