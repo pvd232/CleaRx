@@ -52,7 +52,7 @@
     "BOOTSTRAP-002": {
       "packet_path": "orchestration/work_packets/BOOTSTRAP-002.yaml",
       "packet_sha256": "4076b7da6706b0b661135b43039a12218deea02e00969793962dfad5ccd6719c",
-      "status": "running",
+      "status": "complete",
       "history": [
         {
           "packet_sha256": "4076b7da6706b0b661135b43039a12218deea02e00969793962dfad5ccd6719c",
@@ -77,13 +77,29 @@
           "timestamp": "2026-08-23T08:22:56Z",
           "actor": "codex",
           "reason": "Begin validator ownership correction."
+        },
+        {
+          "packet_sha256": "4076b7da6706b0b661135b43039a12218deea02e00969793962dfad5ccd6719c",
+          "previous_state": "running",
+          "next_state": "validating",
+          "timestamp": "2026-08-23T08:25:30.412725Z",
+          "actor": "codex",
+          "reason": "Bootstrap-002 acceptance tests passed at commit 3a4b079."
+        },
+        {
+          "packet_sha256": "4076b7da6706b0b661135b43039a12218deea02e00969793962dfad5ccd6719c",
+          "previous_state": "validating",
+          "next_state": "complete",
+          "timestamp": "2026-08-23T08:26:00.059729Z",
+          "actor": "codex",
+          "reason": "Validated Bootstrap-002 result receipt."
         }
       ]
     },
     "P0-001": {
       "packet_path": "orchestration/work_packets/P0-001.yaml",
       "packet_sha256": "3896d3661656766ef6e29b4db822bb2d3874a9f827019a087900c8574d6bc704",
-      "status": "failed",
+      "status": "ready",
       "history": [
         {
           "packet_sha256": "3896d3661656766ef6e29b4db822bb2d3874a9f827019a087900c8574d6bc704",
@@ -116,6 +132,14 @@
           "timestamp": "2026-08-23T08:19:52.341473Z",
           "actor": "codex",
           "reason": "Acceptance command points to a missing validator outside the packet write scope; Bootstrap correction required."
+        },
+        {
+          "packet_sha256": "3896d3661656766ef6e29b4db822bb2d3874a9f827019a087900c8574d6bc704",
+          "previous_state": "failed",
+          "next_state": "ready",
+          "timestamp": "2026-08-23T08:26:00.223772Z",
+          "actor": "codex",
+          "reason": "Bootstrap-002 supplied the previously missing acceptance validator."
         }
       ]
     },
