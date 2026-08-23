@@ -1,20 +1,18 @@
 #!/usr/bin/env python3
-"""Validate CleaRx fixture manifests and every artifact checksum they declare."""
+"""Validate fixture envelopes, strict descriptors, artifact bytes, and contracts."""
 
 import argparse
+import subprocess
+import sys
 from pathlib import Path
 
-from orchestration_lib import ContractError, load_record, load_schema, repository_root, safe_repo_path, sha256_file, validate_schema
+from fixture_contract import validate_fixture_envelope
+from orchestration_lib import ContractError, repository_root
 
 
 def validate_manifest(root: Path, manifest_path: Path) -> None:
-    """Validate one fixture manifest and its referenced artifact bytes."""
-    manifest = load_record(manifest_path)
-    validate_schema(manifest, load_schema(root, "fixture.schema.json"), str(manifest_path))
-    for artifact in manifest["artifacts"]:
-        path = safe_repo_path(root, artifact["path"])
-        if not path.is_file() or sha256_file(path) != artifact["sha256"]:
-            raise ContractError(f"fixture artifact identity mismatch: {artifact['path']}")
+    """Validate one fixture envelope through its strict descriptor."""
+    validate_fixture_envelope(root, manifest_path)
 
 
 def main() -> int:
@@ -29,6 +27,11 @@ def main() -> int:
     try:
         for manifest in manifests:
             validate_manifest(root, manifest)
+        harness = root / "tools" / "reference" / "fixture_harness.py"
+        if args.contract_only and harness.is_file():
+            completed = subprocess.run([sys.executable, str(harness), "--contract-only"], cwd=root)
+            if completed.returncode:
+                raise ContractError("fixture harness contract validation failed")
     except (ContractError, OSError, ValueError) as error:
         print(f"INVALID: {error}")
         return 1

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "plan_sha256": "84ec227c182bbf92c87064b4c8f16266f0fd1c6a24921fa11ec539f2272d7dab",
+  "plan_sha256": "c1d3bce5ef13c60c08ef40e6f03d32025a53eb931d4c948f3cb13148daee1ac8",
   "packets": {
     "BOOTSTRAP-001": {
       "packet_path": "orchestration/work_packets/BOOTSTRAP-001.yaml",
@@ -140,6 +140,37 @@
           "timestamp": "2026-08-23T08:53:38.992739Z",
           "actor": "codex",
           "reason": "Validated Bootstrap-003 result receipt."
+        }
+      ]
+    },
+    "BOOTSTRAP-004": {
+      "packet_path": "orchestration/work_packets/BOOTSTRAP-004.yaml",
+      "packet_sha256": "0cee2cdd523883e1f3779b032accf19d15c36adf68a12ba7ad374675908ec71c",
+      "status": "running",
+      "history": [
+        {
+          "packet_sha256": "0cee2cdd523883e1f3779b032accf19d15c36adf68a12ba7ad374675908ec71c",
+          "previous_state": null,
+          "next_state": "planned",
+          "timestamp": "2026-08-23T15:26:41Z",
+          "actor": "codex",
+          "reason": "P0-003A acceptance could not verify its declared boundary, tolerance, and provenance guarantees."
+        },
+        {
+          "packet_sha256": "0cee2cdd523883e1f3779b032accf19d15c36adf68a12ba7ad374675908ec71c",
+          "previous_state": "planned",
+          "next_state": "ready",
+          "timestamp": "2026-08-23T15:26:42Z",
+          "actor": "codex",
+          "reason": "Bootstrap-003 is complete and the owner approved the fixture contract correction."
+        },
+        {
+          "packet_sha256": "0cee2cdd523883e1f3779b032accf19d15c36adf68a12ba7ad374675908ec71c",
+          "previous_state": "ready",
+          "next_state": "running",
+          "timestamp": "2026-08-23T15:26:43Z",
+          "actor": "codex",
+          "reason": "Begin strict fixture descriptor, tolerance, provenance, and acceptance implementation."
         }
       ]
     },

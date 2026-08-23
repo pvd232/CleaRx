@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://clearx.local/schemas/fixture_descriptor.schema.json",
+  "title": "CleaRx reference fixture descriptor",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "descriptor_id", "fixture_kind", "boundary", "case", "provenance", "execution", "comparison", "inputs", "outputs"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "descriptor_id": {"type": "string", "minLength": 1},
+    "fixture_kind": {"enum": ["contract_smoke", "model_boundary"]},
+    "boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "module", "operation", "input_coordinate_domain", "output_coordinate_domain"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]+$"},
+        "module": {"enum": ["bootstrap", "input", "aut", "thinker", "talker", "mtp", "code2wav", "handoff", "scheduler"]},
+        "operation": {"type": "string", "minLength": 1},
+        "input_coordinate_domain": {"$ref": "#/$defs/coordinate_domain"},
+        "output_coordinate_domain": {"$ref": "#/$defs/coordinate_domain"}
+      }
+    },
+    "case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "class", "description", "adversarial_tags"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]+$"},
+        "class": {"enum": ["nominal", "adversarial"]},
+        "description": {"type": "string", "minLength": 1},
+        "adversarial_tags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"enum": ["empty_background", "background_noise", "variable_chunk", "final_partial_chunk", "turn_end", "long_turn", "interruption", "cancellation", "repeated_phase_transition", "context_reconstruction"]}
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["upstream_lock_sha256", "tensor_manifest_sha256", "evaluation_contract_sha256", "fixture_schema_sha256", "generator_commit", "generator_path", "generator_sha256", "source_model_commit", "source_model_config_sha256"],
+      "properties": {
+        "upstream_lock_sha256": {"$ref": "#/$defs/sha256"},
+        "tensor_manifest_sha256": {"$ref": "#/$defs/sha256"},
+        "evaluation_contract_sha256": {"$ref": "#/$defs/sha256"},
+        "fixture_schema_sha256": {"$ref": "#/$defs/sha256"},
+        "generator_commit": {"$ref": "#/$defs/commit"},
+        "generator_path": {"$ref": "#/$defs/repo_path"},
+        "generator_sha256": {"$ref": "#/$defs/sha256"},
+        "source_model_commit": {"$ref": "#/$defs/commit"},
+        "source_model_config_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["seed", "deterministic_algorithms", "sampling_profile_id", "sampling", "framework", "framework_version", "device"],
+      "properties": {
+        "seed": {"type": "integer", "minimum": 0},
+        "deterministic_algorithms": {"type": "boolean"},
+        "sampling_profile_id": {"enum": ["contract-smoke", "greedy-correctness", "release-quality"]},
+        "sampling": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["thinker_do_sample", "talker_do_sample", "temperature", "top_k", "top_p", "repetition_penalty"],
+          "properties": {
+            "thinker_do_sample": {"type": "boolean"},
+            "talker_do_sample": {"type": "boolean"},
+            "temperature": {"type": "number", "exclusiveMinimum": 0},
+            "top_k": {"type": "integer", "minimum": 0},
+            "top_p": {"type": "number", "exclusiveMinimum": 0, "maximum": 1},
+            "repetition_penalty": {"type": "number", "exclusiveMinimum": 0}
+          }
+        },
+        "framework": {"type": "string", "minLength": 1},
+        "framework_version": {"type": "string", "minLength": 1},
+        "device": {"type": "string", "minLength": 1}
+      }
+    },
+    "comparison": {"$ref": "#/$defs/comparison"},
+    "inputs": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/artifact_ref"}
+    },
+    "outputs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/artifact_ref"}
+    }
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "repo_path": {"type": "string", "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+"},
+    "coordinate_domain": {"enum": ["metadata", "pcm_input_sample", "aut_frame", "thinker_position", "talker_position", "codec_frame", "codec_codebook", "pcm_output_sample", "scheduler_event"]},
+    "comparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["profile_id", "mode", "atol", "rtol", "equal_nan", "max_mismatch_fraction", "minimum_cosine_similarity"],
+      "properties": {
+        "profile_id": {"enum": ["exact_discrete", "fp32_strict", "bf16_activation", "bf16_accumulation", "waveform_fp32"]},
+        "mode": {"enum": ["exact", "allclose"]},
+        "atol": {"type": "number", "minimum": 0},
+        "rtol": {"type": "number", "minimum": 0},
+        "equal_nan": {"type": "boolean"},
+        "max_mismatch_fraction": {"type": "number", "minimum": 0, "maximum": 1},
+        "minimum_cosine_similarity": {"type": ["number", "null"], "minimum": -1, "maximum": 1}
+      }
+    },
+    "artifact_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["logical_name", "path", "sha256", "dtype", "shape"],
+      "properties": {
+        "logical_name": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]+$"},
+        "path": {"$ref": "#/$defs/repo_path"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "dtype": {"type": "string", "minLength": 1},
+        "shape": {"type": "array", "items": {"type": "integer", "minimum": 0}}
+      }
+    }
+  }
+}

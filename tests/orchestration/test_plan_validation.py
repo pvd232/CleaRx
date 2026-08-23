@@ -15,7 +15,7 @@ def test_current_package_is_valid(repo_copy: Path) -> None:
     """Accept the unmodified Bootstrap orchestration package."""
     plan, state, packets = validate_all(repo_copy)
     assert len(plan["nodes"]) == len(state["packets"]) == len(packets)
-    assert {"BOOTSTRAP-001", "BOOTSTRAP-002", "BOOTSTRAP-003", "P0-001", "P0-004"} <= set(packets)
+    assert {"BOOTSTRAP-001", "BOOTSTRAP-002", "BOOTSTRAP-003", "BOOTSTRAP-004", "P0-001", "P0-004"} <= set(packets)
 
 
 def test_stale_packet_digest_is_rejected(repo_copy: Path) -> None:

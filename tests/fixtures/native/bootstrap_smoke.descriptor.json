@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0.0",
+  "descriptor_id": "bootstrap-smoke",
+  "fixture_kind": "contract_smoke",
+  "boundary": {
+    "id": "bootstrap.contract_smoke",
+    "module": "bootstrap",
+    "operation": "validate descriptor-to-envelope joins without model execution",
+    "input_coordinate_domain": "metadata",
+    "output_coordinate_domain": "metadata"
+  },
+  "case": {
+    "id": "bootstrap.nominal",
+    "class": "nominal",
+    "description": "Validate one exact UTF-8 payload and all frozen provenance joins.",
+    "adversarial_tags": []
+  },
+  "provenance": {
+    "upstream_lock_sha256": "4a799b7ff82f3f15d2cf9b6a46938742ed2a8fbc0441f645d3b50579b046cd7a",
+    "tensor_manifest_sha256": "2ff0be00e916e6b8ddf6fbf4bcd674694983e609433e9175a5fa2b17c362f90b",
+    "evaluation_contract_sha256": "86cf5fe56d6e0bb2d42b490af205c3970ecf13cd075d641411717ec95aba0b96",
+    "fixture_schema_sha256": "9e4840a7bf491657ae1aed42933f51fedd8d3664e5550e8a024c400e12ed214f",
+    "generator_commit": "ffde0f6d130c6a9687f87e012507111aca0021e7",
+    "generator_path": "scripts/generate_fixture_contract_smoke.py",
+    "generator_sha256": "e9c56b92575a0d6ca882dfcd1f5780c82ad2b65d0ae215efc74ee21f92d6f3f8",
+    "source_model_commit": "26291f793822fb6be9555850f06dfe95f2d7e695",
+    "source_model_config_sha256": "eab5093d47807aaf894119506b238b2b1cee70d08456e894fee9a012d88f2e0d"
+  },
+  "execution": {
+    "seed": 0,
+    "deterministic_algorithms": true,
+    "sampling_profile_id": "contract-smoke",
+    "sampling": {
+      "thinker_do_sample": false,
+      "talker_do_sample": false,
+      "temperature": 1.0,
+      "top_k": 0,
+      "top_p": 1.0,
+      "repetition_penalty": 1.0
+    },
+    "framework": "CleaRx contract validator",
+    "framework_version": "1.0.0",
+    "device": "local_m1"
+  },
+  "comparison": {
+    "profile_id": "exact_discrete",
+    "mode": "exact",
+    "atol": 0.0,
+    "rtol": 0.0,
+    "equal_nan": false,
+    "max_mismatch_fraction": 0.0,
+    "minimum_cosine_similarity": 1.0
+  },
+  "inputs": [],
+  "outputs": [
+    {
+      "logical_name": "bootstrap.payload",
+      "path": "tests/fixtures/native/bootstrap_smoke.txt",
+      "sha256": "959a59dd2a9e285b0859c4518e0f3eaabf4bf1e9932ae4c4f80142f39869def8",
+      "dtype": "utf8",
+      "shape": [25]
+    }
+  ]
+}

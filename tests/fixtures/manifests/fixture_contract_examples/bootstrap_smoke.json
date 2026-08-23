@@ -1,10 +1,24 @@
 {
   "schema_version": "1.0.0",
   "fixture_id": "bootstrap-smoke",
-  "producer_commit": "0000000000000000000000000000000000000000",
+  "producer_commit": "ffde0f6d130c6a9687f87e012507111aca0021e7",
   "seed": 0,
-  "sampling": {},
+  "sampling": {
+    "profile_id": "contract-smoke",
+    "thinker_do_sample": false,
+    "talker_do_sample": false,
+    "temperature": 1.0,
+    "top_k": 0,
+    "top_p": 1.0,
+    "repetition_penalty": 1.0
+  },
   "artifacts": [
+    {
+      "path": "tests/fixtures/native/bootstrap_smoke.descriptor.json",
+      "sha256": "a487538b324959d1b15139b2ff21564f6e79fc1712ca1d5ad0b1b8f8da4e4c78",
+      "dtype": "application/vnd.clearx.fixture-descriptor+json",
+      "shape": [2262]
+    },
     {
       "path": "tests/fixtures/native/bootstrap_smoke.txt",
       "sha256": "959a59dd2a9e285b0859c4518e0f3eaabf4bf1e9932ae4c4f80142f39869def8",

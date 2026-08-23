@@ -1,0 +1,64 @@
+schema_version: "1.0.0"
+id: BOOTSTRAP-004
+title: Close fixture evidence and tolerance gap
+phase: bootstrap
+objective: Make fixture acceptance verify boundary identity, frozen tolerance profiles, provenance, descriptor-to-envelope joins, and the P0 harness.
+rationale: P0-003A required checks exceeded the evidence expressible by the frozen fixture envelope and its artifact-only validator.
+depends_on: [BOOTSTRAP-003]
+execution:
+  environment: local_m1
+  write_scope:
+    - docs/architecture/bootstrap_fixture_contract_gap.md
+    - orchestration/plan.yaml
+    - orchestration/state.json
+    - orchestration/schemas/fixture_descriptor.schema.json
+    - orchestration/work_packets/BOOTSTRAP-004.yaml
+    - scripts/fixture_contract.py
+    - scripts/generate_fixture_contract_smoke.py
+    - scripts/validate_fixtures.py
+    - tests/fixtures/manifests/fixture_contract_examples/bootstrap_smoke.json
+    - tests/fixtures/native/bootstrap_smoke.descriptor.json
+    - tests/orchestration/test_fixture_validation.py
+    - tests/orchestration/test_plan_validation.py
+    - runs/BOOTSTRAP-004/
+inputs:
+  - path: orchestration/schemas/fixture.schema.json
+    sha256: 4c1868f87acd644c633cc6ecd3b150c24a926fa6cd771d12a9cde455d6541561
+  - path: orchestration/work_packets/P0-003A.yaml
+    sha256: e2ebf0ca7c1859dcf4229eb55aa9aa68d35807e8f5b9974fa66f5e6267467d3c
+outputs:
+  - docs/architecture/bootstrap_fixture_contract_gap.md
+  - orchestration/plan.yaml
+  - orchestration/state.json
+  - orchestration/schemas/fixture_descriptor.schema.json
+  - orchestration/work_packets/BOOTSTRAP-004.yaml
+  - scripts/fixture_contract.py
+  - scripts/generate_fixture_contract_smoke.py
+  - scripts/validate_fixtures.py
+  - tests/fixtures/manifests/fixture_contract_examples/bootstrap_smoke.json
+  - tests/fixtures/native/bootstrap_smoke.descriptor.json
+  - tests/orchestration/test_fixture_validation.py
+  - tests/orchestration/test_plan_validation.py
+acceptance:
+  commands:
+    - python -m pytest -q tests/orchestration/test_fixture_validation.py
+    - python scripts/validate_fixtures.py --contract-only
+  required_checks:
+    - strict_descriptor_present
+    - provenance_hashes_recomputed
+    - tolerance_profile_frozen
+    - artifact_metadata_joined
+    - p0_harness_invoked
+forbidden:
+  - changing_the_frozen_fixture_envelope_schema
+  - hiding_contract_fields_in_sampling
+  - accepting_profile_name_without_exact_numeric_definition
+non_goals:
+  - generating_model_outputs
+  - changing_native_abi
+escalation:
+  - required_boundary_has_no_observable_reference_value
+  - tolerance_profile_cannot_name_a_single_comparison_rule
+evidence:
+  result_schema: orchestration/schemas/result.schema.json
+  result_path_template: runs/BOOTSTRAP-004/{run_id}/result.json
