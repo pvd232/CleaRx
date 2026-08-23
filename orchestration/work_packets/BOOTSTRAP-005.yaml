@@ -1,0 +1,55 @@
+schema_version: "1.0.0"
+id: BOOTSTRAP-005
+title: Close generated fixture index acceptance gap
+phase: bootstrap
+objective: Route fixture validation to its owned documents and prove exact boundary-case coverage through a strict generated index.
+rationale: P0-003B acceptance parsed unrelated benchmark contracts and never opened its declared reference index.
+depends_on: [BOOTSTRAP-004]
+execution:
+  environment: local_m1
+  write_scope:
+    - docs/architecture/bootstrap_fixture_index_gap.md
+    - orchestration/plan.yaml
+    - orchestration/state.json
+    - orchestration/schemas/fixture_index.schema.json
+    - orchestration/work_packets/BOOTSTRAP-005.yaml
+    - scripts/validate_fixtures.py
+    - tests/orchestration/test_fixture_validation.py
+    - tests/orchestration/test_plan_validation.py
+    - runs/BOOTSTRAP-005/
+inputs:
+  - path: orchestration/work_packets/P0-003B.yaml
+    sha256: 67c180e9aa904113c1f4815e2254825131723766039814016849cb3c14150414
+  - path: orchestration/schemas/fixture_descriptor.schema.json
+    sha256: 9e4840a7bf491657ae1aed42933f51fedd8d3664e5550e8a024c400e12ed214f
+outputs:
+  - docs/architecture/bootstrap_fixture_index_gap.md
+  - orchestration/plan.yaml
+  - orchestration/state.json
+  - orchestration/schemas/fixture_index.schema.json
+  - orchestration/work_packets/BOOTSTRAP-005.yaml
+  - scripts/validate_fixtures.py
+  - tests/orchestration/test_fixture_validation.py
+  - tests/orchestration/test_plan_validation.py
+acceptance:
+  commands:
+    - python -m pytest -q tests/orchestration/test_fixture_validation.py
+    - python scripts/validate_fixtures.py --contract-only
+  required_checks:
+    - index_schema_validated
+    - unrelated_manifests_excluded
+    - envelope_identities_joined
+    - boundary_case_coverage_exact
+forbidden:
+  - treating_benchmark_contracts_as_fixture_envelopes
+  - accepting_an_unindexed_reference_fixture
+  - allocating_a100_before_acceptance_routes_correctly
+non_goals:
+  - generating_model_outputs
+  - changing_p0_003b_sampling_semantics
+escalation:
+  - p0_003a_matrix_cannot_map_to_one_descriptor_per_pair
+  - generated_envelope_cannot_bind_to_a_generator_commit
+evidence:
+  result_schema: orchestration/schemas/result.schema.json
+  result_path_template: runs/BOOTSTRAP-005/{run_id}/result.json

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "plan_sha256": "c1d3bce5ef13c60c08ef40e6f03d32025a53eb931d4c948f3cb13148daee1ac8",
+  "plan_sha256": "cbcb70d21a778202191412675f5c4d355843419c66c4b3e4fa5ff93423f8ad4b",
   "packets": {
     "BOOTSTRAP-001": {
       "packet_path": "orchestration/work_packets/BOOTSTRAP-001.yaml",
@@ -190,6 +190,37 @@
         }
       ]
     },
+    "BOOTSTRAP-005": {
+      "packet_path": "orchestration/work_packets/BOOTSTRAP-005.yaml",
+      "packet_sha256": "874043fe3f35620504bc2abf364aa6ed623572ca214869f26fba2060d89cc952",
+      "status": "running",
+      "history": [
+        {
+          "packet_sha256": "874043fe3f35620504bc2abf364aa6ed623572ca214869f26fba2060d89cc952",
+          "previous_state": null,
+          "next_state": "planned",
+          "timestamp": "2026-08-23T15:45:27Z",
+          "actor": "codex",
+          "reason": "P0-003B full acceptance parsed unrelated contracts and lacked a generated index coverage join."
+        },
+        {
+          "packet_sha256": "874043fe3f35620504bc2abf364aa6ed623572ca214869f26fba2060d89cc952",
+          "previous_state": "planned",
+          "next_state": "ready",
+          "timestamp": "2026-08-23T15:45:28Z",
+          "actor": "codex",
+          "reason": "Bootstrap-004 is complete and the acceptance-routing defect has a bounded correction."
+        },
+        {
+          "packet_sha256": "874043fe3f35620504bc2abf364aa6ed623572ca214869f26fba2060d89cc952",
+          "previous_state": "ready",
+          "next_state": "running",
+          "timestamp": "2026-08-23T15:45:29Z",
+          "actor": "codex",
+          "reason": "Implement the generated index schema, routing, identity joins, and exact coverage check."
+        }
+      ]
+    },
     "P0-001": {
       "packet_path": "orchestration/work_packets/P0-001.yaml",
       "packet_sha256": "3896d3661656766ef6e29b4db822bb2d3874a9f827019a087900c8574d6bc704",
@@ -374,7 +405,7 @@
     "P0-003B": {
       "packet_path": "orchestration/work_packets/P0-003B.yaml",
       "packet_sha256": "67c180e9aa904113c1f4815e2254825131723766039814016849cb3c14150414",
-      "status": "ready",
+      "status": "running",
       "history": [
         {
           "packet_sha256": "67c180e9aa904113c1f4815e2254825131723766039814016849cb3c14150414",
@@ -391,6 +422,14 @@
           "timestamp": "2026-08-23T15:42:10.453551Z",
           "actor": "codex",
           "reason": "P0-001, P0-002, and P0-003A are complete; A100 fixture generation may begin."
+        },
+        {
+          "packet_sha256": "67c180e9aa904113c1f4815e2254825131723766039814016849cb3c14150414",
+          "previous_state": "ready",
+          "next_state": "running",
+          "timestamp": "2026-08-23T15:42:35.296209Z",
+          "actor": "codex",
+          "reason": "Prepare and execute deterministic A100 reference fixture generation from the completed contract."
         }
       ]
     },
