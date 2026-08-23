@@ -246,7 +246,7 @@
     "P0-005A": {
       "packet_path": "orchestration/work_packets/P0-005A.yaml",
       "packet_sha256": "73a5fa8079684ceff0bf748d74712821f351bef0d4c8c11beafa7c7dfff49fe1",
-      "status": "ready",
+      "status": "running",
       "history": [
         {
           "packet_sha256": "73a5fa8079684ceff0bf748d74712821f351bef0d4c8c11beafa7c7dfff49fe1",
@@ -263,6 +263,14 @@
           "timestamp": "2026-08-23T08:10:41.495996Z",
           "actor": "codex",
           "reason": "Bootstrap dependency completed; Phase 0 first-wave packet authorized."
+        },
+        {
+          "packet_sha256": "73a5fa8079684ceff0bf748d74712821f351bef0d4c8c11beafa7c7dfff49fe1",
+          "previous_state": "ready",
+          "next_state": "running",
+          "timestamp": "2026-08-23T08:31:46.259428Z",
+          "actor": "codex",
+          "reason": "Begin certified L4 host profile capture."
         }
       ]
     },
