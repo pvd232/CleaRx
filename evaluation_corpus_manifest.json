@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0.0",
+  "corpus_id": "clearx-engineering-eval-v1",
+  "version": "2026-08-23",
+  "license": {
+    "policy": "per-item license governs",
+    "allowed": ["CC-BY-SA-4.0", "Public-Domain", "CC0-1.0"]
+  },
+  "sources": [
+    {
+      "id": "fsdd",
+      "repository": "https://github.com/Jakobovski/free-spoken-digit-dataset.git",
+      "commit": "26eb9aaf76e81b692f806f9140c2d2777410d7a1",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "Free Spoken Digit Dataset contributors"
+    },
+    {
+      "id": "wikimedia-commons",
+      "api": "https://commons.wikimedia.org/w/api.php",
+      "license": "Public-Domain",
+      "attribution": "per item"
+    },
+    {
+      "id": "clearx-synthetic-pcm-v1",
+      "generator": "Python wave PCM16 mono little-endian with the per-item sample algorithm",
+      "license": "CC0-1.0",
+      "attribution": "CleaRx"
+    }
+  ],
+  "items": [
+    {"id": "fsdd-george-0", "stratum": "short_clean_speech", "prompt": "Repeat the spoken digit and nothing else.", "expected_text": "zero", "audio": "https://raw.githubusercontent.com/Jakobovski/free-spoken-digit-dataset/26eb9aaf76e81b692f806f9140c2d2777410d7a1/recordings/0_george_0.wav", "audio_sha256": "228ab63fccdf262d2e05817b6ec918b15e7d9e4bfb6bb20183c46ae088405240", "license": "CC-BY-SA-4.0", "output_limit_tokens": 64},
+    {"id": "fsdd-george-1", "stratum": "short_clean_speech", "prompt": "Repeat the spoken digit and nothing else.", "expected_text": "one", "audio": "https://raw.githubusercontent.com/Jakobovski/free-spoken-digit-dataset/26eb9aaf76e81b692f806f9140c2d2777410d7a1/recordings/1_george_0.wav", "audio_sha256": "c652e9243c5cc350063be17ebb3629ae971f2059234aa33cfec3a57ae7668efd", "license": "CC-BY-SA-4.0", "output_limit_tokens": 64},
+    {"id": "fsdd-george-2", "stratum": "short_clean_speech", "prompt": "Repeat the spoken digit and nothing else.", "expected_text": "two", "audio": "https://raw.githubusercontent.com/Jakobovski/free-spoken-digit-dataset/26eb9aaf76e81b692f806f9140c2d2777410d7a1/recordings/2_george_0.wav", "audio_sha256": "64e86e8aec57533dfa5b9054ca3f93f7b7da98fb41e2e1da7c9eabfb9c86792a", "license": "CC-BY-SA-4.0", "output_limit_tokens": 64},
+    {"id": "fsdd-george-3", "stratum": "short_clean_speech", "prompt": "Repeat the spoken digit and nothing else.", "expected_text": "three", "audio": "https://raw.githubusercontent.com/Jakobovski/free-spoken-digit-dataset/26eb9aaf76e81b692f806f9140c2d2777410d7a1/recordings/3_george_0.wav", "audio_sha256": "ab3ce6f5af0eb27f47f1d405c205fbb35776954b3e5beada8449e218fbf30b81", "license": "CC-BY-SA-4.0", "output_limit_tokens": 64},
+    {"id": "fsdd-george-4", "stratum": "short_clean_speech", "prompt": "Repeat the spoken digit and nothing else.", "expected_text": "four", "audio": "https://raw.githubusercontent.com/Jakobovski/free-spoken-digit-dataset/26eb9aaf76e81b692f806f9140c2d2777410d7a1/recordings/4_george_0.wav", "audio_sha256": "caf634cb0b03955ce98239bb9ae9660445f9021049b3211ad6dc09a1765efca3", "license": "CC-BY-SA-4.0", "output_limit_tokens": 64},
+    {"id": "fsdd-george-5", "stratum": "short_clean_speech", "prompt": "Repeat the spoken digit and nothing else.", "expected_text": "five", "audio": "https://raw.githubusercontent.com/Jakobovski/free-spoken-digit-dataset/26eb9aaf76e81b692f806f9140c2d2777410d7a1/recordings/5_george_0.wav", "audio_sha256": "573faed14e5b9037ca124a040d87aea6bdb1852d47a106eba099cdd36701f34b", "license": "CC-BY-SA-4.0", "output_limit_tokens": 64},
+    {"id": "fsdd-george-6", "stratum": "short_clean_speech", "prompt": "Repeat the spoken digit and nothing else.", "expected_text": "six", "audio": "https://raw.githubusercontent.com/Jakobovski/free-spoken-digit-dataset/26eb9aaf76e81b692f806f9140c2d2777410d7a1/recordings/6_george_0.wav", "audio_sha256": "a5afa6e3dad8290335c2883434d51f45d425fe33d545d784c21f1f677712abbb", "license": "CC-BY-SA-4.0", "output_limit_tokens": 64},
+    {"id": "fsdd-george-7", "stratum": "short_clean_speech", "prompt": "Repeat the spoken digit and nothing else.", "expected_text": "seven", "audio": "https://raw.githubusercontent.com/Jakobovski/free-spoken-digit-dataset/26eb9aaf76e81b692f806f9140c2d2777410d7a1/recordings/7_george_0.wav", "audio_sha256": "645dc7b2bd40ca8bddb2b580de6877ddffaf041a94b72a87ab9274d5345581a0", "license": "CC-BY-SA-4.0", "output_limit_tokens": 64},
+    {"id": "fsdd-george-8", "stratum": "short_clean_speech", "prompt": "Repeat the spoken digit and nothing else.", "expected_text": "eight", "audio": "https://raw.githubusercontent.com/Jakobovski/free-spoken-digit-dataset/26eb9aaf76e81b692f806f9140c2d2777410d7a1/recordings/8_george_0.wav", "audio_sha256": "ad8f7a9a1212a3a46e64a8e8a81d050043503f57305ba8b8d1f3b45e78a3a7c5", "license": "CC-BY-SA-4.0", "output_limit_tokens": 64},
+    {"id": "fsdd-george-9", "stratum": "short_clean_speech", "prompt": "Repeat the spoken digit and nothing else.", "expected_text": "nine", "audio": "https://raw.githubusercontent.com/Jakobovski/free-spoken-digit-dataset/26eb9aaf76e81b692f806f9140c2d2777410d7a1/recordings/9_george_0.wav", "audio_sha256": "2a9e54630a64239890f4716445dfa949236841b76e2f880f38cd0c5e28a997e9", "license": "CC-BY-SA-4.0", "output_limit_tokens": 64},
+    {"id": "fsdd-nicolas-0", "stratum": "short_clean_speech_second_speaker", "prompt": "Repeat the spoken digit and nothing else.", "expected_text": "zero", "audio": "https://raw.githubusercontent.com/Jakobovski/free-spoken-digit-dataset/26eb9aaf76e81b692f806f9140c2d2777410d7a1/recordings/0_nicolas_0.wav", "audio_sha256": "527b1d27c2b931204b24995f035580dd248b908978a27756b4698ce0aa7e1aa8", "license": "CC-BY-SA-4.0", "output_limit_tokens": 64},
+    {"id": "fsdd-nicolas-1", "stratum": "short_clean_speech_second_speaker", "prompt": "Repeat the spoken digit and nothing else.", "expected_text": "one", "audio": "https://raw.githubusercontent.com/Jakobovski/free-spoken-digit-dataset/26eb9aaf76e81b692f806f9140c2d2777410d7a1/recordings/1_nicolas_0.wav", "audio_sha256": "d57a29689b0abf1ab609ab401dd4053dbc18c317a4ed9ebed6a9aa034e9bab0a", "license": "CC-BY-SA-4.0", "output_limit_tokens": 64},
+    {"id": "fsdd-nicolas-2", "stratum": "short_clean_speech_second_speaker", "prompt": "Repeat the spoken digit and nothing else.", "expected_text": "two", "audio": "https://raw.githubusercontent.com/Jakobovski/free-spoken-digit-dataset/26eb9aaf76e81b692f806f9140c2d2777410d7a1/recordings/2_nicolas_0.wav", "audio_sha256": "e55aea8bd4d83d0ae4de1b5a4b67a613f17aa00406cd726c352a061001308beb", "license": "CC-BY-SA-4.0", "output_limit_tokens": 64},
+    {"id": "fsdd-nicolas-3", "stratum": "short_clean_speech_second_speaker", "prompt": "Repeat the spoken digit and nothing else.", "expected_text": "three", "audio": "https://raw.githubusercontent.com/Jakobovski/free-spoken-digit-dataset/26eb9aaf76e81b692f806f9140c2d2777410d7a1/recordings/3_nicolas_0.wav", "audio_sha256": "5da068172b180b74cd8ed019d131679249387b0199cb972992adf18e21f1d82d", "license": "CC-BY-SA-4.0", "output_limit_tokens": 64},
+    {"id": "fsdd-nicolas-4", "stratum": "short_clean_speech_second_speaker", "prompt": "Repeat the spoken digit and nothing else.", "expected_text": "four", "audio": "https://raw.githubusercontent.com/Jakobovski/free-spoken-digit-dataset/26eb9aaf76e81b692f806f9140c2d2777410d7a1/recordings/4_nicolas_0.wav", "audio_sha256": "dc6ae853b163bebf1774701a4f7e6e27bbace3472ba3628ec2d61b2e6ab1d0c7", "license": "CC-BY-SA-4.0", "output_limit_tokens": 64},
+    {"id": "fsdd-nicolas-5", "stratum": "short_clean_speech_second_speaker", "prompt": "Repeat the spoken digit and nothing else.", "expected_text": "five", "audio": "https://raw.githubusercontent.com/Jakobovski/free-spoken-digit-dataset/26eb9aaf76e81b692f806f9140c2d2777410d7a1/recordings/5_nicolas_0.wav", "audio_sha256": "808a05f646857095e97450f6824440c271c5a17029d24065a7ff27ea7813f61d", "license": "CC-BY-SA-4.0", "output_limit_tokens": 64},
+    {"id": "fsdd-nicolas-6", "stratum": "short_clean_speech_second_speaker", "prompt": "Repeat the spoken digit and nothing else.", "expected_text": "six", "audio": "https://raw.githubusercontent.com/Jakobovski/free-spoken-digit-dataset/26eb9aaf76e81b692f806f9140c2d2777410d7a1/recordings/6_nicolas_0.wav", "audio_sha256": "48d22b265d86c14e6b4462f51122834bc66e99e3966e95f2279a9d07ffcb9e95", "license": "CC-BY-SA-4.0", "output_limit_tokens": 64},
+    {"id": "fsdd-nicolas-7", "stratum": "short_clean_speech_second_speaker", "prompt": "Repeat the spoken digit and nothing else.", "expected_text": "seven", "audio": "https://raw.githubusercontent.com/Jakobovski/free-spoken-digit-dataset/26eb9aaf76e81b692f806f9140c2d2777410d7a1/recordings/7_nicolas_0.wav", "audio_sha256": "615dc2a2ba6e915521151479bbec3724bd1f5e0c839bb57b693c45f897a174a3", "license": "CC-BY-SA-4.0", "output_limit_tokens": 64},
+    {"id": "fsdd-nicolas-8", "stratum": "short_clean_speech_second_speaker", "prompt": "Repeat the spoken digit and nothing else.", "expected_text": "eight", "audio": "https://raw.githubusercontent.com/Jakobovski/free-spoken-digit-dataset/26eb9aaf76e81b692f806f9140c2d2777410d7a1/recordings/8_nicolas_0.wav", "audio_sha256": "8e2af922d9417b55344ab3ff7d14148c77551c877d5a5543103a6dc07625bc12", "license": "CC-BY-SA-4.0", "output_limit_tokens": 64},
+    {"id": "fsdd-nicolas-9", "stratum": "short_clean_speech_second_speaker", "prompt": "Repeat the spoken digit and nothing else.", "expected_text": "nine", "audio": "https://raw.githubusercontent.com/Jakobovski/free-spoken-digit-dataset/26eb9aaf76e81b692f806f9140c2d2777410d7a1/recordings/9_nicolas_0.wav", "audio_sha256": "44e8eb48a33839ac22c10c702963fbb53463858187a721f3addbacfe0e5cf14b", "license": "CC-BY-SA-4.0", "output_limit_tokens": 64},
+    {"id": "commons-columbia-address", "stratum": "long_speech_final_partial", "prompt": "In two sentences, identify the event and the main message in the final minute.", "expected_facts": ["Space Shuttle Columbia", "no survivors", "journey into space will continue"], "audio": "https://upload.wikimedia.org/wikipedia/commons/1/1f/George_W_Bush_Columbia_FINAL.ogg", "audio_sha256": "97a6384767e2fc3fb27c7593831aa19115d909fcdb85a1e389359ecc4b92a1e8", "license": "Public-Domain", "attribution": "United States government recording; Wikimedia Commons file page confirms public domain", "duration_seconds": 198.734331, "output_limit_tokens": 256},
+    {"id": "commons-jfk-inaugural", "stratum": "long_speech_context", "prompt": "Summarize three commitments made in this address and cite the closing appeal.", "expected_facts": ["service and sacrifice", "cooperation for peace", "ask what you can do for your country"], "audio": "https://upload.wikimedia.org/wikipedia/commons/d/d5/JFK_inaugural_address.ogg", "audio_sha256": "a257580da6eda796ed1c703e545865005753f7cb20cc042e0db3c44de82274fc", "license": "Public-Domain", "attribution": "United States government recording; Wikimedia Commons file page confirms public domain", "duration_seconds": 840.228345, "output_limit_tokens": 384},
+    {"id": "synthetic-silence-31.25s", "stratum": "background_empty_final_partial", "prompt": "State whether intelligible speech is present.", "expected_text": "no intelligible speech", "audio": "generated:clearx-synthetic-pcm-v1:silence-31.25s", "audio_sha256": "93aad4421288211334dd6d353d6b6c3aabe121ded8f28ebfbec9327026d7cec4", "license": "CC0-1.0", "generator": {"sample_rate_hz": 16000, "channels": 1, "sample_format": "pcm_s16le", "samples": 500000, "algorithm": "all samples equal zero; Python wave canonical 44-byte header"}, "output_limit_tokens": 64},
+    {"id": "synthetic-tone-440hz", "stratum": "non_speech_tone", "prompt": "Describe the audible signal without inventing speech.", "expected_facts": ["steady tone", "no intelligible speech"], "audio": "generated:clearx-synthetic-pcm-v1:tone-440hz-2.25s", "audio_sha256": "2060ceca22bff2384725c47c125f0530d1a69450a5d00965013c1268395d3c88", "license": "CC0-1.0", "generator": {"sample_rate_hz": 16000, "channels": 1, "sample_format": "pcm_s16le", "samples": 36000, "algorithm": "sample[n]=round(8191.75*sin(2*pi*440*n/16000)); Python wave canonical 44-byte header"}, "output_limit_tokens": 64},
+    {"id": "synthetic-tail-impulse", "stratum": "final_partial_chunk_signal", "prompt": "Report whether a signal occurs at the end of the recording.", "expected_text": "signal at the end", "audio": "generated:clearx-synthetic-pcm-v1:tail-impulse-30.125s", "audio_sha256": "53781e86840cdd7544278c25af5d5658d66bfd3df9ac89899fe803e90c22c0c9", "license": "CC0-1.0", "generator": {"sample_rate_hz": 16000, "channels": 1, "sample_format": "pcm_s16le", "samples": 482000, "algorithm": "zeros except final 160 samples alternating +8192 and -8192; Python wave canonical 44-byte header"}, "output_limit_tokens": 64},
+    {"id": "synthetic-xorshift-noise", "stratum": "background_noise", "prompt": "State whether intelligible speech is present and describe the background.", "expected_facts": ["no intelligible speech", "noise"], "audio": "generated:clearx-synthetic-pcm-v1:xorshift-noise-10s", "audio_sha256": "d37b243f40bb860df40f5f62dd42c9c5e930911291844f30bf8f1d129e01d50a", "license": "CC0-1.0", "generator": {"sample_rate_hz": 16000, "channels": 1, "sample_format": "pcm_s16le", "samples": 160000, "algorithm": "xorshift32 seed 0x12345678; sample=((state & 0xffff)-32768)//16; Python wave canonical 44-byte header"}, "output_limit_tokens": 64}
+  ],
+  "sampling": {
+    "profiles": [
+      {"id": "greedy-correctness", "thinker_do_sample": false, "talker_do_sample": false, "temperature": 1.0, "top_k": 0, "top_p": 1.0},
+      {"id": "release-quality", "thinker_do_sample": false, "talker_do_sample": true, "talker_temperature": 0.9, "talker_top_k": 50, "talker_top_p": 1.0, "talker_repetition_penalty": 1.05}
+    ],
+    "speaker": "Ethan",
+    "thinker_max_new_tokens": 384,
+    "talker_max_new_tokens": 4096
+  },
+  "seeds": [7, 19, 43],
+  "paired_keys": ["item_id", "seed", "sampling_id"]
+}

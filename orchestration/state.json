@@ -370,7 +370,7 @@
     "P0-007A": {
       "packet_path": "orchestration/work_packets/P0-007A.yaml",
       "packet_sha256": "7f6d18296e52d56a9c35d002d5a37876d89456ca6cde91dcb5d2360715d482b4",
-      "status": "ready",
+      "status": "running",
       "history": [
         {
           "packet_sha256": "7f6d18296e52d56a9c35d002d5a37876d89456ca6cde91dcb5d2360715d482b4",
@@ -387,6 +387,14 @@
           "timestamp": "2026-08-23T08:10:41.815608Z",
           "actor": "codex",
           "reason": "Bootstrap dependency completed; Phase 0 first-wave packet authorized."
+        },
+        {
+          "packet_sha256": "7f6d18296e52d56a9c35d002d5a37876d89456ca6cde91dcb5d2360715d482b4",
+          "previous_state": "ready",
+          "next_state": "running",
+          "timestamp": "2026-08-23T08:42:26.973937Z",
+          "actor": "codex",
+          "reason": "Begin versioned evaluation corpus and threshold contract."
         }
       ]
     },

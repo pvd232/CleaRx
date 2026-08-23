@@ -1,0 +1,94 @@
+{
+  "schema_version": "1.0.0",
+  "benchmark_id": "clearx-evaluation-thresholds-v1",
+  "host_profile": "clearx-mantra-g2-l4-v1",
+  "workload": {
+    "corpus_id": "clearx-engineering-eval-v1",
+    "corpus_version": "2026-08-23",
+    "sampling_profiles": ["greedy-correctness", "release-quality"],
+    "seeds": [7, 19, 43],
+    "speaker": "Ethan",
+    "batch_size": 1,
+    "concurrency": 1,
+    "audio_output_sample_rate_hz": 24000,
+    "performance_scope": "warm single-session waveform-in to waveform-out"
+  },
+  "metrics": [
+    "codec_token_exact_match_rate",
+    "asr_word_error_rate_delta",
+    "speaker_embedding_cosine_delta",
+    "paired_task_success_delta",
+    "audio_start_latency_ms_p95",
+    "realtime_factor_p95",
+    "underflow_count"
+  ],
+  "repetitions": 30,
+  "warmups": 5,
+  "thresholds": {
+    "correctness": {
+      "metric": "codec_token_exact_match_rate",
+      "sampling_id": "greedy-correctness",
+      "comparison": "native versus pinned Transformers oracle",
+      "threshold": 1.0,
+      "decision": "every primary and residual codec token must match"
+    },
+    "semantic": {
+      "metric": "asr_word_error_rate_delta",
+      "sampling_id": "release-quality",
+      "comparison": "ASR transcript of native audio minus ASR transcript of paired oracle audio",
+      "noninferiority_margin_absolute": 0.02,
+      "decision": "upper 95% paired-bootstrap confidence bound must be at most 0.02"
+    },
+    "acoustic": {
+      "metric": "speaker_embedding_cosine_delta",
+      "sampling_id": "release-quality",
+      "comparison": "native similarity to enrollment minus oracle similarity to enrollment",
+      "noninferiority_margin_absolute": -0.02,
+      "decision": "lower 95% paired-bootstrap confidence bound must be at least -0.02"
+    },
+    "material_improvement": {
+      "metric": "paired_task_success_delta",
+      "comparison": "candidate bounded-context policy minus its declared baseline at matched byte budget",
+      "minimum_absolute_delta": 0.03,
+      "decision": "point estimate must be at least 0.03 and lower 95% paired-bootstrap bound must exceed zero"
+    },
+    "latency": {
+      "metric": "audio_start_latency_ms_p95",
+      "maximum_ms": 2000,
+      "realtime_factor_metric": "realtime_factor_p95",
+      "maximum_realtime_factor": 1.0,
+      "underflow_metric": "underflow_count",
+      "maximum_underflows": 0,
+      "decision": "all three limits must pass on the certified host"
+    },
+    "confidence": {
+      "method": "paired percentile bootstrap over corpus item and seed pairs",
+      "level": 0.95,
+      "resamples": 10000,
+      "bootstrap_seed": 20260823,
+      "decision_rule": "apply the metric-specific one-sided confidence bound after all pairs are present"
+    },
+    "failure_attribution": {
+      "required_fields": [
+        "first_divergent_module",
+        "failure_class",
+        "corpus_item_id",
+        "seed",
+        "host_profile"
+      ],
+      "failure_classes": [
+        "input_decode",
+        "aut",
+        "thinker",
+        "talker",
+        "mtp",
+        "code2wav",
+        "scheduler",
+        "memory",
+        "latency",
+        "evaluation_tool"
+      ]
+    }
+  },
+  "paired_keys": ["item_id", "seed", "sampling_id"]
+}
