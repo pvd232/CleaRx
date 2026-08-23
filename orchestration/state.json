@@ -99,7 +99,7 @@
     "BOOTSTRAP-003": {
       "packet_path": "orchestration/work_packets/BOOTSTRAP-003.yaml",
       "packet_sha256": "1af65868a2b9abe9911e5927ca47d01e4ef64378a52b15ef110fbf2af3b39ffd",
-      "status": "running",
+      "status": "complete",
       "history": [
         {
           "packet_sha256": "1af65868a2b9abe9911e5927ca47d01e4ef64378a52b15ef110fbf2af3b39ffd",
@@ -124,6 +124,22 @@
           "timestamp": "2026-08-23T08:51:49Z",
           "actor": "codex",
           "reason": "Begin derived validator implementation and contract tests."
+        },
+        {
+          "packet_sha256": "1af65868a2b9abe9911e5927ca47d01e4ef64378a52b15ef110fbf2af3b39ffd",
+          "previous_state": "running",
+          "next_state": "validating",
+          "timestamp": "2026-08-23T08:53:00.387315Z",
+          "actor": "codex",
+          "reason": "Bootstrap-003 acceptance and full orchestration tests passed at commit c55f3a5."
+        },
+        {
+          "packet_sha256": "1af65868a2b9abe9911e5927ca47d01e4ef64378a52b15ef110fbf2af3b39ffd",
+          "previous_state": "validating",
+          "next_state": "complete",
+          "timestamp": "2026-08-23T08:53:38.992739Z",
+          "actor": "codex",
+          "reason": "Validated Bootstrap-003 result receipt."
         }
       ]
     },

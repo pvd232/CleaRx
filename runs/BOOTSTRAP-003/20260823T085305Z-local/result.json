@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0.0",
+  "packet_id": "BOOTSTRAP-003",
+  "packet_sha256": "1af65868a2b9abe9911e5927ca47d01e4ef64378a52b15ef110fbf2af3b39ffd",
+  "git_commit": "c55f3a5d79e8af649a9aca1ad30b9be72901c0bf",
+  "run_id": "20260823T085305Z-local",
+  "environment": {
+    "kind": "local_m1",
+    "conda_environment": "clearx",
+    "python": "3.12.14"
+  },
+  "commands": [
+    {
+      "command": "python -m pytest -q tests/orchestration/test_derived_validator_entrypoints.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python -m pytest -q tests/orchestration",
+      "exit_code": 0
+    }
+  ],
+  "artifacts": [
+    {"path": "docs/architecture/bootstrap_derived_validator_gap.md", "sha256": "1c0ed649b74e72a5403c83afd04d40cee26a21c84923df1d884bb357326ad4eb", "size_bytes": 1585},
+    {"path": "orchestration/plan.yaml", "sha256": "84ec227c182bbf92c87064b4c8f16266f0fd1c6a24921fa11ec539f2272d7dab", "size_bytes": 3711},
+    {"path": "orchestration/state.json", "sha256": "537e746e0aa8ef34c7627b2c2620efa68e37801c54b95db2b3e3ee4772552f03", "size_bytes": 19306},
+    {"path": "orchestration/work_packets/BOOTSTRAP-003.yaml", "sha256": "1af65868a2b9abe9911e5927ca47d01e4ef64378a52b15ef110fbf2af3b39ffd", "size_bytes": 2123},
+    {"path": "tools/inventory/validate_memory_budget.py", "sha256": "a8f95ee1f1648beb6a91a7c6f384087cf204d12aa03be52e0211c03d75a3a261", "size_bytes": 3216},
+    {"path": "tools/inventory/validate_abi_contract.py", "sha256": "395d703afb650b70fb12f0cb08f13293e69d0fa1d16685e094009deacc3dac3a", "size_bytes": 2193},
+    {"path": "tools/inventory/validate_deployment_acceptance.py", "sha256": "73c5e1da9cf2f9d97095161577dd82ff6cea451e1a3dc1e5cc13f455d5837abf", "size_bytes": 4531},
+    {"path": "tools/benchmarks/validate_cache_spike.py", "sha256": "c4ed8ce2ca2192f2717d69ffcb5ae4f9e20e4b0f35f0bd9f21de0047d1f0f821", "size_bytes": 2996},
+    {"path": "tests/orchestration/test_derived_validator_entrypoints.py", "sha256": "73539828f25a46f5d2c430861aaf0ed34e7d1bcf8c9a933c28e98fecc8af41fb", "size_bytes": 5913},
+    {"path": "tests/orchestration/test_plan_validation.py", "sha256": "7e524901ccea62b288d721396b2b7035eafeb844325507d4d44b758949449196", "size_bytes": 2561}
+  ],
+  "required_checks": {
+    "derived_validator_paths_owned": true,
+    "success_records_pass": true,
+    "missing_identity_rejected": true,
+    "missing_measurement_rejected": true
+  },
+  "outcome": "complete",
+  "deviations": [],
+  "started_at": "2026-08-23T08:51:49Z",
+  "finished_at": "2026-08-23T08:53:05Z"
+}

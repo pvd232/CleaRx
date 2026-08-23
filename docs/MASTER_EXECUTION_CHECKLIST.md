@@ -32,7 +32,7 @@ commit. Complete dependency producers before their consumers.
 | Local project environment | Verified locally | Environment foundation | `conda run -n clearx` resolves the declared Python and tools |
 | Colab control-plane access | Verified with ADC | Environment foundation | `colab --auth=adc sessions` exits successfully |
 | Clean L4 deployment host | Verified live | Infrastructure foundation | GCE instance, disk, GPU, SSH, and backup-image inspections |
-| Schemas, validators, state machine, and packet DAG | Complete at `4541b7f`; validator ownership corrected at `3a4b079` | Bootstrap-001 and Bootstrap-002 | Valid results `20260823T081011Z-local` and `20260823T082530Z-local` |
+| Schemas, validators, state machine, and packet DAG | Complete at `4541b7f`; first-wave and derived validator ownership corrected at `3a4b079` and `c55f3a5` | Bootstrap-001 through Bootstrap-003 | Valid results `20260823T081011Z-local`, `20260823T082530Z-local`, and `20260823T085305Z-local` |
 | Pinned upstream/runtime contract | Complete at `902d871` | P0-001 | Valid result `20260823T083005Z-local` |
 | Tensor inventory | Not started | P0-002 | Validated tensor manifest and analysis |
 | Fixture contract and generated reference fixtures | Not started | P0-003A and P0-003B | Fixture validator and packet-bound A100 evidence |
@@ -74,6 +74,8 @@ commit. Complete dependency producers before their consumers.
 - [x] Review the package against the handoff and commit the validated checkpoint.
 - [x] Correct the four missing Phase 0 validator entry points through
   Bootstrap-002 without changing the immutable Phase 0 packet bytes.
+- [x] Audit every derived Phase 0 acceptance command and supply the four
+  remaining validators through Bootstrap-003, including success and severed-join tests.
 
 **Acceptance gate**
 
