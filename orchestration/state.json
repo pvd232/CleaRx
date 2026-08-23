@@ -99,7 +99,7 @@
     "P0-001": {
       "packet_path": "orchestration/work_packets/P0-001.yaml",
       "packet_sha256": "3896d3661656766ef6e29b4db822bb2d3874a9f827019a087900c8574d6bc704",
-      "status": "running",
+      "status": "complete",
       "history": [
         {
           "packet_sha256": "3896d3661656766ef6e29b4db822bb2d3874a9f827019a087900c8574d6bc704",
@@ -148,6 +148,22 @@
           "timestamp": "2026-08-23T08:27:11.094734Z",
           "actor": "codex",
           "reason": "Resume upstream audit after Bootstrap-002 validator correction."
+        },
+        {
+          "packet_sha256": "3896d3661656766ef6e29b4db822bb2d3874a9f827019a087900c8574d6bc704",
+          "previous_state": "running",
+          "next_state": "validating",
+          "timestamp": "2026-08-23T08:30:05.718544Z",
+          "actor": "codex",
+          "reason": "Pinned upstream lock resolved and runtime gap matrix passed acceptance validation."
+        },
+        {
+          "packet_sha256": "3896d3661656766ef6e29b4db822bb2d3874a9f827019a087900c8574d6bc704",
+          "previous_state": "validating",
+          "next_state": "complete",
+          "timestamp": "2026-08-23T08:30:27.369996Z",
+          "actor": "codex",
+          "reason": "Validated P0-001 result receipt."
         }
       ]
     },

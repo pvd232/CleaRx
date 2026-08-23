@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0.0",
+  "packet_id": "P0-001",
+  "packet_sha256": "3896d3661656766ef6e29b4db822bb2d3874a9f827019a087900c8574d6bc704",
+  "git_commit": "902d8712681de4fef5745e73d1af2c9f7adb168f",
+  "run_id": "20260823T083005Z-local",
+  "environment": {
+    "kind": "local_m1",
+    "conda_environment": "clearx",
+    "l4_toolchain_inspected": true
+  },
+  "commands": [
+    {
+      "command": "python tools/inventory/validate_upstream_lock.py",
+      "exit_code": 0
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "upstream.lock",
+      "sha256": "4a799b7ff82f3f15d2cf9b6a46938742ed2a8fbc0441f645d3b50579b046cd7a",
+      "size_bytes": 5485
+    },
+    {
+      "path": "docs/architecture/runtime_gap_matrix.md",
+      "sha256": "aa1b5b011ff3eb4f3c067d8e366a13fa39ba4dea588d3761b6d32d8807336a2a",
+      "size_bytes": 8892
+    }
+  ],
+  "required_checks": {
+    "commits_resolve": true,
+    "sources_authoritative": true,
+    "gaps_cite_symbols": true
+  },
+  "outcome": "complete",
+  "deviations": [
+    "Execution paused for the Bootstrap-002 validator ownership correction; P0-001 packet bytes remained unchanged."
+  ],
+  "started_at": "2026-08-23T08:26:00Z",
+  "finished_at": "2026-08-23T08:30:05Z"
+}

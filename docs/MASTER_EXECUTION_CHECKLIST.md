@@ -33,7 +33,7 @@ commit. Complete dependency producers before their consumers.
 | Colab control-plane access | Verified with ADC | Environment foundation | `colab --auth=adc sessions` exits successfully |
 | Clean L4 deployment host | Verified live | Infrastructure foundation | GCE instance, disk, GPU, SSH, and backup-image inspections |
 | Schemas, validators, state machine, and packet DAG | Complete at `4541b7f`; validator ownership corrected at `3a4b079` | Bootstrap-001 and Bootstrap-002 | Valid results `20260823T081011Z-local` and `20260823T082530Z-local` |
-| Pinned upstream/runtime contract | Not started | P0-001 | Validated lock and runtime gap matrix |
+| Pinned upstream/runtime contract | Complete at `902d871` | P0-001 | Valid result `20260823T083005Z-local` |
 | Tensor inventory | Not started | P0-002 | Validated tensor manifest and analysis |
 | Fixture contract and generated reference fixtures | Not started | P0-003A and P0-003B | Fixture validator and packet-bound A100 evidence |
 | Native ABI and ownership contract | Not started | P0-004 | Phase 0 integration gate |
@@ -88,7 +88,7 @@ no production runtime implementation.
 
 **Depends on:** Phase A
 
-- [ ] Complete P0-001 and freeze exact upstream/runtime revisions.
+- [x] Complete P0-001 and freeze exact upstream/runtime revisions.
 - [ ] Complete P0-002 and publish the complete tensor inventory.
 - [ ] Complete P0-003A and validate the fixture contract and harness.
 - [ ] Complete P0-005A using the live `mantra-g2` host profile.
