@@ -2,21 +2,21 @@
 
 ## Status
 
-The current fixture envelope and artifact hash check are inspected and
-implemented. The strict descriptor, provenance joins, frozen tolerance
-profiles, harness invocation, and rejection tests in this correction are
-proposed until Bootstrap-004 reaches `complete`.
+Bootstrap-004 completed this correction. Contract-only validation now checks a
+strict descriptor, recalculates every recorded producer hash, compares the
+selected tolerance profile with its frozen definition, runs the P0-003A
+harness, and exercises the rejection cases described below.
 
-## Required claim
+## What contract-only validation must prove
 
 `python scripts/validate_fixtures.py --contract-only` verifies that every
 contract fixture names one observable boundary, one frozen comparison profile,
 the exact producer inputs and code, and output metadata identical to the bytes
-declared by its envelope. When P0-003A supplies `fixture_harness.py`, the same
-command also requires that harness to validate the complete boundary and
+declared by its envelope. When P0-003A adds `fixture_harness.py`, the same
+command runs that harness to validate the complete boundary and
 adversarial-case matrices.
 
-## Current gap
+## Why the previous validator was insufficient
 
 The frozen [`fixture.schema.json`](../../orchestration/schemas/fixture.schema.json)
 accepts `producer_commit`, `seed`, an unconstrained `sampling` object, and
@@ -32,14 +32,14 @@ the operation whose output those bytes represent. The old envelope established
 file identity, then lost boundary identity, provenance, and comparison policy
 before acceptance.
 
-## Contract models
+## Descriptor fields
 
 The existing fixture manifest remains the byte envelope. One artifact with
 dtype `application/vnd.clearx.fixture-descriptor+json` identifies the strict
 descriptor.
 
 [`fixture_descriptor.schema.json`](../../orchestration/schemas/fixture_descriptor.schema.json)
-defines these authorities:
+requires these fields:
 
 - `boundary` names the module, operation, and input/output coordinate domains;
 - `case` classifies a nominal or tagged adversarial execution;
@@ -86,13 +86,13 @@ For `model_boundary` fixtures, the validator also reads
 `generator_commit:generator_path` from Git and hashes those committed bytes.
 `contract_smoke` fixtures establish only schema and join behavior.
 
-## Persisted evidence
+## Files and hashes written
 
-The envelope persists the descriptor hash and all output hashes. The descriptor
-persists the boundary, case, provenance, execution, comparison, and artifact
-references. P0-003B results therefore join generated arrays back to the pinned
-model, tensor inventory, generator commit, and exact schema bytes through
-hashes; filenames remain locators.
+The envelope stores the descriptor hash and all output hashes. The descriptor
+stores the boundary, case, provenance, execution, comparison, and artifact
+references. A P0-003B result can therefore trace each generated array to the
+pinned model, tensor inventory, generator commit, and exact schema bytes.
+Filenames locate those records; the hashes identify their contents.
 
 ## Verification
 
@@ -109,12 +109,12 @@ Stable checks are:
 - `p0_harness_invoked`: contract-only acceptance propagates the P0 harness exit
   status.
 
-## Propagation
+## Files changed by the repair
 
 | Surface | Required change |
 |---|---|
 | Type | Add strict descriptor schema; retain the existing envelope schema. |
-| Authoring | P0-003A defines boundary/profile assignments and adversarial coverage. |
+| Authoring | P0-003A lists every boundary/profile assignment and adversarial case. |
 | Runtime | P0-003B generator writes descriptors beside model-derived outputs. |
 | Persistence | Envelope hashes descriptor and output bytes. |
 | Verification | `fixture_contract.py` recomputes provenance and all cross-record joins. |

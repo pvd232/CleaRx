@@ -15,9 +15,10 @@ kept Talker and Code2Wav on CUDA and placed Thinker layers 21 through 47 on CPU.
 The complete Thinker-to-waveform path then produced a `[1, 1, 1365]` float32
 waveform from one codec frame.
 
-The same execution established the evidence boundary. The pinned model exposes
-AuT, Thinker, Talker, MTP, Code2Wav, and their tensor handoffs. The future native
-runtime owns the serving scheduler and bounded-context reconstruction operation.
+The probe could observe AuT, Thinker, Talker, MTP, Code2Wav, and the tensors
+passed between them. The pinned PyTorch model has no serving scheduler or
+bounded-context rebuild operation, so only the future native runtime can
+produce those records.
 
 ## Corrected contract
 
@@ -27,7 +28,7 @@ them into two exhaustive sets:
 - `model_reference`: 154 pairs observable in the pinned PyTorch model and
   required in the P0-003B index;
 - `synthetic_native`: eight scheduler or context-reconstruction pairs generated
-  after P0-004 freezes the native ABI inputs.
+  after P0-004 fixes the concrete inputs passed to the native ABI.
 
 The native set contains all six `scheduler.turn_trace` cases plus
 `context_reconstruction` at `thinker.accepted_hidden` and
@@ -35,9 +36,10 @@ The native set contains all six `scheduler.turn_trace` cases plus
 cases and their tags. Full reference-index validation requires exact equality
 with `required_model_fixture_pairs()`.
 
-This split preserves the adversarial requirements and assigns each persisted
-value to an implementation that can produce it. Fabricated scheduler records
-labeled as model output fail the P0-003B evidence contract.
+The generator now saves only values returned by the pinned model. Native ABI
+tests will save the scheduler and rebuild records after those operations exist.
+Full validation rejects any P0-003B index that labels a fabricated scheduler
+record as model output.
 
 ## Acceptance case
 

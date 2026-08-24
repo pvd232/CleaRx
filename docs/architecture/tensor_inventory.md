@@ -1,6 +1,6 @@
 # Qwen3-Omni tensor inventory
 
-## Evidence boundary
+## What the inventory measures
 
 [`tensor_manifest.json`](../../tensor_manifest.json) inventories every tensor in
 the 15 safetensors shards of
@@ -34,10 +34,10 @@ the memory-budget packet must not treat them as interchangeable.
 
 The Thinker contains 18,432 routed-expert tensors totaling 57,982,058,496
 source bytes. The Talker contains 7,680 routed-expert tensors totaling exactly
-6,039,797,760 bytes (5.625 GiB). The latter receive an authoritative pinned-CPU
-residency plus demand-loaded L4 slot-cache policy; no expert is pruned or
-approximated. Dense Talker tensors, routers, norms, embeddings, projections,
-and heads remain speaking-phase GPU tensors.
+6,039,797,760 bytes (5.625 GiB). The deployment keeps every Talker expert in
+pinned CPU memory and loads selected experts into L4 cache slots on demand.
+Dense Talker tensors, routers, norms, embeddings, projections, and heads remain
+on the GPU while the model speaks.
 
 ## Released architecture facts
 
@@ -77,7 +77,7 @@ Target precision and placement follow one deterministic rule per module:
 | `thinker.model.*`, `thinker.lm_head.*` | Q4_K_M matrices; BF16 1-D/norm/bias | L4 CUDA | Permanent |
 | `thinker.audio_tower.*` | Q8_0 matrices; BF16 1-D/norm/bias | L4 CUDA | Listening arena |
 | `thinker.visual.*` | Removed | Absent | Absent |
-| `talker.model.*`, projections, and codec head | Q8_0 matrices; BF16 1-D/norm/bias | L4 CUDA | Speaking phase; routed experts use the CPU-authoritative slot cache |
+| `talker.model.*`, projections, and codec head | Q8_0 matrices; BF16 1-D/norm/bias | L4 CUDA | Speaking phase; all expert bytes stay in pinned CPU RAM and selected experts occupy L4 cache slots |
 | `talker.code_predictor.*` | BF16 | L4 CUDA | Speaking phase |
 | `code2wav.*` | BF16 | CPU | Permanent CPU residency |
 

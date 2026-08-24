@@ -62,7 +62,7 @@ phase entry, phase exit, and every intervening allocation or release.
 The native recorder combines GGML backend-buffer sizes with device free/total
 samples and records both values rather than substituting one for the other.
 CUDA free-memory deltas include non-GGML runtime allocations; GGML buffer sums
-retain ownership attribution.
+retain byte totals for each recorded owner.
 
 `process_rss` is `VmRSS` from `/proc/self/status`, sampled every 100 ms and at
 every phase transition. The same sample records `VmLck` so later runs can show

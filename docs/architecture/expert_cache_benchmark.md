@@ -1,12 +1,12 @@
 # Expert-cache and shared-allocator benchmark contract
 
-## Claim boundary
+## What this benchmark can establish
 
-This contract defines measurements and rejection rules. It contains no
-representative transfer time, cache hit rate, overlap rate, or policy verdict.
-P0-006B inserts expert shapes from `tensor_manifest.json`, runs the cases on
-the certified L4 profile, and records exploratory feasibility evidence for the
-1,610,612,736-byte expert-slot pool.
+This benchmark measures transfer time, cache hits, copy/compute overlap, and
+allocator behavior, then rejects invalid event traces. The contract itself
+contains no representative measurement or cache-policy verdict. P0-006B inserts
+expert shapes from `tensor_manifest.json`, runs the cases on the certified L4,
+and records whether the 1,610,612,736-byte expert-slot pool is feasible.
 
 The machine-readable contract is
 [`expert_cache_contract.json`](../../tests/fixtures/manifests/expert_cache_contract.json).
@@ -114,10 +114,10 @@ replace CUDA-event durations. A row passes measurement validity only when
 payload hashes match, timestamps are monotonic, and every allocation is
 released.
 
-## Result custody
+## Raw result fields
 
-The P0-006B result identifies `source_commit`, `host_profile_sha256`,
+Each P0-006B row identifies `source_commit`, `host_profile_sha256`,
 `tensor_manifest_sha256`, `trace_sha256`, case, warm-up or repetition index,
 all raw duration fields, cache counts, peak bytes, and the validity verdict.
-Aggregate summaries are derived from those rows. The raw rows remain the
-authority for later feasibility or policy claims.
+Later summaries calculate aggregates from those rows. Reviewers can recompute
+any feasibility or policy conclusion from the stored measurements.

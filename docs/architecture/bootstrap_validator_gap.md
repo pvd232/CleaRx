@@ -1,4 +1,4 @@
-# Phase 0 validator ownership correction
+# Add the four missing Phase 0 validators
 
 ## 1. Status
 
@@ -7,18 +7,18 @@ acceptance command whose Python entry point does not exist at Bootstrap-001
 commit `4541b7f`.
 
 **Failed:** P0-001 entered `failed` when its named validator was absent and the
-packet did not own that path.
+packet's `execution.write_scope` did not include that path.
 
-**Proposed:** Bootstrap-002 creates and tests the four shared validator entry
-points before any affected Phase 0 packet resumes execution.
+**Resolved:** Bootstrap-002 created and tested the four shared validator entry
+points before the affected Phase 0 packets resumed execution.
 
-## 2. Required claim
+## 2. Completion condition
 
-Every affected Phase 0 packet executes a pre-existing, Bootstrap-owned
-validator that accepts the packet's declared outputs and rejects a record that
-omits one of the packet's required checks.
+Each affected Phase 0 packet now invokes a validator that existed before that
+packet began. The validator accepts the packet's declared outputs and rejects a
+record that omits one of its required checks.
 
-## 3. Current gap
+## 3. Why acceptance could not run at `4541b7f`
 
 The packet-to-command connector stops at the executable path:
 
@@ -33,30 +33,29 @@ The Phase 0 packet cannot create its own validator because that path is absent
 from `execution.write_scope`. Expanding a completed packet's scope would change
 its digest and invalidate the lifecycle history bound to the earlier bytes.
 
-## 4. Contract models
+## 4. Files added by Bootstrap-002
 
-Bootstrap-002 owns these executable files:
+Bootstrap-002 added these executable files:
 
 - `tools/inventory/validate_upstream_lock.py`
 - `tools/inventory/validate_l4_host_profile.py`
 - `tools/benchmarks/validate_cache_contract.py`
 - `tools/inventory/validate_evaluation_contract.py`
 
-`tools/contract_validation.py` owns shared JSON loading, required-field,
-digest, timestamp, and benchmark-schema checks. Each entry point owns the
-domain-specific fields consumed by its corresponding Phase 0 packet.
+`tools/contract_validation.py` loads JSON and checks shared required fields,
+digests, timestamps, and benchmark schemas. Each entry point checks the
+domain-specific fields produced by its corresponding Phase 0 packet.
 
-## 5. Execution
+## 5. How the repair works
 
-The primary orchestrator completes Bootstrap-002, validates its result, and
-then transitions P0-001 from `failed` back to `ready`. A Phase 0 packet writes
-only its declared outputs. Its acceptance command reads those outputs through
-the pre-existing validator and returns zero only when every named contract
-check passes.
+The primary orchestrator completed Bootstrap-002, validated its result, and
+then moved P0-001 from `failed` back to `ready`. Each Phase 0 packet writes only
+its declared outputs. Its acceptance command passes those outputs to the
+pre-existing validator, which returns zero only when every named check passes.
 
-## 6. Persisted evidence
+## 6. Files and result record
 
-Bootstrap-002 persists the five validator files and this specification at one
+Bootstrap-002 persisted the five validator files and this specification at one
 Git commit. Its result record binds their byte hashes to the Bootstrap-002
 packet digest and source commit. Each later Phase 0 result stores its validator
 command and exit code under the existing result schema.
@@ -71,7 +70,7 @@ command and exit code under the existing result schema.
 - `missing_evidence_rejected`: tests remove one domain-specific measurement or
   comparison field and require a nonzero verdict.
 
-## 8. Propagation
+## 8. Files and execution order changed
 
 | Surface | Required change |
 |---|---|

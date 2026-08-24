@@ -1,16 +1,15 @@
-# Derived Phase 0 validator ownership correction
+# Add the four missing derived Phase 0 validators
 
-## Status and required claim
+## Original failure
 
 **Inspected:** P0-004, P0-005B, P0-006B, and P0-007B name validator paths
 that are absent after Bootstrap-002 and outside each packet's write scope.
 
-**Proposed:** Bootstrap-003 owns those four validators and their contract tests.
-After its result is complete, every remaining derived Phase 0 acceptance command
-resolves to a pre-existing executable without changing an immutable Phase 0
-packet.
+**Resolved:** Bootstrap-003 added those four validators and their contract
+tests. Every derived Phase 0 acceptance command now resolves to an executable
+that existed before the packet ran; no immutable Phase 0 packet changed.
 
-## Missing connector
+## Why acceptance could not run
 
 ```text
 derived packet acceptance command
@@ -19,17 +18,17 @@ derived packet acceptance command
 -> unsupported completion check
 ```
 
-The lost value is verifier coverage: a result may name required checks, but no
-code evaluates the corresponding memory, spike, deployment, or ABI artifact.
+Without those executables, no code could check the memory budget, L4 spike,
+deployment record, or ABI artifact named by a result.
 
-## Closure
+## What Bootstrap-003 added
 
-Bootstrap-003 writes the validators, tests ordinary success records, and tests
-one severed identity or required field per validator. Its commit and result
-receipt preserve byte identity. The existing packet command then supplies the
-derived artifact to the Bootstrap-owned validator.
+Bootstrap-003 wrote the validators, tested ordinary success records, and tested
+one severed identity or required field per validator. Its result receipt records
+the commit and each file hash. The existing packet commands now pass their
+derived artifacts to those validators.
 
-| Surface | Propagation |
+| Area | Change |
 |---|---|
 | Authoring | Add Bootstrap-003 to the plan and Bootstrap gates. |
 | Runtime | Complete Bootstrap-003 before executing a derived packet. |

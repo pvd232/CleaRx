@@ -1,10 +1,11 @@
 # CleaRx authorized execution checklist
 
-This file is the execution authority for the owner-approved path through the
-Phase 1 readiness checkpoint. The
-[orchestrator handoff](LOCAL_ORCHESTRATOR_MASTER_PROMPT.md) owns the technical
-architecture and acceptance semantics. `orchestration/plan.yaml` owns packet
-identity, dependencies, and lifecycle state after Bootstrap-001 creates it.
+This checklist records the owner-approved execution order through the Phase 1
+readiness checkpoint. The
+[orchestrator handoff](LOCAL_ORCHESTRATOR_MASTER_PROMPT.md) states the target
+architecture and acceptance gates. `orchestration/plan.yaml` lists each packet,
+its immutable file, its digest, and its dependencies. `orchestration/state.json`
+records the current lifecycle state and transition history.
 
 ## Terminal outcome
 
@@ -32,10 +33,10 @@ commit. Complete dependency producers before their consumers.
 | Local project environment | Verified locally | Environment foundation | `conda run -n clearx` resolves the declared Python and tools |
 | Colab control-plane access | Verified with ADC | Environment foundation | `colab --auth=adc sessions` exits successfully |
 | Clean L4 deployment host | Verified live | Infrastructure foundation | GCE instance, disk, GPU, SSH, and backup-image inspections |
-| Schemas, validators, state machine, and packet DAG | Complete at `4541b7f`; first-wave and derived validator ownership corrected at `3a4b079` and `c55f3a5` | Bootstrap-001 through Bootstrap-003 | Valid results `20260823T081011Z-local`, `20260823T082530Z-local`, and `20260823T085305Z-local` |
+| Schemas, validators, state machine, and packet DAG | Complete at `4541b7f`; four first-wave validators added at `3a4b079` and four derived validators added at `c55f3a5` | Bootstrap-001 through Bootstrap-003 | Valid results `20260823T081011Z-local`, `20260823T082530Z-local`, and `20260823T085305Z-local` |
 | Pinned upstream/runtime contract | Complete at `902d871` | P0-001 | Valid result `20260823T083005Z-local` |
 | Tensor inventory | Complete at `0d4ae2b` | P0-002 | Valid result `20260823T091355Z-mixed`; 28,010 source tensors and 15 shards reconcile |
-| Fixture contract and generated reference fixtures | P0-003A blocked on schema/acceptance mismatch and owner-approved numeric tolerances | P0-003A and P0-003B | Fixture validator and packet-bound A100 evidence |
+| Fixture contract and generated reference fixtures | P0-003A complete at `885bb6f`; P0-003B running after successful A100 preflight and full-path load probe | P0-003A and P0-003B | Fixture validator and packet-bound A100 evidence |
 | Native ABI and ownership contract | Not started | P0-004 | Phase 0 integration gate |
 | L4 host and memory contract | Host profile complete at `502d9eb`; manifest-derived budget complete at `15c358e` | P0-005A and P0-005B | Valid results `20260823T083617Z-l4` and `20260823T091916Z-mixed` |
 | Expert-cache and allocator risk contract | Benchmark contract complete at `f693c04`; certified L4 spike complete at `63868f5` | P0-006A and P0-006B | Valid results `20260823T083903Z-local` and `20260823T092532Z-l4` |
@@ -92,7 +93,7 @@ no production runtime implementation.
 
 - [x] Complete P0-001 and freeze exact upstream/runtime revisions.
 - [x] Complete P0-002 and publish the complete tensor inventory.
-- [ ] Complete P0-003A and validate the fixture contract and harness.
+- [x] Complete P0-003A and validate the fixture contract and harness.
 - [x] Complete P0-005A using the live `mantra-g2` host profile.
 - [x] Complete P0-006A and validate the benchmark/result contracts.
 - [x] Complete P0-007A and freeze the draft corpus, metrics, and margins.
@@ -118,20 +119,19 @@ digests, artifact hashes, schemas, and the full repository test command pass.
 
 **Commit boundary:** frozen Phase 0 evidence, evaluation contract, and `abi_v0`.
 
-### Current Phase 0 blocker
+### Current Phase 0 position
 
-P0-003A cannot truthfully pass its declared gate with the frozen fixture input.
-`fixture.schema.json` has no fields for boundary identity, tolerance profile, or
-the upstream-lock, tensor-manifest, generator, and fixture-schema digests that
-P0-003B must later join. `scripts/validate_fixtures.py --contract-only` checks
-only the minimal Bootstrap smoke manifest and artifact hash; it does not invoke
-the future harness or verify the four required P0-003A checks.
+Bootstrap-004 added the strict fixture descriptor, provenance joins, numerical
+profiles, and harness invocation that P0-003A required. Bootstrap-005 added the
+generated reference index and exact coverage check. Bootstrap-006 then split
+the fixture matrix into 154 values observable from the pinned PyTorch model and
+eight traces that only the native scheduler and context-rebuild code can
+produce. P0-003A has completed against those contracts.
 
-Resolution requires a Bootstrap-004 correction that strengthens fixture
-acceptance without silently weakening the immutable packet, plus owner approval
-of named numerical profiles for FP32, BF16, integer/token, and waveform
-boundaries. P0-003A remains `blocked`; P0-003B, P0-004, and Phase 1 readiness
-remain dependency-closed behind it.
+P0-003B is running. Its A100 preflight and explicit-placement probe loaded the
+pinned model and produced one complete codec frame and waveform, but it has not
+yet generated and validated all 154 `model_reference` fixture pairs. P0-004
+cannot begin until P0-003B completes.
 
 ## Phase D. Authorized Phase 1 readiness checkpoint
 
@@ -162,7 +162,7 @@ ctest --test-dir build/local --output-on-failure
 |---|---|---|
 | Already granted: execute through Phase 1 readiness | Phase A | Serial Bootstrap, Phase 0, and readiness work |
 | Already granted: replace unchanged MANTRA disk from backup | Infrastructure foundation | Clean CleaRx L4 host |
-| Approve or revise typed fixture tolerance profiles and Bootstrap-004 correction | P0-003A | A100 fixture generation, ABI freeze, and Phase 1 readiness |
+| Already granted: typed fixture tolerance profiles and Bootstrap-004 correction | P0-003A | A100 fixture generation, ABI freeze, and Phase 1 readiness |
 | Next review: approve production Phase 1 work and any parallel dispatch | After Phase D | Talker, MTP, Code2Wav, AuT, loader, and scheduler implementation |
 | Later: approve Phase 2 and performance work | After Phase 1 correctness gate | End-to-end streaming and L4 optimization |
 

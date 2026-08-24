@@ -14,17 +14,17 @@ contains benchmark, cache, host, and orchestration contracts governed by other
 schemas. The command therefore failed on `expert_cache_contract.json` before it
 looked for P0-003B output.
 
-The declared reference `manifest.json` is an index over many boundary-case
-envelopes. Bootstrap-004 defined strict per-fixture descriptors. The stack still
-lacked an index schema and a validator join from the complete P0-003A matrix to
-those descriptors. A partial A100 collection sat outside the acceptance
-command's read set.
+The declared reference `manifest.json` lists many boundary-case envelopes.
+Bootstrap-004 defined strict per-fixture descriptors, but no schema defined that
+list and no validator compared its boundary-case pairs with the complete
+P0-003A matrix. The acceptance command therefore could not see a partial A100
+collection.
 
-## Corrected contract
+## How full validation now reaches generated fixtures
 
 [`fixture_index.schema.json`](../../orchestration/schemas/fixture_index.schema.json)
-defines one generator commit and a list of boundary ID, case ID, envelope path,
-and envelope SHA-256 records. Every envelope path stays below
+stores one generator commit and a list of records containing boundary ID, case
+ID, envelope path, and envelope SHA-256. Every envelope path stays below
 `tests/fixtures/reference/`.
 
 Full validation now performs this chain for each index entry:
@@ -44,10 +44,10 @@ between its boundary-case pairs and the index pairs. It rejects duplicate
 pairs, duplicate paths, duplicate descriptor IDs, missing pairs, extra pairs,
 hash drift, join drift, and a fixture kind other than `model_boundary`.
 
-Contract-only validation continues to read only the dedicated
-`fixture_contract_examples/` directory and to invoke the P0 harness. Full
+Contract-only validation reads only the dedicated
+`fixture_contract_examples/` directory and invokes the P0 harness. Full
 validation reads those examples plus the generated reference index. Benchmark
-and host contracts remain with their owning validators.
+and host contracts use separate validators.
 
 ## Acceptance case
 
