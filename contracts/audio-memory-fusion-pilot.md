@@ -8,6 +8,88 @@ audio--text memory positions. Its evidence covers this one execution and leaves
 broader quality comparisons to a later pilot.
 
 <!-- contract-protocol:generated:start -->
+**In progress.** [Jump to current PairBlock](#amf-pb-01)
+
+**Checklist:** [Audio memory pilot](../checklists/audio-memory-pilot.md)
+
+### PairBlocks
+
+<a id="amf-pb-01"></a>
+
+#### <nobr><code>AMF-PB-01</code></nobr>
+
+**Status:** drafting
+
+**Requirement contribution:** Add the frozen fusion functions, local rejection tests, A100 worker, bootstrap entrypoint, and result validator required for one auditable smoke run.
+
+**Review handoff**
+
+**What changed**
+
+- Add the frozen one-case pooling and fusion operations with strict result validation.
+- Add separate Colab bootstrap and A100 worker entrypoints so dependency installation precedes pinned model imports.
+- Add local counterexample tests for identity drift, unequal compressed budgets, invalid vector shapes, and non-finite evidence.
+
+**Plan deviations:** The implementation contains only the approved three-condition smoke scope. Coefficient sweeps, Whisper alignment, training, and in-Thinker compression remain future work.
+
+**Start work:** [Open current plan](../plans/audio-memory-fusion-pilot/AMF-PB-01/plan.toml)
+
+**Review these files**
+
+- [Fusion and evidence contract](../plans/audio-memory-fusion-pilot/AMF-PB-01/add/tools/research/audio_memory_fusion.py#L1)
+- [A100 smoke worker](../plans/audio-memory-fusion-pilot/AMF-PB-01/add/experiments/audio_memory_smoke_worker.py#L1)
+- [Contract rejection tests](../plans/audio-memory-fusion-pilot/AMF-PB-01/add/tests/experiments/test_audio_memory_fusion.py#L1)
+
+**Evidence:** No passing gate receipt.
+
+**Decision:** Run the current PairBlock plan.
+
+<details>
+<summary>Implementation details</summary>
+
+**Plan:** [plan.toml](../plans/audio-memory-fusion-pilot/AMF-PB-01/plan.toml)
+
+**Candidate files:** [tools/research/audio_memory_fusion.py](../plans/audio-memory-fusion-pilot/AMF-PB-01/add/tools/research/audio_memory_fusion.py) · [experiments/audio_memory_smoke_bootstrap.py](../plans/audio-memory-fusion-pilot/AMF-PB-01/add/experiments/audio_memory_smoke_bootstrap.py) · [experiments/audio_memory_smoke_worker.py](../plans/audio-memory-fusion-pilot/AMF-PB-01/add/experiments/audio_memory_smoke_worker.py) · [scripts/validate_audio_memory_smoke.py](../plans/audio-memory-fusion-pilot/AMF-PB-01/add/scripts/validate_audio_memory_smoke.py) · [tests/experiments/test_audio_memory_fusion.py](../plans/audio-memory-fusion-pilot/AMF-PB-01/add/tests/experiments/test_audio_memory_fusion.py)
+
+**Implementation roots:** [tools/research](../tools/research) · [experiments](../experiments) · [scripts](../scripts)
+
+**Test roots:** [tests/experiments](../tests/experiments)
+
+**Dependencies:** None
+
+**Gate steps:**
+
+```bash
+# typecheck
+(cd . && pyright --pythonpath /Users/machina/miniconda3/envs/clearx/bin/python tools/research/audio_memory_fusion.py experiments/audio_memory_smoke_bootstrap.py experiments/audio_memory_smoke_worker.py scripts/validate_audio_memory_smoke.py tests/experiments/test_audio_memory_fusion.py)
+# test
+(cd . && python -m pytest -q tests/experiments/test_audio_memory_fusion.py)
+# documentation
+(cd . && python /Users/machina/.agents/skills/code-documentation/scripts/check-schema-descriptions.py tools/research/audio_memory_fusion.py experiments/audio_memory_smoke_bootstrap.py experiments/audio_memory_smoke_worker.py scripts/validate_audio_memory_smoke.py tests/experiments/test_audio_memory_fusion.py)
+# lint
+(cd . && ruff format --check tools/research/audio_memory_fusion.py experiments/audio_memory_smoke_bootstrap.py experiments/audio_memory_smoke_worker.py scripts/validate_audio_memory_smoke.py tests/experiments/test_audio_memory_fusion.py)
+# lint
+(cd . && ruff check tools/research/audio_memory_fusion.py experiments/audio_memory_smoke_bootstrap.py experiments/audio_memory_smoke_worker.py scripts/validate_audio_memory_smoke.py tests/experiments/test_audio_memory_fusion.py)
+```
+
+</details>
+
+
+### Requirements
+
+| Requirement | Claim | Progress | Verifiers | PairBlocks |
+|---|---|---|---|---|
+| <nobr><code>AMF-REQ-01</code></nobr> | Freeze one short audio item, its transcript, prompt, model revisions, and the full-audio, transcript-only, and VoxZip-addition smoke conditions. | in_progress | <nobr><code>AMF-VR-01</code></nobr> | <nobr><code>AMF-PB-01</code></nobr> |
+| <nobr><code>AMF-REQ-02</code></nobr> | Construct every compressed condition from the same chronological mean-pooled Audio Tower vectors and the same transcript-token positions. | in_progress | <nobr><code>AMF-VR-02</code></nobr> | <nobr><code>AMF-PB-01</code></nobr> |
+| <nobr><code>AMF-REQ-03</code></nobr> | Retain one locally revalidated A100 smoke result that binds the source commit, input hash, model revisions, condition shapes, finite logits, and comparison metrics. | in_progress | <nobr><code>AMF-VR-03</code></nobr> | <nobr><code>AMF-PB-01</code></nobr> |
+
+### Verification rules
+
+| Rule | Requirements | Acceptance conditions | Success case | Rejection cases |
+|---|---|---|---|---|
+| <nobr><code>AMF-VR-01</code></nobr> | <nobr><code>AMF-REQ-01</code></nobr> | The smoke contract selects fsdd-george-0 and rejects another item, audio hash, transcript, prompt, model revision, or coefficient set. | [test_accepts_frozen_smoke_identity](../tests/experiments/test_audio_memory_fusion.py) | [test_rejects_changed_smoke_identity](../tests/experiments/test_audio_memory_fusion.py) |
+| <nobr><code>AMF-VR-02</code></nobr> | <nobr><code>AMF-REQ-02</code></nobr> | Mean pooling emits exactly one ordered audio vector per transcript token.<br>Alpha zero returns the transcript vectors and alpha one returns their element-wise sum with the pooled audio vectors. | [test_constructs_equal_budget_memory_vectors](../tests/experiments/test_audio_memory_fusion.py) | [test_rejects_invalid_fusion_inputs](../tests/experiments/test_audio_memory_fusion.py) |
+| <nobr><code>AMF-VR-03</code></nobr> | <nobr><code>AMF-REQ-03</code></nobr> | The result records the source commit, audio and logits hashes, exact revisions, position counts, peak GPU allocation, and finite comparison metrics.<br>Transcript-only and VoxZip-addition conditions have identical compressed input and memory-position counts. | [test_accepts_complete_smoke_result](../tests/experiments/test_audio_memory_fusion.py) | [test_rejects_unequal_memory_budgets](../tests/experiments/test_audio_memory_fusion.py)<br>[test_rejects_nonfinite_comparison](../tests/experiments/test_audio_memory_fusion.py) |
 <!-- contract-protocol:generated:end -->
 
 ## 2. Claim
