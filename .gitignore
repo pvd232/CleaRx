@@ -6,6 +6,9 @@
 /runs/**/artifacts/
 /runs/**/stdout.log
 /runs/**/stderr.log
+/.viper/*
+!/.viper/pointers/
+!/.viper/pointers/**
 /.pytest_cache/
 /**/__pycache__/
 *.pyc
