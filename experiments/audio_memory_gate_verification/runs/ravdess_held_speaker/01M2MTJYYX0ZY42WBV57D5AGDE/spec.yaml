@@ -1,0 +1,232 @@
+schema_version: 2
+run_id: 01M2MTJYYX0ZY42WBV57D5AGDE
+experiment_id: audio_memory_gate_verification
+variant_id: ravdess_held_speaker
+replicate_id: seed_7
+benchmark_id: null
+seed: 7
+source:
+  kind: git
+  repository: https://github.com/pvd232/CleaRx.git
+  commit: 91ec2f19e6b0c8a7b089ae6230e532bec78622bd
+env:
+  kind: local
+  compute:
+    kind: cpu
+  lockfile:
+    kind: git
+    repository: https://github.com/pvd232/CleaRx.git
+    commit: 91ec2f19e6b0c8a7b089ae6230e532bec78622bd
+    path: environment.yml
+  python_env:
+    python_version: 3.12.14
+    distributions:
+    - name: annotated-types
+      version: 0.8.0
+    - name: anyio
+      version: 4.15.1
+    - name: attrs
+      version: 26.1.0
+    - name: build
+      version: 1.6.1
+    - name: certifi
+      version: 2026.7.22
+    - name: cffi
+      version: 2.1.1
+    - name: charset-normalizer
+      version: 3.5.1
+    - name: click
+      version: 8.5.0
+    - name: cryptography
+      version: 50.0.1
+    - name: docutils
+      version: '0.23'
+    - name: filelock
+      version: 3.32.6
+    - name: fsspec
+      version: 2026.7.0
+    - name: google-api-core
+      version: 2.37.0
+    - name: google-auth
+      version: 2.58.0
+    - name: google-cloud-core
+      version: 2.7.0
+    - name: google-cloud-storage
+      version: 3.14.1
+    - name: google-crc32c
+      version: 1.8.0
+    - name: google-resumable-media
+      version: 2.10.2
+    - name: googleapis-common-protos
+      version: 1.75.3
+    - name: h11
+      version: 0.16.0
+    - name: hf-xet
+      version: 1.6.0
+    - name: httpcore
+      version: 1.0.9
+    - name: httpcore2
+      version: 2.12.0
+    - name: httpx
+      version: 0.28.1
+    - name: httpx2
+      version: 2.12.0
+    - name: huggingface-hub
+      version: 1.31.0
+    - name: id
+      version: 1.6.1
+    - name: idna
+      version: '3.19'
+    - name: iniconfig
+      version: 2.3.0
+    - name: jaraco-classes
+      version: 3.4.0
+    - name: jaraco-context
+      version: 6.1.2
+    - name: jaraco-functools
+      version: 4.6.0
+    - name: jinja2
+      version: 3.1.6
+    - name: jsonschema
+      version: 4.26.0
+    - name: jsonschema-specifications
+      version: 2025.9.1
+    - name: keyring
+      version: 25.7.0
+    - name: markdown-it-py
+      version: 4.2.0
+    - name: markupsafe
+      version: 3.0.3
+    - name: mcp
+      version: 2.2.0
+    - name: mcp-types
+      version: 2.2.0
+    - name: mdurl
+      version: 0.1.2
+    - name: more-itertools
+      version: 11.1.0
+    - name: mpmath
+      version: 1.3.0
+    - name: networkx
+      version: 3.6.1
+    - name: nh3
+      version: 0.3.7
+    - name: nodeenv
+      version: 1.10.0
+    - name: numpy
+      version: 2.5.3
+    - name: opentelemetry-api
+      version: 1.44.0
+    - name: packaging
+      version: '26.3'
+    - name: pip
+      version: 25.0.1
+    - name: pluggy
+      version: 1.6.0
+    - name: proto-plus
+      version: 1.28.4
+    - name: protobuf
+      version: 7.36.1
+    - name: pyasn1
+      version: 0.6.4
+    - name: pyasn1-modules
+      version: 0.4.2
+    - name: pycparser
+      version: '3.0'
+    - name: pydantic
+      version: 2.13.5
+    - name: pydantic-core
+      version: 2.46.5
+    - name: pygments
+      version: 2.21.0
+    - name: pyjwt
+      version: 2.14.0
+    - name: pyproject-hooks
+      version: 1.2.0
+    - name: pyright
+      version: 1.1.414
+    - name: pytest
+      version: 9.1.1
+    - name: python-multipart
+      version: 0.0.32
+    - name: pyyaml
+      version: 6.0.3
+    - name: readme-renderer
+      version: '46.0'
+    - name: referencing
+      version: 0.37.0
+    - name: requests
+      version: 2.34.2
+    - name: requests-toolbelt
+      version: 1.0.0
+    - name: rfc3986
+      version: 2.0.0
+    - name: rich
+      version: 15.0.0
+    - name: rpds-py
+      version: 2026.6.3
+    - name: ruff
+      version: 0.16.7
+    - name: setuptools
+      version: 84.0.0
+    - name: sse-starlette
+      version: 3.4.11
+    - name: starlette
+      version: 1.6.0
+    - name: sympy
+      version: 1.14.0
+    - name: torch
+      version: 2.14.0
+    - name: torchdata
+      version: 0.11.0
+    - name: tqdm
+      version: 4.70.1
+    - name: truststore
+      version: 0.10.4
+    - name: twine
+      version: 6.2.0
+    - name: typing-extensions
+      version: 4.16.0
+    - name: typing-inspection
+      version: 0.4.4
+    - name: urllib3
+      version: 2.7.0
+    - name: uvicorn
+      version: 0.52.4
+    - name: viper-provenance
+      version: 0.1.0a5
+reproducibility:
+  determinism:
+    deterministic_algorithms: true
+    deterministic_warn_only: false
+    cudnn_deterministic: true
+    cudnn_benchmark: false
+    cublas_workspace_config: :4096:8
+  precision:
+    float32_matmul_precision: highest
+    cudnn_allow_tf32: false
+    autocast_enabled: false
+    autocast_dtype: null
+  parallelism:
+    process_count: 1
+    torch_intraop_threads: 1
+    torch_interop_threads: 1
+    dataloader:
+      workers: 0
+      prefetch_factor: null
+      persistent_workers: false
+      in_order: true
+  numpy_randomness:
+    generators: {}
+    capture_legacy_global: true
+execution_policy:
+  mode: reproducible
+  version: 1
+stages:
+- stage_id: verify_gate
+  spec: experiments/audio_memory_gate_verification/runs/ravdess_held_speaker/01M2MTJYYX0ZY42WBV57D5AGDE/stages/verify_gate/spec.yaml
+  sha256: 512caa8c82b181d1330890b4ac7452a847b792bcf6936167106aad92601235bb
+  bytes: 1057
+estimator:
+  stage_id: verify_gate
+  artifact_name: report

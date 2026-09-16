@@ -1,0 +1,26 @@
+schema_version: 2
+spec:
+  sha256: 3bf327a68452efa985ea5dad59a0f5ee9bd3108d3c633e4237d82ad3b00bab0f
+  bytes: 5392
+  stored_at:
+    kind: local
+    workspace: /Users/machina/Developer/ChatGPT/CleaRx
+    store: .viper/store
+    store_id: 16cdd49c0c9d8b89d382ebe01cbec0b6
+    commit: 052109e9499cd7074ada3fe2996ce269da37ef3e1c74a3df1d615e668a12e784
+    path: experiments/audio_memory_gate_verification/runs/ravdess_held_speaker/01M2MTJYYX0ZY42WBV57D5AGDE/spec.yaml
+  kind: run_spec
+status: succeeded
+attempts:
+- sha256: 280be08a17ed3d946a6c40e85c4b8013dcb45bed2c330146bb58fee14f834fe6
+  bytes: 2664
+  stored_at:
+    kind: local
+    workspace: /Users/machina/Developer/ChatGPT/CleaRx
+    store: .viper/store
+    store_id: 16cdd49c0c9d8b89d382ebe01cbec0b6
+    commit: 1b4eaec718aa92bc32cd23d6100a76fccd27e638d4a324ab946c2d4d722051b2
+    path: experiments/audio_memory_gate_verification/runs/ravdess_held_speaker/01M2MTJYYX0ZY42WBV57D5AGDE/attempts/1/resolved.yaml
+  kind: resolved_attempt
+successful_attempt_id: 1
+completed_at: '2026-09-16T10:00:56.681046Z'

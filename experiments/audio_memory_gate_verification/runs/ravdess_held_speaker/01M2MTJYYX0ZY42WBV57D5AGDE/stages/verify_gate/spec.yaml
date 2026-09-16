@@ -1,0 +1,37 @@
+kind: diagnostic
+schema_version: 2
+env: null
+metric_ids: []
+outputs:
+  report:
+    kind: file
+    path: experiments/audio_memory_gate_verification/runs/ravdess_held_speaker/01M2MTJYYX0ZY42WBV57D5AGDE/artifacts/verify_gate/report/verification.json
+    relative_path: verification.json
+    loader:
+      path: tools/research/audio_memory_gate.py
+      symbol: load_json
+      sha256: be070e751f4f096cf5e095b4b9fe6372b1d303f6a15f507685d2aaefbe435421
+      bytes: 10272
+    data_role: eval
+implementation:
+  path: experiments/audio_memory_gate_viper.py
+  symbol: verify_gate
+  sha256: ef1fd5f4f0f356b4018c0e677f4d75fefef90b0da3bbd53bd6e3b889b491c27e
+  bytes: 7046
+config_type:
+  owner: viper
+  path: config.py
+  symbol: DiagnosticConfig
+  sha256: 64e4b15cf76e5c31ed80a3b259ce5d4dba5b55ec373b24e0b04caf04c4a09368
+  bytes: 2875
+reuse: never
+file_access: unrestricted
+inputs:
+  a100_result:
+    kind: external
+    source:
+      kind: local
+      path: runs/audio-memory-fusion-gate/20260916T091635Z-a100/result.json
+    data_role: eval
+config:
+  schema_version: 2

@@ -1,0 +1,9 @@
+{
+  "a100_source_commit": "cdacfa8f1095435518ef8b660d1f918237ec8641",
+  "preflight_correct": 1,
+  "preflight_unique_predictions": 1,
+  "schema_version": "1.0.0",
+  "status": "stopped_after_preflight",
+  "stop_rule_verified": true,
+  "verified": true
+}
