@@ -1,0 +1,113 @@
+schema_version = 1
+contract_id = "audio-memory-fusion-pilot"
+package_sha256 = "f9566b7da715ae61c0cc1c6cc913554ec22d21ab892169a3b7bb8208198262f8"
+pair_block_id = "AMF-PB-01"
+baseline_commit = "8f316a9b2ca47bd519021d31ea518de3d2ff7290"
+change_summary = [
+  "Add the frozen one-case pooling and fusion operations with strict result validation.",
+  "Add separate Colab bootstrap and A100 worker entrypoints so dependency installation precedes pinned model imports.",
+  "Add local counterexample tests for identity drift, unequal compressed budgets, invalid vector shapes, and non-finite evidence.",
+]
+deviation_summary = "The implementation follows the approved three-condition smoke scope without adding a coefficient sweep, Whisper alignment, training, or in-Thinker compression."
+
+[[actions]]
+operation = "add"
+source_path = "add/tools/research/audio_memory_fusion.py"
+target_path = "tools/research/audio_memory_fusion.py"
+
+[[actions]]
+operation = "add"
+source_path = "add/experiments/audio_memory_smoke_bootstrap.py"
+target_path = "experiments/audio_memory_smoke_bootstrap.py"
+
+[[actions]]
+operation = "add"
+source_path = "add/experiments/audio_memory_smoke_worker.py"
+target_path = "experiments/audio_memory_smoke_worker.py"
+
+[[actions]]
+operation = "add"
+source_path = "add/scripts/validate_audio_memory_smoke.py"
+target_path = "scripts/validate_audio_memory_smoke.py"
+
+[[actions]]
+operation = "add"
+source_path = "add/tests/experiments/test_audio_memory_fusion.py"
+target_path = "tests/experiments/test_audio_memory_fusion.py"
+
+[[handoff_targets]]
+label = "Fusion and evidence contract"
+source = "plan"
+path = "add/tools/research/audio_memory_fusion.py"
+line = 1
+
+[[handoff_targets]]
+label = "A100 smoke worker"
+source = "plan"
+path = "add/experiments/audio_memory_smoke_worker.py"
+line = 1
+
+[[handoff_targets]]
+label = "Contract rejection tests"
+source = "plan"
+path = "add/tests/experiments/test_audio_memory_fusion.py"
+line = 1
+
+[gate]
+source_roots = ["tools/research", "experiments", "scripts"]
+test_roots = ["tests/experiments"]
+
+[[gate.steps]]
+role = "typecheck"
+working_directory = "."
+argv = [
+  "pyright",
+  "--pythonpath", "/Users/machina/miniconda3/envs/clearx/bin/python",
+  "tools/research/audio_memory_fusion.py",
+  "experiments/audio_memory_smoke_bootstrap.py",
+  "experiments/audio_memory_smoke_worker.py",
+  "scripts/validate_audio_memory_smoke.py",
+  "tests/experiments/test_audio_memory_fusion.py",
+]
+
+[[gate.steps]]
+role = "test"
+working_directory = "."
+argv = ["python", "-m", "pytest", "-q", "tests/experiments/test_audio_memory_fusion.py"]
+
+[[gate.steps]]
+role = "documentation"
+working_directory = "."
+argv = [
+  "python",
+  "/Users/machina/.agents/skills/code-documentation/scripts/check-schema-descriptions.py",
+  "tools/research/audio_memory_fusion.py",
+  "experiments/audio_memory_smoke_bootstrap.py",
+  "experiments/audio_memory_smoke_worker.py",
+  "scripts/validate_audio_memory_smoke.py",
+  "tests/experiments/test_audio_memory_fusion.py",
+]
+
+[[gate.steps]]
+role = "lint"
+working_directory = "."
+argv = [
+  "ruff", "format", "--check",
+  "tools/research/audio_memory_fusion.py",
+  "experiments/audio_memory_smoke_bootstrap.py",
+  "experiments/audio_memory_smoke_worker.py",
+  "scripts/validate_audio_memory_smoke.py",
+  "tests/experiments/test_audio_memory_fusion.py",
+]
+
+[[gate.steps]]
+role = "lint"
+working_directory = "."
+argv = [
+  "ruff", "check",
+  "tools/research/audio_memory_fusion.py",
+  "experiments/audio_memory_smoke_bootstrap.py",
+  "experiments/audio_memory_smoke_worker.py",
+  "scripts/validate_audio_memory_smoke.py",
+  "tests/experiments/test_audio_memory_fusion.py",
+]
