@@ -7,7 +7,7 @@ from pathlib import Path
 
 import numpy as np
 
-from tools.research.audio_memory_gate import (
+from clearx.audio_memory.gate import (
     FEATURE_NAMES,
     degrade_audio,
     fit_gate,

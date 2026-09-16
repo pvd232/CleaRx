@@ -137,11 +137,11 @@ equal memory budgets. The present result supports testing that policy; it does
 not yet establish a memory-saving compactor.
 
 The exact A100 record is
-[`result.json`](../../experiments/audio_memory_transcript_trust/runs/ravdess_transcript_corruption/20260916T101500Z-a100/result.json).
+[`result.json`](runs/ravdess_transcript_corruption/20260916T101500Z-a100/result.json).
 VIPER recomputed the gate locally with a maximum numeric difference of
 `8.88e-16` and confirmed both the positive ordering result and the negative
 continuous-policy result in its
-[`verification.json`](../../experiments/audio_memory_transcript_trust_verification/runs/ravdess_transcript_corruption/01M2MYBFGD4XXNTBAHSJ2AH8QK/artifacts/verify_gate/report/verification.json)
+[`verification.json`](../audio_memory_transcript_trust_verification/runs/ravdess_transcript_corruption/01M2MYBFGD4XXNTBAHSJ2AH8QK/artifacts/verify_gate/report/verification.json)
 record.
 
 ## Execution boundary

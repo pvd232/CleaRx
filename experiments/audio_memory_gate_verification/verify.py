@@ -15,7 +15,7 @@ from viper.repository import read_source
 from viper.runtime import LocalEnvSpec, observe_python_env
 from viper.stages import StageContext, diagnostic
 
-from tools.research.audio_memory_gate import gate_payload, load_json
+from clearx.audio_memory.gate import gate_payload, load_json
 
 RESULT_PATH = "experiments/audio_memory_fusion_gate/runs/ravdess_held_speaker/20260916T091635Z-a100/result.json"
 

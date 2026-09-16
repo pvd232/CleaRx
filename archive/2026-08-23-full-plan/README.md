@@ -16,7 +16,7 @@ conventions so their recorded hashes and receipts remain meaningful.
 | [`upstream.lock`](upstream.lock) | Exact upstream revisions and file identities used by the execution. |
 
 The repository keeps one active environment contract at
-[`environment.yml`](../../../../environment.yml). To resume this execution,
+[`environment.yml`](../../environment.yml). To resume this execution,
 create a dedicated branch or worktree and restore this snapshot at that
 worktree's root before running the archived packet commands. Preserve existing
 result files; a resumed attempt should write new evidence.

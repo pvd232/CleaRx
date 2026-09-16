@@ -9,6 +9,8 @@
 
 ## Active experiments
 
+- Keep reusable research code under `src/clearx/`. Reserve `tools/` for
+  repository-maintenance commands; importable libraries belong in `src/clearx/`.
 - Keep experiment declarations, variants, captured runs, and VIPER records
   under `experiments/<experiment_id>/`.
 - Store each captured run under
@@ -21,7 +23,7 @@
 
 ## Historical executions
 
-- Treat `docs/proposals/full_plan/8-23/` as the read-only snapshot of the
+- Treat `archive/2026-08-23-full-plan/` as the read-only snapshot of the
   August 23 contract execution. Its internal paths preserve that execution's
   workspace layout.
 - Resume a historical execution in a dedicated branch or worktree. Restore its

@@ -5,7 +5,7 @@
 The Apple M1 checkout owns Git integration, packet/state mutation, schema
 validation, fixture inspection, CPU smoke tests, and small native builds. Run
 project commands inside the `clearx` Conda environment declared by
-[`environment.yml`](../../../../../../environment.yml).
+[`environment.yml`](../../../../environment.yml).
 
 ```bash
 conda activate clearx
