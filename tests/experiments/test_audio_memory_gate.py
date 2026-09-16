@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import math
+from pathlib import Path
 
 import numpy as np
 
@@ -10,11 +11,28 @@ from tools.research.audio_memory_gate import (
     FEATURE_NAMES,
     fit_gate,
     gate_payload,
+    load_json,
     oracle_alpha,
     predict_alpha,
     segment_features,
     select_fixed_alpha,
 )
+
+
+def test_load_json_requires_an_object(tmp_path: Path) -> None:
+    """The isolated VIPER loader accepts objects and rejects other JSON values."""
+    artifact = tmp_path / "artifact.json"
+    artifact.write_text('{"verified": true}\n', encoding="utf-8")
+
+    assert load_json(artifact) == {"verified": True}
+
+    artifact.write_text("[]\n", encoding="utf-8")
+    try:
+        load_json(artifact)
+    except TypeError as error:
+        assert str(error) == "JSON artifact must contain an object"
+    else:
+        raise AssertionError("load_json accepted a non-object artifact")
 
 
 def _item(actor: str, index: int, best_alpha: float, split: str) -> dict[str, object]:

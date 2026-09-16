@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import json
 import math
-from pathlib import Path
 from typing import Any
 
 from viper import execution
@@ -16,17 +15,9 @@ from viper.repository import read_source
 from viper.runtime import LocalEnvSpec, observe_python_env
 from viper.stages import StageContext, diagnostic
 
-from tools.research.audio_memory_gate import gate_payload
+from tools.research.audio_memory_gate import gate_payload, load_json
 
 RESULT_PATH = "runs/audio-memory-fusion-gate/20260916T091635Z-a100/result.json"
-
-
-def load_json(path: Path) -> dict[str, Any]:
-    """Load one JSON artifact produced or consumed by the verification stage."""
-    value = json.loads(path.read_text(encoding="utf-8"))
-    if not isinstance(value, dict):
-        raise TypeError("JSON artifact must contain an object")
-    return value
 
 
 def maximum_delta(expected: Any, observed: Any) -> float:

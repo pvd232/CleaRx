@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+import json
 import math
 import statistics
 from collections.abc import Mapping, Sequence
+from pathlib import Path
 from typing import Any, Final
 
 import numpy as np
@@ -20,6 +22,14 @@ FEATURE_NAMES: Final = (
     "audio_positions_per_text_position",
 )
 RIDGE_VALUES: Final = (0.01, 0.1, 1.0, 10.0, 100.0)
+
+
+def load_json(path: Path) -> dict[str, Any]:
+    """Load one JSON object for the gate experiment or its VIPER verifier."""
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise TypeError("JSON artifact must contain an object")
+    return value
 
 
 def segment_features(
