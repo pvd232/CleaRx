@@ -1,0 +1,904 @@
+{
+  "aggregate": {
+    "alpha_0.00": {
+      "alpha": 0.0,
+      "item_count": 10,
+      "items_better_than_alpha_0": 0,
+      "mean_relative_kl_reduction_vs_alpha_0": 0.0,
+      "mean_teacher_kl": 2.3537266135215758,
+      "median_teacher_kl": 2.122917413711548,
+      "top1_agreement_count": 0
+    },
+    "alpha_0.25": {
+      "alpha": 0.25,
+      "item_count": 10,
+      "items_better_than_alpha_0": 3,
+      "mean_relative_kl_reduction_vs_alpha_0": -0.04347998909005055,
+      "mean_teacher_kl": 2.514383375644684,
+      "median_teacher_kl": 2.3634153604507446,
+      "top1_agreement_count": 0
+    },
+    "alpha_0.50": {
+      "alpha": 0.5,
+      "item_count": 10,
+      "items_better_than_alpha_0": 5,
+      "mean_relative_kl_reduction_vs_alpha_0": 0.014229916108198262,
+      "mean_teacher_kl": 2.407438027858734,
+      "median_teacher_kl": 2.3242387771606445,
+      "top1_agreement_count": 0
+    },
+    "alpha_0.75": {
+      "alpha": 0.75,
+      "item_count": 10,
+      "items_better_than_alpha_0": 6,
+      "mean_relative_kl_reduction_vs_alpha_0": 0.01956558533100996,
+      "mean_teacher_kl": 2.3759108066558836,
+      "median_teacher_kl": 2.1038390398025513,
+      "top1_agreement_count": 0
+    },
+    "alpha_1.00": {
+      "alpha": 1.0,
+      "item_count": 10,
+      "items_better_than_alpha_0": 7,
+      "mean_relative_kl_reduction_vs_alpha_0": 0.07012087845184531,
+      "mean_teacher_kl": 2.254708433151245,
+      "median_teacher_kl": 2.0048595666885376,
+      "top1_agreement_count": 0
+    }
+  },
+  "environment": {
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_total_bytes": 42405855232,
+    "torch_version": "2.11.0+cu128",
+    "transformers_version": "5.2.0"
+  },
+  "experiment_id": "audio-memory-fusion-sweep-v1",
+  "identity": {
+    "alphas": [
+      0.0,
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ],
+    "dataset_commit": "26eb9aaf76e81b692f806f9140c2d2777410d7a1",
+    "model_commit": "26291f793822fb6be9555850f06dfe95f2d7e695",
+    "model_repository": "Qwen/Qwen3-Omni-30B-A3B-Instruct",
+    "prompt": "Repeat the spoken digit and nothing else.",
+    "seed": 7,
+    "transformers_commit": "7d9754a05193eb79b1d86aa744b622b8068008cd"
+  },
+  "items": [
+    {
+      "audio_feature_positions": 4,
+      "audio_sha256": "228ab63fccdf262d2e05817b6ec918b15e7d9e4bfb6bb20183c46ae088405240",
+      "audio_url": "https://raw.githubusercontent.com/Jakobovski/free-spoken-digit-dataset/26eb9aaf76e81b692f806f9140c2d2777410d7a1/recordings/0_george_0.wav",
+      "compressed_input_positions": 17,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 17,
+          "logits_sha256": "4f38a49cba1d0655b1f7c07a7d481d33cd7b787b806fbad17aed6b3831787844",
+          "memory_positions": 1,
+          "seconds": 5.814410015000021,
+          "teacher_kl": 2.135908842086792,
+          "teacher_top1_agreement": false,
+          "top_token_id": 14154,
+          "top_token_text": "zero",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.25": {
+          "alpha": 0.25,
+          "input_positions": 17,
+          "logits_sha256": "cb2a218f189b7b0ed19a030550848309f5c085ac3539d9cb98812da42952e109",
+          "memory_positions": 1,
+          "seconds": 5.761459607000006,
+          "teacher_kl": 2.2793047428131104,
+          "teacher_top1_agreement": false,
+          "top_token_id": 14154,
+          "top_token_text": "zero",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 17,
+          "logits_sha256": "0dbe1d0a0cc7ec92402c1b20c02ca075bf0cda83e7c3213f8a1786bd4662c797",
+          "memory_positions": 1,
+          "seconds": 5.805913270000019,
+          "teacher_kl": 2.492609977722168,
+          "teacher_top1_agreement": false,
+          "top_token_id": 14154,
+          "top_token_text": "zero",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.75": {
+          "alpha": 0.75,
+          "input_positions": 17,
+          "logits_sha256": "02a7221eb3722b1d414640d9b8a61ef51c93be8fba013e2ff2ac0c8bddd8a71e",
+          "memory_positions": 1,
+          "seconds": 5.797897849000037,
+          "teacher_kl": 1.7593778371810913,
+          "teacher_top1_agreement": false,
+          "top_token_id": 14154,
+          "top_token_text": "zero",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 17,
+          "logits_sha256": "0ce2b96a044fac6ebc3b0706c45e1dd6dc6635b702dcecf3839bba84b965620f",
+          "memory_positions": 1,
+          "seconds": 5.791948542,
+          "teacher_kl": 1.9663727283477783,
+          "teacher_top1_agreement": false,
+          "top_token_id": 14154,
+          "top_token_text": "zero",
+          "vocabulary_size": 152064
+        }
+      },
+      "filename": "0_george_0.wav",
+      "full_input_positions": 22,
+      "item_id": "0-george-0",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 22,
+        "logits_sha256": "fa5cbaa23650f85b9e24a3d96fbf041991bd4ecf96d90348fae4bde846538036",
+        "memory_positions": null,
+        "top_token_id": 17999,
+        "top_token_text": "Zero",
+        "vocabulary_size": 152064
+      },
+      "transcript": "zero",
+      "transcript_token_positions": 1
+    },
+    {
+      "audio_feature_positions": 7,
+      "audio_sha256": "b3739400f793620875bb7849bfd8629dc6b2966ed6bda8276aa14178a612f13a",
+      "audio_url": "https://raw.githubusercontent.com/Jakobovski/free-spoken-digit-dataset/26eb9aaf76e81b692f806f9140c2d2777410d7a1/recordings/1_jackson_0.wav",
+      "compressed_input_positions": 17,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 17,
+          "logits_sha256": "675fe04788a17b322334fbc118784169d47088274e7baaecc0bc21471b270c15",
+          "memory_positions": 1,
+          "seconds": 5.797540143000106,
+          "teacher_kl": 2.848410129547119,
+          "teacher_top1_agreement": false,
+          "top_token_id": 603,
+          "top_token_text": "one",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.25": {
+          "alpha": 0.25,
+          "input_positions": 17,
+          "logits_sha256": "a570bbd8fe94c630a5663cb4a079b0e428277be79d2e7631118591c402a89726",
+          "memory_positions": 1,
+          "seconds": 5.797612754000056,
+          "teacher_kl": 2.7933871746063232,
+          "teacher_top1_agreement": false,
+          "top_token_id": 603,
+          "top_token_text": "one",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 17,
+          "logits_sha256": "118f8f27f8cfd4b9a1231b9c6d6805b67966fb6d7b0fe9987c195ede66781a0c",
+          "memory_positions": 1,
+          "seconds": 5.8102105460000075,
+          "teacher_kl": 2.6691951751708984,
+          "teacher_top1_agreement": false,
+          "top_token_id": 603,
+          "top_token_text": "one",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.75": {
+          "alpha": 0.75,
+          "input_positions": 17,
+          "logits_sha256": "46f377e7dca2ee229f4810c3da5d383d1d3ba00d5abf867b28e36a2d74cd0fd8",
+          "memory_positions": 1,
+          "seconds": 5.7914836279999236,
+          "teacher_kl": 2.4039294719696045,
+          "teacher_top1_agreement": false,
+          "top_token_id": 603,
+          "top_token_text": "one",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 17,
+          "logits_sha256": "6a5e6a22b47f2fe1d057e72addc9a05d8eb7e6a1d1913b3f3e9df9af85c8d1c7",
+          "memory_positions": 1,
+          "seconds": 5.786819817000151,
+          "teacher_kl": 2.3842613697052,
+          "teacher_top1_agreement": false,
+          "top_token_id": 603,
+          "top_token_text": "one",
+          "vocabulary_size": 152064
+        }
+      },
+      "filename": "1_jackson_0.wav",
+      "full_input_positions": 25,
+      "item_id": "1-jackson-0",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 25,
+        "logits_sha256": "89f7dab39da94170fea5813177241b829e31d6e0040900ee5e2189b951d636b1",
+        "memory_positions": null,
+        "top_token_id": 3966,
+        "top_token_text": "One",
+        "vocabulary_size": 152064
+      },
+      "transcript": "one",
+      "transcript_token_positions": 1
+    },
+    {
+      "audio_feature_positions": 5,
+      "audio_sha256": "1cc45214f58b07f3188a0474060cf04c600123d1bc05c9889f81a24e77edab2f",
+      "audio_url": "https://raw.githubusercontent.com/Jakobovski/free-spoken-digit-dataset/26eb9aaf76e81b692f806f9140c2d2777410d7a1/recordings/2_lucas_0.wav",
+      "compressed_input_positions": 17,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 17,
+          "logits_sha256": "415c81b024d967fe6f95e0e6d1e125d0b5fd9c414e33fd34861724ef0e8264e3",
+          "memory_positions": 1,
+          "seconds": 5.774615643999823,
+          "teacher_kl": 2.371650218963623,
+          "teacher_top1_agreement": false,
+          "top_token_id": 19789,
+          "top_token_text": "two",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.25": {
+          "alpha": 0.25,
+          "input_positions": 17,
+          "logits_sha256": "1985f700524116731b3e4342f9d622b344b8723e2c7f56243e60fe7762281f79",
+          "memory_positions": 1,
+          "seconds": 5.805127790000142,
+          "teacher_kl": 2.6392672061920166,
+          "teacher_top1_agreement": false,
+          "top_token_id": 19789,
+          "top_token_text": "two",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 17,
+          "logits_sha256": "7b6c16b861518c4e14b67f5001a34fcd86b223965446e524096dd0c47145fc6e",
+          "memory_positions": 1,
+          "seconds": 5.78569174800009,
+          "teacher_kl": 2.440903902053833,
+          "teacher_top1_agreement": false,
+          "top_token_id": 19789,
+          "top_token_text": "two",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.75": {
+          "alpha": 0.75,
+          "input_positions": 17,
+          "logits_sha256": "4fd3e70adbc0d690a2831c1565b2db4bd7d4e8a3ec567abe139ab8592dc9b3fa",
+          "memory_positions": 1,
+          "seconds": 5.77857268799994,
+          "teacher_kl": 2.319122076034546,
+          "teacher_top1_agreement": false,
+          "top_token_id": 19789,
+          "top_token_text": "two",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 17,
+          "logits_sha256": "f9183e034dc3d60f761b12eca8bc1ee3beaadf10b5dc447aa7628b1b6c854667",
+          "memory_positions": 1,
+          "seconds": 5.80394020000017,
+          "teacher_kl": 2.571549892425537,
+          "teacher_top1_agreement": false,
+          "top_token_id": 19789,
+          "top_token_text": "two",
+          "vocabulary_size": 152064
+        }
+      },
+      "filename": "2_lucas_0.wav",
+      "full_input_positions": 23,
+      "item_id": "2-lucas-0",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 23,
+        "logits_sha256": "d74e7080941c3d93636dd64fbf6d31afb578df26e30efa8a83adba463f23b003",
+        "memory_positions": null,
+        "top_token_id": 11613,
+        "top_token_text": "Two",
+        "vocabulary_size": 152064
+      },
+      "transcript": "two",
+      "transcript_token_positions": 1
+    },
+    {
+      "audio_feature_positions": 5,
+      "audio_sha256": "5da068172b180b74cd8ed019d131679249387b0199cb972992adf18e21f1d82d",
+      "audio_url": "https://raw.githubusercontent.com/Jakobovski/free-spoken-digit-dataset/26eb9aaf76e81b692f806f9140c2d2777410d7a1/recordings/3_nicolas_0.wav",
+      "compressed_input_positions": 17,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 17,
+          "logits_sha256": "f55b4877be067f37d881608996b32d20e9bfb66fbbd79b9058ff55ec0d48e06f",
+          "memory_positions": 1,
+          "seconds": 5.771876011999893,
+          "teacher_kl": 5.293259620666504,
+          "teacher_top1_agreement": false,
+          "top_token_id": 27856,
+          "top_token_text": "three",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.25": {
+          "alpha": 0.25,
+          "input_positions": 17,
+          "logits_sha256": "e4b060811e7a26367210b575eafbbc9b751afae72f3cad90751d99f3df0f871a",
+          "memory_positions": 1,
+          "seconds": 5.791618025000162,
+          "teacher_kl": 6.0857744216918945,
+          "teacher_top1_agreement": false,
+          "top_token_id": 27856,
+          "top_token_text": "three",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 17,
+          "logits_sha256": "a1e90b005d17413a05a84bbc838dbab017dc7fa6100f97babde110d508b555bd",
+          "memory_positions": 1,
+          "seconds": 5.787802665000072,
+          "teacher_kl": 6.272766590118408,
+          "teacher_top1_agreement": false,
+          "top_token_id": 27856,
+          "top_token_text": "three",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.75": {
+          "alpha": 0.75,
+          "input_positions": 17,
+          "logits_sha256": "12e7d76fec86832ae0bf5fe45e1097f5d99197fe945f05ca11f22eb1d7e25ac1",
+          "memory_positions": 1,
+          "seconds": 5.798567078000133,
+          "teacher_kl": 6.435591697692871,
+          "teacher_top1_agreement": false,
+          "top_token_id": 27856,
+          "top_token_text": "three",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 17,
+          "logits_sha256": "668a4acd665f07dbc19541e565e89a483e2f224c6ef0f3631e0573792c4621f8",
+          "memory_positions": 1,
+          "seconds": 5.7994241970000076,
+          "teacher_kl": 6.01775598526001,
+          "teacher_top1_agreement": false,
+          "top_token_id": 27856,
+          "top_token_text": "three",
+          "vocabulary_size": 152064
+        }
+      },
+      "filename": "3_nicolas_0.wav",
+      "full_input_positions": 23,
+      "item_id": "3-nicolas-0",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 23,
+        "logits_sha256": "db6d164800f7a1cb551a934af06ddeb564d7054b09672ecfd027c3d9e555775f",
+        "memory_positions": null,
+        "top_token_id": 19641,
+        "top_token_text": "Three",
+        "vocabulary_size": 152064
+      },
+      "transcript": "three",
+      "transcript_token_positions": 1
+    },
+    {
+      "audio_feature_positions": 4,
+      "audio_sha256": "4b96496d35d799b61b8341ac42161907b0a4dac68564310016396d9c6cffebe4",
+      "audio_url": "https://raw.githubusercontent.com/Jakobovski/free-spoken-digit-dataset/26eb9aaf76e81b692f806f9140c2d2777410d7a1/recordings/4_theo_0.wav",
+      "compressed_input_positions": 17,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 17,
+          "logits_sha256": "e5b6483a1ea54be24177421d6ea696c262e2028487d790b042f632f4f6d3db74",
+          "memory_positions": 1,
+          "seconds": 5.7956306210001,
+          "teacher_kl": 2.429598569869995,
+          "teacher_top1_agreement": false,
+          "top_token_id": 34024,
+          "top_token_text": "four",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.25": {
+          "alpha": 0.25,
+          "input_positions": 17,
+          "logits_sha256": "7e799fd54ed7275f02b6778940a3058f4297bc8587a047d2b48d39ee9ac90092",
+          "memory_positions": 1,
+          "seconds": 5.794367192999971,
+          "teacher_kl": 2.447525978088379,
+          "teacher_top1_agreement": false,
+          "top_token_id": 34024,
+          "top_token_text": "four",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 17,
+          "logits_sha256": "a4e7d5f917615632795fca13d47f5a387f5d0add333ac10bdc30c26259acfb14",
+          "memory_positions": 1,
+          "seconds": 5.802886887999875,
+          "teacher_kl": 2.207573652267456,
+          "teacher_top1_agreement": false,
+          "top_token_id": 34024,
+          "top_token_text": "four",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.75": {
+          "alpha": 0.75,
+          "input_positions": 17,
+          "logits_sha256": "1cec0e5c091a17fd8e3f63cc1d7d49276c064ee1d806f87bb7a9bbbe335b5da5",
+          "memory_positions": 1,
+          "seconds": 5.792822921999914,
+          "teacher_kl": 2.4177138805389404,
+          "teacher_top1_agreement": false,
+          "top_token_id": 34024,
+          "top_token_text": "four",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 17,
+          "logits_sha256": "7c4ebe034b6c43926b9d37d128c705f3daa3f59d9f4901177561a1aa2861f111",
+          "memory_positions": 1,
+          "seconds": 5.811478967999847,
+          "teacher_kl": 1.7687219381332397,
+          "teacher_top1_agreement": false,
+          "top_token_id": 34024,
+          "top_token_text": "four",
+          "vocabulary_size": 152064
+        }
+      },
+      "filename": "4_theo_0.wav",
+      "full_input_positions": 22,
+      "item_id": "4-theo-0",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 22,
+        "logits_sha256": "129259080296eb242e745139dcfe19a83d5eed37d05890625fa2b14ab5b7fbf5",
+        "memory_positions": null,
+        "top_token_id": 26972,
+        "top_token_text": "Four",
+        "vocabulary_size": 152064
+      },
+      "transcript": "four",
+      "transcript_token_positions": 1
+    },
+    {
+      "audio_feature_positions": 4,
+      "audio_sha256": "8850c7830e4a4427c1c53c6f4dad91debc90ec08f9ac104621d66e684a7cae76",
+      "audio_url": "https://raw.githubusercontent.com/Jakobovski/free-spoken-digit-dataset/26eb9aaf76e81b692f806f9140c2d2777410d7a1/recordings/5_yweweler_0.wav",
+      "compressed_input_positions": 17,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 17,
+          "logits_sha256": "c5afb848ffb7d44e03c34a5b9c9b41c7765616b2b9e3104a62219244447fa3c3",
+          "memory_positions": 1,
+          "seconds": 5.775790406000169,
+          "teacher_kl": 1.1117476224899292,
+          "teacher_top1_agreement": false,
+          "top_token_id": 52670,
+          "top_token_text": "five",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.25": {
+          "alpha": 0.25,
+          "input_positions": 17,
+          "logits_sha256": "b913879a15d9591c851a36d1710e37c7ee43576efea4b116a8be079f403f52bd",
+          "memory_positions": 1,
+          "seconds": 5.758655438999995,
+          "teacher_kl": 0.8732174634933472,
+          "teacher_top1_agreement": false,
+          "top_token_id": 52670,
+          "top_token_text": "five",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 17,
+          "logits_sha256": "8fe56cb1a57fab19c1ae42c4b8919c9f44f00fa83d5f13c8d9a8a4e04988c2df",
+          "memory_positions": 1,
+          "seconds": 5.809473350000189,
+          "teacher_kl": 0.9514821767807007,
+          "teacher_top1_agreement": false,
+          "top_token_id": 52670,
+          "top_token_text": "five",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.75": {
+          "alpha": 0.75,
+          "input_positions": 17,
+          "logits_sha256": "90145de963a50ecafcfbf8c3ef2b8588950be1f2de64b8f5aa930acd06b6ec74",
+          "memory_positions": 1,
+          "seconds": 5.775280489000124,
+          "teacher_kl": 1.0296767950057983,
+          "teacher_top1_agreement": false,
+          "top_token_id": 52670,
+          "top_token_text": "five",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 17,
+          "logits_sha256": "e15c55e22232c6962a46ff29c0bf18b41b4f3d922d7ed8f4ea47f50b670d37a2",
+          "memory_positions": 1,
+          "seconds": 5.840627692999988,
+          "teacher_kl": 0.9511051177978516,
+          "teacher_top1_agreement": false,
+          "top_token_id": 52670,
+          "top_token_text": "five",
+          "vocabulary_size": 152064
+        }
+      },
+      "filename": "5_yweweler_0.wav",
+      "full_input_positions": 22,
+      "item_id": "5-yweweler-0",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 22,
+        "logits_sha256": "389d2111966f6a126586ef238b2f0f6d74a35f859f13c101ca6f196dd33a4b8e",
+        "memory_positions": null,
+        "top_token_id": 37020,
+        "top_token_text": "Five",
+        "vocabulary_size": 152064
+      },
+      "transcript": "five",
+      "transcript_token_positions": 1
+    },
+    {
+      "audio_feature_positions": 7,
+      "audio_sha256": "a5afa6e3dad8290335c2883434d51f45d425fe33d545d784c21f1f677712abbb",
+      "audio_url": "https://raw.githubusercontent.com/Jakobovski/free-spoken-digit-dataset/26eb9aaf76e81b692f806f9140c2d2777410d7a1/recordings/6_george_0.wav",
+      "compressed_input_positions": 17,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 17,
+          "logits_sha256": "e74334ad3d7d2523f3c13e4664839070b67cb5493e565142ecbc431c09741d90",
+          "memory_positions": 1,
+          "seconds": 5.742603558999917,
+          "teacher_kl": 1.7283097505569458,
+          "teacher_top1_agreement": false,
+          "top_token_id": 50364,
+          "top_token_text": "six",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.25": {
+          "alpha": 0.25,
+          "input_positions": 17,
+          "logits_sha256": "38f07d00fbe53f3cd523baa91f478e62210560c79b8b4efed26b83075b05554c",
+          "memory_positions": 1,
+          "seconds": 5.81766807300005,
+          "teacher_kl": 2.149921178817749,
+          "teacher_top1_agreement": false,
+          "top_token_id": 50364,
+          "top_token_text": "six",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 17,
+          "logits_sha256": "18bee48dee194e64bec428cad4a108c8e8b9a0fe9a668a5d12a3ad6272ceb401",
+          "memory_positions": 1,
+          "seconds": 5.808498483999983,
+          "teacher_kl": 1.6341276168823242,
+          "teacher_top1_agreement": false,
+          "top_token_id": 50364,
+          "top_token_text": "six",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.75": {
+          "alpha": 0.75,
+          "input_positions": 17,
+          "logits_sha256": "305143470f1e95344ab76a08fdc629e5823e59ed30edda7ad00f336d2e492096",
+          "memory_positions": 1,
+          "seconds": 5.788401977999911,
+          "teacher_kl": 1.74136483669281,
+          "teacher_top1_agreement": false,
+          "top_token_id": 50364,
+          "top_token_text": "six",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 17,
+          "logits_sha256": "b15b6e6f093b36ecf1f458b57fa10b166ab0c594b7c89eba15d52de75fa00c0d",
+          "memory_positions": 1,
+          "seconds": 5.810723375999942,
+          "teacher_kl": 1.6204562187194824,
+          "teacher_top1_agreement": false,
+          "top_token_id": 50364,
+          "top_token_text": "six",
+          "vocabulary_size": 152064
+        }
+      },
+      "filename": "6_george_0.wav",
+      "full_input_positions": 25,
+      "item_id": "6-george-0",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 25,
+        "logits_sha256": "5a5da030111344fcfa3ca399051ba511cd3a60a506c7a4eb7bfe4c6156ab1289",
+        "memory_positions": null,
+        "top_token_id": 41460,
+        "top_token_text": "Six",
+        "vocabulary_size": 152064
+      },
+      "transcript": "six",
+      "transcript_token_positions": 1
+    },
+    {
+      "audio_feature_positions": 6,
+      "audio_sha256": "bd4f5fa8db9a8a8d14a88236da314cd38fce2370cc406181b2485e03437d55d3",
+      "audio_url": "https://raw.githubusercontent.com/Jakobovski/free-spoken-digit-dataset/26eb9aaf76e81b692f806f9140c2d2777410d7a1/recordings/7_jackson_0.wav",
+      "compressed_input_positions": 17,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 17,
+          "logits_sha256": "28c3294b4575bea575bdba018e28ef40aee80e28126eb4b1cd95f67ed5ac666a",
+          "memory_positions": 1,
+          "seconds": 5.804657037999959,
+          "teacher_kl": 1.778148889541626,
+          "teacher_top1_agreement": false,
+          "top_token_id": 80185,
+          "top_token_text": "seven",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.25": {
+          "alpha": 0.25,
+          "input_positions": 17,
+          "logits_sha256": "d7ac083a089e1fa6306d063cad78102566fea4e2e985c7081fb861b3526dffa7",
+          "memory_positions": 1,
+          "seconds": 5.802495128999908,
+          "teacher_kl": 1.9851645231246948,
+          "teacher_top1_agreement": false,
+          "top_token_id": 80185,
+          "top_token_text": "seven",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 17,
+          "logits_sha256": "31e0fc624c095f5a1d1f745ddcbbc638e5c346b2707ffb18027b258a798e665f",
+          "memory_positions": 1,
+          "seconds": 5.784086032000005,
+          "teacher_kl": 1.7816945314407349,
+          "teacher_top1_agreement": false,
+          "top_token_id": 80185,
+          "top_token_text": "seven",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.75": {
+          "alpha": 0.75,
+          "input_positions": 17,
+          "logits_sha256": "f27d3cf6d4cb85d719144e82328794e6baf776c9d5699a5d4c0487a20213eb69",
+          "memory_positions": 1,
+          "seconds": 5.766963985999837,
+          "teacher_kl": 2.092360734939575,
+          "teacher_top1_agreement": false,
+          "top_token_id": 80185,
+          "top_token_text": "seven",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 17,
+          "logits_sha256": "5ef210e479e549372c46f2dc14f51b5ee526e877e2ae34ece876d78b7ed160ef",
+          "memory_positions": 1,
+          "seconds": 5.744466058999933,
+          "teacher_kl": 2.0933380126953125,
+          "teacher_top1_agreement": false,
+          "top_token_id": 80185,
+          "top_token_text": "seven",
+          "vocabulary_size": 152064
+        }
+      },
+      "filename": "7_jackson_0.wav",
+      "full_input_positions": 24,
+      "item_id": "7-jackson-0",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 24,
+        "logits_sha256": "6cf9a94ba22af3415ec7299c1b11ffef20d6ead764368b36abdc4759a6b2f8d9",
+        "memory_positions": null,
+        "top_token_id": 59528,
+        "top_token_text": "Seven",
+        "vocabulary_size": 152064
+      },
+      "transcript": "seven",
+      "transcript_token_positions": 1
+    },
+    {
+      "audio_feature_positions": 15,
+      "audio_sha256": "154cfd07257bb8488778969d694b770d6648bdc793761335115ecd2a0239de53",
+      "audio_url": "https://raw.githubusercontent.com/Jakobovski/free-spoken-digit-dataset/26eb9aaf76e81b692f806f9140c2d2777410d7a1/recordings/8_lucas_0.wav",
+      "compressed_input_positions": 17,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 17,
+          "logits_sha256": "878e38e64c296f79d5a6887c3271944d4255a1678adb8a71d436c2c355b1c2bd",
+          "memory_positions": 1,
+          "seconds": 5.7628797509999,
+          "teacher_kl": 1.7303065061569214,
+          "teacher_top1_agreement": false,
+          "top_token_id": 67532,
+          "top_token_text": "eight",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.25": {
+          "alpha": 0.25,
+          "input_positions": 17,
+          "logits_sha256": "1c166063755aa605e525470f0d3d02a9621a78c6a5a042e9aa7aa60264eba635",
+          "memory_positions": 1,
+          "seconds": 5.785831898999959,
+          "teacher_kl": 1.2255367040634155,
+          "teacher_top1_agreement": false,
+          "top_token_id": 67532,
+          "top_token_text": "eight",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 17,
+          "logits_sha256": "c47a50f546593e8c4e733c5bb91e5b09c1150f023d5031086a131ff78eb76658",
+          "memory_positions": 1,
+          "seconds": 5.782652782000014,
+          "teacher_kl": 1.05594003200531,
+          "teacher_top1_agreement": false,
+          "top_token_id": 67532,
+          "top_token_text": "eight",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.75": {
+          "alpha": 0.75,
+          "input_positions": 17,
+          "logits_sha256": "1e412b033f68c7947604afec67d435a9f4e5810b6eb164b6946dc62459c78c93",
+          "memory_positions": 1,
+          "seconds": 5.800601054000026,
+          "teacher_kl": 1.4446533918380737,
+          "teacher_top1_agreement": false,
+          "top_token_id": 67532,
+          "top_token_text": "eight",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 17,
+          "logits_sha256": "92d7c0daae96c5c4c4cb4511cb26108f1895f84494170988daa9ad636decaa3a",
+          "memory_positions": 1,
+          "seconds": 5.751524944999801,
+          "teacher_kl": 1.1301766633987427,
+          "teacher_top1_agreement": false,
+          "top_token_id": 67532,
+          "top_token_text": "eight",
+          "vocabulary_size": 152064
+        }
+      },
+      "filename": "8_lucas_0.wav",
+      "full_input_positions": 33,
+      "item_id": "8-lucas-0",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 33,
+        "logits_sha256": "0fe4c2f799c0093f1e707a9a3b11dd6676d7a0c2009400065a5fdf821dfef037",
+        "memory_positions": null,
+        "top_token_id": 59085,
+        "top_token_text": "Eight",
+        "vocabulary_size": 152064
+      },
+      "transcript": "eight",
+      "transcript_token_positions": 1
+    },
+    {
+      "audio_feature_positions": 6,
+      "audio_sha256": "44e8eb48a33839ac22c10c702963fbb53463858187a721f3addbacfe0e5cf14b",
+      "audio_url": "https://raw.githubusercontent.com/Jakobovski/free-spoken-digit-dataset/26eb9aaf76e81b692f806f9140c2d2777410d7a1/recordings/9_nicolas_0.wav",
+      "compressed_input_positions": 17,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 17,
+          "logits_sha256": "5a26e509eb070888b1b869416c935546172179f546fad2109ef984f5bd4d80c4",
+          "memory_positions": 1,
+          "seconds": 5.770136111999818,
+          "teacher_kl": 2.1099259853363037,
+          "teacher_top1_agreement": false,
+          "top_token_id": 93223,
+          "top_token_text": "nine",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.25": {
+          "alpha": 0.25,
+          "input_positions": 17,
+          "logits_sha256": "43127b8bfdff0d1536810e5b5b5c088bfaa17f5dd957fdb7119a83dccf945101",
+          "memory_positions": 1,
+          "seconds": 5.8044471599998815,
+          "teacher_kl": 2.664734363555908,
+          "teacher_top1_agreement": false,
+          "top_token_id": 93223,
+          "top_token_text": "nine",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 17,
+          "logits_sha256": "d4d4263a080aa4e05ccd7f05be398e054e2ea1f83d65c612e83f7d05bc84faba",
+          "memory_positions": 1,
+          "seconds": 5.759001066999872,
+          "teacher_kl": 2.568086624145508,
+          "teacher_top1_agreement": false,
+          "top_token_id": 93223,
+          "top_token_text": "nine",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.75": {
+          "alpha": 0.75,
+          "input_positions": 17,
+          "logits_sha256": "64595f2ffc31985b05abe4d8d8af6d28dffce302bfac1f267365ba21eb28d548",
+          "memory_positions": 1,
+          "seconds": 5.769240630000013,
+          "teacher_kl": 2.1153173446655273,
+          "teacher_top1_agreement": false,
+          "top_token_id": 93223,
+          "top_token_text": "nine",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 17,
+          "logits_sha256": "3baa5b25e719828c6330a2edc1bfdfa64307cd149424e1a94317a8ac63322648",
+          "memory_positions": 1,
+          "seconds": 5.769321062000017,
+          "teacher_kl": 2.043346405029297,
+          "teacher_top1_agreement": false,
+          "top_token_id": 93223,
+          "top_token_text": "nine",
+          "vocabulary_size": 152064
+        }
+      },
+      "filename": "9_nicolas_0.wav",
+      "full_input_positions": 24,
+      "item_id": "9-nicolas-0",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 24,
+        "logits_sha256": "87cc56b2f70cbd7de6b54e19a6a1317f88ce55d12ef23890fa19db845ea79e73",
+        "memory_positions": null,
+        "top_token_id": 83329,
+        "top_token_text": "Nine",
+        "vocabulary_size": 152064
+      },
+      "transcript": "nine",
+      "transcript_token_positions": 1
+    }
+  ],
+  "observations": {
+    "execution_seconds": 624.2445530050001,
+    "item_count": 10,
+    "model_load_seconds": 249.78301936200012,
+    "peak_gpu_allocated_bytes": 40425423360
+  },
+  "schema_version": "exploratory-1.0.0",
+  "source": {
+    "smoke_review_commit": "da6c799431411a8c48102503b00df26145af7dc1",
+    "sweep_commit": "259b381da1afe963e485e922f260653255b9ff59"
+  }
+}
