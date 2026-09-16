@@ -1,0 +1,9 @@
+schema_version: 2
+experiment_id: audio_memory_adaptive_retention_verification
+variant_id: ravdess_equal_budget
+levels: {}
+stage_configs:
+- kind: diagnostic
+  stage_id: verify_retention
+  config:
+    schema_version: 2
