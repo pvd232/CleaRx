@@ -1,0 +1,69 @@
+{
+  "conditions": {
+    "full_audio": {
+      "alpha": null,
+      "input_positions": 22,
+      "logits_sha256": "fa5cbaa23650f85b9e24a3d96fbf041991bd4ecf96d90348fae4bde846538036",
+      "memory_positions": null,
+      "top_token_id": 17999,
+      "top_token_text": "Zero",
+      "vocabulary_size": 152064
+    },
+    "transcript_only": {
+      "alpha": 0.0,
+      "input_positions": 17,
+      "logits_sha256": "4f38a49cba1d0655b1f7c07a7d481d33cd7b787b806fbad17aed6b3831787844",
+      "memory_positions": 1,
+      "teacher_kl": 2.135908842086792,
+      "teacher_top1_agreement": false,
+      "top_token_id": 14154,
+      "top_token_text": "zero",
+      "vocabulary_size": 152064
+    },
+    "voxzip_addition": {
+      "alpha": 1.0,
+      "input_positions": 17,
+      "logits_sha256": "0ce2b96a044fac6ebc3b0706c45e1dd6dc6635b702dcecf3839bba84b965620f",
+      "memory_positions": 1,
+      "teacher_kl": 1.9663727283477783,
+      "teacher_top1_agreement": false,
+      "top_token_id": 14154,
+      "top_token_text": "zero",
+      "vocabulary_size": 152064
+    }
+  },
+  "environment": {
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_total_bytes": 42405855232,
+    "torch_version": "2.11.0+cu128",
+    "transformers_version": "5.2.0"
+  },
+  "experiment_id": "audio-memory-fusion-smoke-v1",
+  "identity": {
+    "alphas": [
+      0.0,
+      1.0
+    ],
+    "audio_sha256": "228ab63fccdf262d2e05817b6ec918b15e7d9e4bfb6bb20183c46ae088405240",
+    "audio_url": "https://raw.githubusercontent.com/Jakobovski/free-spoken-digit-dataset/26eb9aaf76e81b692f806f9140c2d2777410d7a1/recordings/0_george_0.wav",
+    "item_id": "fsdd-george-0",
+    "model_commit": "26291f793822fb6be9555850f06dfe95f2d7e695",
+    "model_repository": "Qwen/Qwen3-Omni-30B-A3B-Instruct",
+    "prompt": "Repeat the spoken digit and nothing else.",
+    "seed": 7,
+    "transcript": "zero",
+    "transformers_commit": "7d9754a05193eb79b1d86aa744b622b8068008cd"
+  },
+  "observations": {
+    "audio_feature_positions": 4,
+    "execution_seconds": 282.27296242700004,
+    "model_load_seconds": 238.75790375100001,
+    "peak_gpu_allocated_bytes": 40421987328,
+    "transcript_token_positions": 1
+  },
+  "schema_version": "1.0.0",
+  "source": {
+    "contract_package_sha256": "f9566b7da715ae61c0cc1c6cc913554ec22d21ab892169a3b7bb8208198262f8",
+    "git_commit": "da6c799431411a8c48102503b00df26145af7dc1"
+  }
+}
