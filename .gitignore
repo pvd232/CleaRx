@@ -1,14 +1,19 @@
-# Generated artifacts from the archived KWIC example.
-/unrelated/build/
-
 # CleaRx local build and execution payloads.
 /build/
-/runs/**/artifacts/
-/runs/**/stdout.log
-/runs/**/stderr.log
+/.DS_Store
+**/.DS_Store
+/.pytest_cache/
+/.ruff_cache/
+/tmp/
+**/__pycache__/
+*.pyc
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+
+# VIPER's local object store and materialized workspaces stay outside Git.
 /.viper/*
 !/.viper/pointers/
 !/.viper/pointers/**
-/.pytest_cache/
-/**/__pycache__/
-*.pyc

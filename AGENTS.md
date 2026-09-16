@@ -7,21 +7,27 @@
 - Treat `environment.yml` as the environment contract. Record an intentional
   dependency change there before relying on it.
 
-## Packet execution
+## Active experiments
 
-- Read this file, the assigned immutable work packet, and any nearer
-  `AGENTS.md` before editing.
-- Inspect `git status` before work. Every packet runs from its recorded clean
-  commit and packet digest.
-- Edit only paths in the packet's `execution.write_scope`. Shared-interface
-  changes require a dedicated packet or orchestrator approval.
-- Use revisions in `upstream.lock`. Record every unavoidable deviation in the
-  result manifest.
-- Produce every declared artifact and a schema-valid result manifest. Run the
-  packet's acceptance commands; compilation or prose does not establish
-  completion.
-- Report blockers instead of expanding scope, weakening checks, or changing
-  the frozen precision policy.
+- Keep experiment declarations, variants, captured runs, and VIPER records
+  under `experiments/<experiment_id>/`.
+- Store each captured run under
+  `experiments/<experiment_id>/runs/<variant_id>/<run_id>/`.
+- Keep contract declarations in `contracts/`, checklist state in `checklists/`,
+  current PairBlock candidates in `plans/`, and compact gate receipts in
+  `evidence/`.
+- Preserve resolved VIPER records and captured result files. A changed source
+  declaration produces another run; executed evidence remains immutable.
+
+## Historical executions
+
+- Treat `docs/proposals/full_plan/8-23/` as the read-only snapshot of the
+  August 23 contract execution. Its internal paths preserve that execution's
+  workspace layout.
+- Resume a historical execution in a dedicated branch or worktree. Restore its
+  snapshot paths there before running the archived acceptance commands.
+- Keep the repository-wide `environment.yml` at the root. Dated snapshots
+  reference this shared environment contract.
 
 ## Evidence and infrastructure
 
@@ -31,5 +37,5 @@
 - Keep credentials, access tokens, Colab session state, model weights, build
   products, and run payloads out of Git. Commit only compact manifests and
   evidence explicitly owned by a packet.
-- Preserve task-agnostic architecture and typed module boundaries. A worker
-  cannot change another packet's lifecycle state.
+- Preserve task-agnostic architecture and typed module boundaries. Each worker
+  changes only the lifecycle state of its assigned packet.

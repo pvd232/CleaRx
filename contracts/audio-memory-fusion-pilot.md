@@ -51,7 +51,7 @@ broader quality comparisons to a later pilot.
 
 **Candidate files:** [tools/research/audio_memory_fusion.py](../plans/audio-memory-fusion-pilot/AMF-PB-01/add/tools/research/audio_memory_fusion.py) · [experiments/audio_memory_smoke_bootstrap.py](../plans/audio-memory-fusion-pilot/AMF-PB-01/add/experiments/audio_memory_smoke_bootstrap.py) · [experiments/audio_memory_smoke_worker.py](../plans/audio-memory-fusion-pilot/AMF-PB-01/add/experiments/audio_memory_smoke_worker.py) · [scripts/validate_audio_memory_smoke.py](../plans/audio-memory-fusion-pilot/AMF-PB-01/add/scripts/validate_audio_memory_smoke.py) · [tests/experiments/test_audio_memory_fusion.py](../plans/audio-memory-fusion-pilot/AMF-PB-01/add/tests/experiments/test_audio_memory_fusion.py)
 
-**Implementation roots:** [tools/research](../tools/research) · [experiments](../experiments) · [scripts](../scripts)
+**Implementation targets:** `tools/research` · `experiments` · `scripts`
 
 **Test roots:** [tests/experiments](../tests/experiments)
 
@@ -87,9 +87,9 @@ broader quality comparisons to a later pilot.
 
 | Rule | Requirements | Acceptance conditions | Success case | Rejection cases |
 |---|---|---|---|---|
-| <nobr><code>AMF-VR-01</code></nobr> | <nobr><code>AMF-REQ-01</code></nobr> | The smoke contract selects fsdd-george-0 and rejects another item, audio hash, transcript, prompt, model revision, or coefficient set. | [test_accepts_frozen_smoke_identity](../tests/experiments/test_audio_memory_fusion.py) | [test_rejects_changed_smoke_identity](../tests/experiments/test_audio_memory_fusion.py) |
-| <nobr><code>AMF-VR-02</code></nobr> | <nobr><code>AMF-REQ-02</code></nobr> | Mean pooling emits exactly one ordered audio vector per transcript token.<br>Alpha zero returns the transcript vectors and alpha one returns their element-wise sum with the pooled audio vectors. | [test_constructs_equal_budget_memory_vectors](../tests/experiments/test_audio_memory_fusion.py) | [test_rejects_invalid_fusion_inputs](../tests/experiments/test_audio_memory_fusion.py) |
-| <nobr><code>AMF-VR-03</code></nobr> | <nobr><code>AMF-REQ-03</code></nobr> | The result records the source commit, audio and logits hashes, exact revisions, position counts, peak GPU allocation, and finite comparison metrics.<br>Transcript-only and VoxZip-addition conditions have identical compressed input and memory-position counts. | [test_accepts_complete_smoke_result](../tests/experiments/test_audio_memory_fusion.py) | [test_rejects_unequal_memory_budgets](../tests/experiments/test_audio_memory_fusion.py)<br>[test_rejects_nonfinite_comparison](../tests/experiments/test_audio_memory_fusion.py) |
+| <nobr><code>AMF-VR-01</code></nobr> | <nobr><code>AMF-REQ-01</code></nobr> | The smoke contract selects fsdd-george-0 and rejects another item, audio hash, transcript, prompt, model revision, or coefficient set. | [test_accepts_frozen_smoke_identity](../plans/audio-memory-fusion-pilot/AMF-PB-01/add/tests/experiments/test_audio_memory_fusion.py) | [test_rejects_changed_smoke_identity](../plans/audio-memory-fusion-pilot/AMF-PB-01/add/tests/experiments/test_audio_memory_fusion.py) |
+| <nobr><code>AMF-VR-02</code></nobr> | <nobr><code>AMF-REQ-02</code></nobr> | Mean pooling emits exactly one ordered audio vector per transcript token.<br>Alpha zero returns the transcript vectors and alpha one returns their element-wise sum with the pooled audio vectors. | [test_constructs_equal_budget_memory_vectors](../plans/audio-memory-fusion-pilot/AMF-PB-01/add/tests/experiments/test_audio_memory_fusion.py) | [test_rejects_invalid_fusion_inputs](../plans/audio-memory-fusion-pilot/AMF-PB-01/add/tests/experiments/test_audio_memory_fusion.py) |
+| <nobr><code>AMF-VR-03</code></nobr> | <nobr><code>AMF-REQ-03</code></nobr> | The result records the source commit, audio and logits hashes, exact revisions, position counts, peak GPU allocation, and finite comparison metrics.<br>Transcript-only and VoxZip-addition conditions have identical compressed input and memory-position counts. | [test_accepts_complete_smoke_result](../plans/audio-memory-fusion-pilot/AMF-PB-01/add/tests/experiments/test_audio_memory_fusion.py) | [test_rejects_unequal_memory_budgets](../plans/audio-memory-fusion-pilot/AMF-PB-01/add/tests/experiments/test_audio_memory_fusion.py)<br>[test_rejects_nonfinite_comparison](../plans/audio-memory-fusion-pilot/AMF-PB-01/add/tests/experiments/test_audio_memory_fusion.py) |
 <!-- contract-protocol:generated:end -->
 
 ## 2. Claim
@@ -138,7 +138,7 @@ rejects any identity, budget, shape, hash, or finite-number violation.
 |---|---|
 | `contracts/audio-memory-fusion-pilot.toml` | Requirements, verifier ownership, and the diagnostic PairBlock. |
 | `plans/audio-memory-fusion-pilot/AMF-PB-01/plan.toml` | Exact implementation baseline, file actions, and local gate. |
-| `runs/audio-memory-fusion-smoke/<run-id>/result.json` | Source, input, model, environment, condition, hash, and comparison observations from one A100 run. |
+| `experiments/audio_memory_fusion_smoke/runs/a100/<run-id>/result.json` | Source, input, model, environment, condition, hash, and comparison observations from one A100 run. |
 
 Large weights, logits, audio bytes, credentials, and Colab session state remain
 outside Git.
