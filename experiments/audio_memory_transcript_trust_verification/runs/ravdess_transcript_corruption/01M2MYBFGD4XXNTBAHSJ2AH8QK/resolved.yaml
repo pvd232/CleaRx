@@ -1,0 +1,26 @@
+schema_version: 2
+spec:
+  sha256: 781f791b3591dfb3997cd3f04d029fd6bbe0b5e82623d0071e37217d34312765
+  bytes: 5434
+  stored_at:
+    kind: local
+    workspace: /Users/machina/Developer/ChatGPT/CleaRx
+    store: .viper/store
+    store_id: 16cdd49c0c9d8b89d382ebe01cbec0b6
+    commit: 359d5484c1e65bdc0923110cd9e9bb7cf11cb19e0cf05d98e1ec11d778bbb8ec
+    path: experiments/audio_memory_transcript_trust_verification/runs/ravdess_transcript_corruption/01M2MYBFGD4XXNTBAHSJ2AH8QK/spec.yaml
+  kind: run_spec
+status: succeeded
+attempts:
+- sha256: 28ca465f07aa10de57806155d4eab590529f045b908f6494e4d40c20833ccb7b
+  bytes: 2769
+  stored_at:
+    kind: local
+    workspace: /Users/machina/Developer/ChatGPT/CleaRx
+    store: .viper/store
+    store_id: 16cdd49c0c9d8b89d382ebe01cbec0b6
+    commit: cfa34681f8f66b2f880684eb85d8d49b934f17d12954ac6140ccc7c6e584c063
+    path: experiments/audio_memory_transcript_trust_verification/runs/ravdess_transcript_corruption/01M2MYBFGD4XXNTBAHSJ2AH8QK/attempts/1/resolved.yaml
+  kind: resolved_attempt
+successful_attempt_id: 1
+completed_at: '2026-09-16T11:06:46.325340Z'

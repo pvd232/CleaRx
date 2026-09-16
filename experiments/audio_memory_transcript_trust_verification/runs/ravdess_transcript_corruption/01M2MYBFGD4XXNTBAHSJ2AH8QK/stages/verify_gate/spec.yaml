@@ -1,0 +1,37 @@
+kind: diagnostic
+schema_version: 2
+env: null
+metric_ids: []
+outputs:
+  report:
+    kind: file
+    path: experiments/audio_memory_transcript_trust_verification/runs/ravdess_transcript_corruption/01M2MYBFGD4XXNTBAHSJ2AH8QK/artifacts/verify_gate/report/verification.json
+    relative_path: verification.json
+    loader:
+      path: tools/research/audio_memory_gate.py
+      symbol: load_json
+      sha256: 275528f614cc80cea0b276119fd237ff75264663ea205633da8d78d7fae7554b
+      bytes: 11616
+    data_role: eval
+implementation:
+  path: experiments/audio_memory_transcript_trust_viper.py
+  symbol: verify_gate
+  sha256: d1b8286ef0bbabaa3cb3f06795f7c1d0eaf6ba7903d0274c8bf29f017368717e
+  bytes: 7063
+config_type:
+  owner: viper
+  path: config.py
+  symbol: DiagnosticConfig
+  sha256: 64e4b15cf76e5c31ed80a3b259ce5d4dba5b55ec373b24e0b04caf04c4a09368
+  bytes: 2875
+reuse: never
+file_access: unrestricted
+inputs:
+  a100_result:
+    kind: external
+    source:
+      kind: local
+      path: runs/audio-memory-transcript-trust/20260916T101500Z-a100/result.json
+    data_role: eval
+config:
+  schema_version: 2

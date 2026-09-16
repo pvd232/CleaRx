@@ -1,0 +1,62 @@
+schema_version: 2
+attempt_id: 1
+purpose: run
+status: succeeded
+started_at: '2026-09-16T11:06:41.223643Z'
+completed_at: '2026-09-16T11:06:46.322374Z'
+resolved_stages:
+- stage_id: verify_gate
+  snapshot:
+    kind: local
+    workspace: /Users/machina/Developer/ChatGPT/CleaRx
+    store: .viper/store
+    store_id: 16cdd49c0c9d8b89d382ebe01cbec0b6
+    commit: 7d6098bfba13297d2d3440c5f0ced5c14d2efdf2c105b877441c174a2776fe7e
+  resolved_spec:
+    sha256: dd97de29a97115cc290557340bf0c2fbfb4631c60bf83b2f3706cc0ac4455a5c
+    bytes: 10099
+    path: experiments/audio_memory_transcript_trust_verification/runs/ravdess_transcript_corruption/01M2MYBFGD4XXNTBAHSJ2AH8QK/stages/verify_gate/resolved.yaml
+invocations:
+- sha256: 9448e45d6066e58f2cab49953546cdb69665f3be2ad234b570b924bb9410a360
+  bytes: 1102
+  stored_at:
+    kind: local
+    workspace: /Users/machina/Developer/ChatGPT/CleaRx
+    store: .viper/store
+    store_id: 16cdd49c0c9d8b89d382ebe01cbec0b6
+    commit: dcd88e2cd3be5770517b8b0f02b890b8be211ecd5c971c35a3ff6f3854ec90c5
+    path: experiments/audio_memory_transcript_trust_verification/runs/ravdess_transcript_corruption/01M2MYBFGD4XXNTBAHSJ2AH8QK/attempts/1/invocations/verify_gate.yaml
+  kind: stage_invocation
+journal:
+  sha256: ac78bca95db44a800f08ca502e66af2fbb58578430447ec942b4016d1e792669
+  bytes: 1118
+  stored_at:
+    kind: local
+    workspace: /Users/machina/Developer/ChatGPT/CleaRx
+    store: .viper/store
+    store_id: 16cdd49c0c9d8b89d382ebe01cbec0b6
+    commit: 6eae300d969ee4bf9619b6a4ce8bb3d89b3c6346e1e8967970bcc283a03774d1
+    path: experiments/audio_memory_transcript_trust_verification/runs/ravdess_transcript_corruption/01M2MYBFGD4XXNTBAHSJ2AH8QK/attempts/1/journal.jsonl
+  kind: attempt_journal
+measurement_files: []
+metric_verification_files: []
+log_files:
+- sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  bytes: 0
+  stored_at:
+    kind: local
+    workspace: /Users/machina/Developer/ChatGPT/CleaRx
+    store: .viper/store
+    store_id: 16cdd49c0c9d8b89d382ebe01cbec0b6
+    commit: 6eae300d969ee4bf9619b6a4ce8bb3d89b3c6346e1e8967970bcc283a03774d1
+    path: experiments/audio_memory_transcript_trust_verification/runs/ravdess_transcript_corruption/01M2MYBFGD4XXNTBAHSJ2AH8QK/attempts/1/logs/verify_gate.stderr.log
+- sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  bytes: 0
+  stored_at:
+    kind: local
+    workspace: /Users/machina/Developer/ChatGPT/CleaRx
+    store: .viper/store
+    store_id: 16cdd49c0c9d8b89d382ebe01cbec0b6
+    commit: 6eae300d969ee4bf9619b6a4ce8bb3d89b3c6346e1e8967970bcc283a03774d1
+    path: experiments/audio_memory_transcript_trust_verification/runs/ravdess_transcript_corruption/01M2MYBFGD4XXNTBAHSJ2AH8QK/attempts/1/logs/verify_gate.stdout.log
+failure: null

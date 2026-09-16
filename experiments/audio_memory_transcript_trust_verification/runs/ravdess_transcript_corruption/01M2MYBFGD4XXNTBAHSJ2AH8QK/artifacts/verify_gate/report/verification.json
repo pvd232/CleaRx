@@ -1,0 +1,14 @@
+{
+  "a100_source_commit": "3480585e36cea3d284e19fb17bb83e1b8516d334",
+  "directional_success": false,
+  "fixed_alpha_selected_on_train": 1.0,
+  "item_count": 36,
+  "maximum_numeric_delta": 8.881784197001252e-16,
+  "oracle_alpha_orders_memory_quality": true,
+  "predicted_alpha_orders_memory_quality": true,
+  "schema_version": "1.0.0",
+  "selected_ridge": 10.0,
+  "test_item_count": 12,
+  "training_item_count": 24,
+  "verified": true
+}
