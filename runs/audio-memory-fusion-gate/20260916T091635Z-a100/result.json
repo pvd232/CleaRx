@@ -1,0 +1,53 @@
+{
+  "experiment_id": "audio-memory-fusion-gate-v1",
+  "preflight": {
+    "correct": 1,
+    "items": [
+      {
+        "correct": true,
+        "expected": "neutral",
+        "item_id": "actor-01-neutral",
+        "predicted": "neutral"
+      },
+      {
+        "correct": false,
+        "expected": "happy",
+        "item_id": "actor-01-happy",
+        "predicted": "neutral"
+      },
+      {
+        "correct": false,
+        "expected": "sad",
+        "item_id": "actor-01-sad",
+        "predicted": "neutral"
+      },
+      {
+        "correct": false,
+        "expected": "angry",
+        "item_id": "actor-01-angry",
+        "predicted": "neutral"
+      },
+      {
+        "correct": false,
+        "expected": "fearful",
+        "item_id": "actor-01-fearful",
+        "predicted": "neutral"
+      },
+      {
+        "correct": false,
+        "expected": "disgust",
+        "item_id": "actor-01-disgust",
+        "predicted": "neutral"
+      }
+    ],
+    "minimum_correct": 4,
+    "passed": false,
+    "unique_predictions": 1
+  },
+  "schema_version": "exploratory-1.0.0",
+  "source": {
+    "gate_commit": "c33808b65e07b5ab826df2d1dca0e781f7e6b226",
+    "smoke_review_commit": "da6c799431411a8c48102503b00df26145af7dc1"
+  },
+  "status": "stopped_after_preflight"
+}

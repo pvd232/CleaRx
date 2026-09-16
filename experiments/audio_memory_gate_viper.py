@@ -68,10 +68,55 @@ def maximum_delta(expected: Any, observed: Any) -> float:
 
 @diagnostic(config=DiagnosticConfig)
 def verify_gate(context: StageContext[DiagnosticConfig]) -> None:
-    """Recompute the frozen gate fit and reject a mismatched A100 result."""
+    """Verify the frozen stop rule or recompute a completed gate fit."""
     result = load_json(context.inputs["a100_result"])
-    if result.get("status") != "completed":
-        raise ValueError("A100 gate result is not complete")
+    status = result.get("status")
+    if status == "stopped_after_preflight":
+        preflight = result.get("preflight")
+        if not isinstance(preflight, dict):
+            raise TypeError("stopped A100 result must contain its preflight")
+        observations = preflight.get("items")
+        if not isinstance(observations, list) or len(observations) != 6:
+            raise ValueError("preflight must contain six observations")
+        correct = sum(
+            observation.get("expected") == observation.get("predicted")
+            for observation in observations
+            if isinstance(observation, dict)
+        )
+        unique_predictions = len(
+            {
+                observation.get("predicted")
+                for observation in observations
+                if isinstance(observation, dict)
+            }
+        )
+        minimum_correct = int(preflight.get("minimum_correct", -1))
+        expected_pass = correct >= minimum_correct and unique_predictions >= 4
+        if (
+            int(preflight.get("correct", -1)) != correct
+            or int(preflight.get("unique_predictions", -1)) != unique_predictions
+            or bool(preflight.get("passed")) != expected_pass
+            or expected_pass
+        ):
+            raise ValueError("recorded preflight does not justify stopping")
+        report = {
+            "schema_version": "1.0.0",
+            "verified": True,
+            "status": status,
+            "a100_source_commit": result["source"]["gate_commit"],
+            "preflight_correct": correct,
+            "preflight_unique_predictions": unique_predictions,
+            "stop_rule_verified": True,
+        }
+        destination = context.outputs["report"]
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_text(
+            json.dumps(report, allow_nan=False, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+        return
+    if status != "completed":
+        raise ValueError("A100 gate result has an unknown status")
     items = result.get("items")
     if not isinstance(items, list):
         raise TypeError("A100 gate result must contain item observations")
