@@ -1,0 +1,3385 @@
+{
+  "environment": {
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_total_bytes": 42405855232,
+    "torch_version": "2.11.0+cu128",
+    "transformers_version": "5.2.0"
+  },
+  "experiment_id": "audio-memory-transcript-trust-v1",
+  "gate": {
+    "fixed_alpha_selected_on_train": 1.0,
+    "model": {
+      "coefficients": [
+        2.9003196365193027,
+        0.08793963062989621,
+        0.2224210322565449,
+        0.006792201989398956,
+        -0.09766751577125758,
+        -0.006868913336956046,
+        -0.03923650987479313,
+        0.41273124335909195,
+        0.019255996537286563
+      ],
+      "feature_names": [
+        "mean_cosine",
+        "std_cosine",
+        "mean_log_norm_ratio",
+        "std_log_norm_ratio",
+        "mean_audio_log_norm",
+        "std_audio_log_norm",
+        "mean_temporal_delta_ratio",
+        "audio_positions_per_text_position"
+      ],
+      "link": "logistic",
+      "means": [
+        0.026199701763027796,
+        0.04664072080880741,
+        0.1845865428011952,
+        0.3781066249126115,
+        -0.45397018396357586,
+        0.28126602423534913,
+        0.7167800061367523,
+        6.499751984126984
+      ],
+      "ridge": 10.0,
+      "scales": [
+        0.007738781601900934,
+        0.0076787672319309185,
+        0.09902245821314161,
+        0.04522895905319103,
+        0.09281286231998541,
+        0.03942404160537918,
+        0.07257588715069048,
+        0.8274620962812468
+      ],
+      "speaker_validation_mse": {
+        "0.01": 0.03791191523782401,
+        "0.1": 0.03880391776041318,
+        "1": 0.03475836210695136,
+        "10": 0.03405547027521231,
+        "100": 0.03907081845499979
+      },
+      "training_item_count": 24,
+      "training_speakers": [
+        "01",
+        "02",
+        "03",
+        "04"
+      ]
+    },
+    "test_predictions": {
+      "actor-05-statement-01-conflicting": 0.9580940976515412,
+      "actor-05-statement-01-exact": 0.842498591386934,
+      "actor-05-statement-01-incomplete": 0.9586565095019894,
+      "actor-05-statement-02-conflicting": 0.9667119670789248,
+      "actor-05-statement-02-exact": 0.8951026642731673,
+      "actor-05-statement-02-incomplete": 0.9743354561799157,
+      "actor-06-statement-01-conflicting": 0.9573156001902172,
+      "actor-06-statement-01-exact": 0.8530109241075371,
+      "actor-06-statement-01-incomplete": 0.9718331701817907,
+      "actor-06-statement-02-conflicting": 0.9696385138388681,
+      "actor-06-statement-02-exact": 0.8447725314766482,
+      "actor-06-statement-02-incomplete": 0.9718438447859032
+    }
+  },
+  "identity": {
+    "alphas": [
+      0.0,
+      0.5,
+      1.0
+    ],
+    "incomplete_transcripts": {
+      "01": "Are talking by the door.",
+      "02": "Are sitting by the door."
+    },
+    "memory_qualities": [
+      "exact",
+      "incomplete",
+      "conflicting"
+    ],
+    "model_commit": "26291f793822fb6be9555850f06dfe95f2d7e695",
+    "model_repository": "Qwen/Qwen3-Omni-30B-A3B-Instruct",
+    "noise_snr_db": -10.0,
+    "prompt": "Repeat the spoken sentence exactly. Answer only with the sentence.",
+    "ravdess_archive_md5": "bc696df654c87fed845eb13823edef8a",
+    "ravdess_url": "https://zenodo.org/records/1188976/files/Audio_Speech_Actors_01-24.zip?download=1",
+    "seed": 7,
+    "test_actors": [
+      "05",
+      "06"
+    ],
+    "train_actors": [
+      "01",
+      "02",
+      "03",
+      "04"
+    ],
+    "transcripts": {
+      "01": "Kids are talking by the door.",
+      "02": "Dogs are sitting by the door."
+    },
+    "transformers_commit": "7d9754a05193eb79b1d86aa744b622b8068008cd"
+  },
+  "items": [
+    {
+      "actor_id": "01",
+      "audio_feature_positions": 43,
+      "audio_quality": "degraded",
+      "audio_sha256": "c467aad2ca80b089dbd4c2ba0dd16be508e4ce08230f46d36a208b859dc7fbac",
+      "compressed_input_positions": 27,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 27,
+          "logits_sha256": "b9463ef823d5b59fcfc28ba72660c63c9637a2fe909d71fff64e912b88b16941",
+          "memory_positions": 7,
+          "seconds": 5.735334660999797,
+          "teacher_kl": 0.0037397791165858507,
+          "teacher_top1_agreement": true,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 27,
+          "logits_sha256": "c0055bb0a65317bb17f8da017aee876f589b4c0ba96bb145375d0ef19676040e",
+          "memory_positions": 7,
+          "seconds": 5.727435664000041,
+          "teacher_kl": 0.0035909113939851522,
+          "teacher_top1_agreement": true,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 27,
+          "logits_sha256": "99c6a27e9c3434daaea1860dca1af0cea0a0eab3815f5024886121b7cc429b27",
+          "memory_positions": 7,
+          "seconds": 5.729171407000649,
+          "teacher_kl": 0.0017247460782527924,
+          "teacher_top1_agreement": true,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "c467aad2ca80b089",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Kids are talking by the door.",
+      "filename": "03-01-01-01-01-01-01.wav",
+      "full_input_positions": 65,
+      "gate_features": {
+        "audio_positions_per_text_position": 6.142857142857143,
+        "mean_audio_log_norm": -0.31163929903081283,
+        "mean_cosine": 0.02301550869940409,
+        "mean_log_norm_ratio": 0.3334506134236314,
+        "mean_temporal_delta_ratio": 0.6522877427184292,
+        "std_audio_log_norm": 0.3275508045091361,
+        "std_cosine": 0.044428238675578,
+        "std_log_norm_ratio": 0.38963768238311547
+      },
+      "item_id": "actor-01-statement-01-exact",
+      "memory_quality": "exact",
+      "memory_transcript": "Kids are talking by the door.",
+      "oracle_alpha": 1.0,
+      "split": "train",
+      "statement_id": "01",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 65,
+        "logits_sha256": "04d2823cd0131358b2f8fcaceaa9117b414ffd5743c003931235b1d5f0004f12",
+        "memory_positions": null,
+        "top_token_id": 69433,
+        "top_token_text": "Kids",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Kids are talking by the door.",
+      "transcript_token_positions": 7
+    },
+    {
+      "actor_id": "01",
+      "audio_feature_positions": 43,
+      "audio_quality": "clean",
+      "audio_sha256": "c467aad2ca80b089dbd4c2ba0dd16be508e4ce08230f46d36a208b859dc7fbac",
+      "compressed_input_positions": 26,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 26,
+          "logits_sha256": "faebfdfacc2b91b0746ecfc946074733270e8e9a5de56d566b758fa4643cba7c",
+          "memory_positions": 6,
+          "seconds": 5.722576156999821,
+          "teacher_kl": 12.376180648803711,
+          "teacher_top1_agreement": false,
+          "top_token_id": 11526,
+          "top_token_text": "Are",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 26,
+          "logits_sha256": "6f422563d62e1287e686457d2a70262c41d84bbdea6f3f976acb1b6e92316ebe",
+          "memory_positions": 6,
+          "seconds": 5.716408555000271,
+          "teacher_kl": 10.434629440307617,
+          "teacher_top1_agreement": false,
+          "top_token_id": 11526,
+          "top_token_text": "Are",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 26,
+          "logits_sha256": "96a38fa3f82d4452dcff283acfcdcaf0ecb7a676a0f3b7b5b4dbf55d78e964c4",
+          "memory_positions": 6,
+          "seconds": 5.733375949000219,
+          "teacher_kl": 8.079630851745605,
+          "teacher_top1_agreement": false,
+          "top_token_id": 11526,
+          "top_token_text": "Are",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "c467aad2ca80b089",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Kids are talking by the door.",
+      "filename": "03-01-01-01-01-01-01.wav",
+      "full_input_positions": 65,
+      "gate_features": {
+        "audio_positions_per_text_position": 7.166666666666667,
+        "mean_audio_log_norm": -0.50671639745943,
+        "mean_cosine": 0.021065707953158,
+        "mean_log_norm_ratio": 0.12372834796953468,
+        "mean_temporal_delta_ratio": 0.7869988124356099,
+        "std_audio_log_norm": 0.25191414606021045,
+        "std_cosine": 0.047207168471208254,
+        "std_log_norm_ratio": 0.3555006267148052
+      },
+      "item_id": "actor-01-statement-01-incomplete",
+      "memory_quality": "incomplete",
+      "memory_transcript": "Are talking by the door.",
+      "oracle_alpha": 1.0,
+      "split": "train",
+      "statement_id": "01",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 65,
+        "logits_sha256": "04d2823cd0131358b2f8fcaceaa9117b414ffd5743c003931235b1d5f0004f12",
+        "memory_positions": null,
+        "top_token_id": 69433,
+        "top_token_text": "Kids",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Kids are talking by the door.",
+      "transcript_token_positions": 6
+    },
+    {
+      "actor_id": "01",
+      "audio_feature_positions": 43,
+      "audio_quality": "clean",
+      "audio_sha256": "c467aad2ca80b089dbd4c2ba0dd16be508e4ce08230f46d36a208b859dc7fbac",
+      "compressed_input_positions": 28,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 28,
+          "logits_sha256": "439d89dfe55d6d4fbcbfb16cb83d0861bdcaf6564d6d00da562a570fa3502f6d",
+          "memory_positions": 8,
+          "seconds": 5.731562384000426,
+          "teacher_kl": 20.872413635253906,
+          "teacher_top1_agreement": false,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 28,
+          "logits_sha256": "a22ec44b6ba30060d63ac9e77630de46a9af7f84d4088098a250ab8e91eacc4a",
+          "memory_positions": 8,
+          "seconds": 5.733454977999827,
+          "teacher_kl": 20.497058868408203,
+          "teacher_top1_agreement": false,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 28,
+          "logits_sha256": "3627c60715824865dfce9108e0fa76be2c5a6e783058b0f2230b89e5c432f0f3",
+          "memory_positions": 8,
+          "seconds": 5.758985024999674,
+          "teacher_kl": 18.308170318603516,
+          "teacher_top1_agreement": false,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "c467aad2ca80b089",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Kids are talking by the door.",
+      "filename": "03-01-01-01-01-01-01.wav",
+      "full_input_positions": 65,
+      "gate_features": {
+        "audio_positions_per_text_position": 5.375,
+        "mean_audio_log_norm": -0.4763945646844433,
+        "mean_cosine": 0.04130452572300544,
+        "mean_log_norm_ratio": 0.1695382674920073,
+        "mean_temporal_delta_ratio": 0.7380503275193308,
+        "std_audio_log_norm": 0.2677684064093478,
+        "std_cosine": 0.040853749653202834,
+        "std_log_norm_ratio": 0.43179847586340053
+      },
+      "item_id": "actor-01-statement-01-conflicting",
+      "memory_quality": "conflicting",
+      "memory_transcript": "Dogs are sitting by the door.",
+      "oracle_alpha": 1.0,
+      "split": "train",
+      "statement_id": "01",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 65,
+        "logits_sha256": "04d2823cd0131358b2f8fcaceaa9117b414ffd5743c003931235b1d5f0004f12",
+        "memory_positions": null,
+        "top_token_id": 69433,
+        "top_token_text": "Kids",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Kids are talking by the door.",
+      "transcript_token_positions": 8
+    },
+    {
+      "actor_id": "01",
+      "audio_feature_positions": 43,
+      "audio_quality": "degraded",
+      "audio_sha256": "53970b4b7c4fd2a1efabeb74409dd06914e8c113d0e5cced4d9fceb036318739",
+      "compressed_input_positions": 28,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 28,
+          "logits_sha256": "439d89dfe55d6d4fbcbfb16cb83d0861bdcaf6564d6d00da562a570fa3502f6d",
+          "memory_positions": 8,
+          "seconds": 5.7292587909996655,
+          "teacher_kl": 0.00583741394802928,
+          "teacher_top1_agreement": true,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 28,
+          "logits_sha256": "a5cb78526f1c44ffeddacec2014b1ab610e7c56cd1040ec353e5e094f9540aab",
+          "memory_positions": 8,
+          "seconds": 5.726383436000106,
+          "teacher_kl": 0.005534384865313768,
+          "teacher_top1_agreement": true,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 28,
+          "logits_sha256": "bd568991b7d25db130ac46fd4ead60071abf397448bfe88263802078c4ec4d58",
+          "memory_positions": 8,
+          "seconds": 5.728956589000518,
+          "teacher_kl": 0.005635748151689768,
+          "teacher_top1_agreement": true,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "53970b4b7c4fd2a1",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Dogs are sitting by the door.",
+      "filename": "03-01-01-01-02-01-01.wav",
+      "full_input_positions": 65,
+      "gate_features": {
+        "audio_positions_per_text_position": 5.375,
+        "mean_audio_log_norm": -0.3338444596561629,
+        "mean_cosine": 0.026962853684315637,
+        "mean_log_norm_ratio": 0.31208837252028776,
+        "mean_temporal_delta_ratio": 0.5904475013935764,
+        "std_audio_log_norm": 0.3312080621010827,
+        "std_cosine": 0.03652811714015521,
+        "std_log_norm_ratio": 0.44754899420946437
+      },
+      "item_id": "actor-01-statement-02-exact",
+      "memory_quality": "exact",
+      "memory_transcript": "Dogs are sitting by the door.",
+      "oracle_alpha": 0.5,
+      "split": "train",
+      "statement_id": "02",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 65,
+        "logits_sha256": "15614b26f0ec6423d9e30a39753ee0465549a2f4526b5fd07e550892fc56ee0a",
+        "memory_positions": null,
+        "top_token_id": 35,
+        "top_token_text": "D",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Dogs are sitting by the door.",
+      "transcript_token_positions": 8
+    },
+    {
+      "actor_id": "01",
+      "audio_feature_positions": 43,
+      "audio_quality": "clean",
+      "audio_sha256": "53970b4b7c4fd2a1efabeb74409dd06914e8c113d0e5cced4d9fceb036318739",
+      "compressed_input_positions": 26,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 26,
+          "logits_sha256": "fe75c9cc594c4cf6722a0460add3bc19aedb8d734371b3433ba6b3742f972e74",
+          "memory_positions": 6,
+          "seconds": 5.718335405999824,
+          "teacher_kl": 16.13450813293457,
+          "teacher_top1_agreement": false,
+          "top_token_id": 50,
+          "top_token_text": "S",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 26,
+          "logits_sha256": "3602653b81ad929818bf4df6158b6b052bb62db65b69337d49148f8e3c571799",
+          "memory_positions": 6,
+          "seconds": 5.724262189999536,
+          "teacher_kl": 15.871564865112305,
+          "teacher_top1_agreement": false,
+          "top_token_id": 50,
+          "top_token_text": "S",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 26,
+          "logits_sha256": "ba888fe8aaa73043bb4c156bee49eb2bc9e8f1b2de92c9ed8bcad11582c5d885",
+          "memory_positions": 6,
+          "seconds": 5.729560841999955,
+          "teacher_kl": 12.007047653198242,
+          "teacher_top1_agreement": false,
+          "top_token_id": 50,
+          "top_token_text": "S",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "53970b4b7c4fd2a1",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Dogs are sitting by the door.",
+      "filename": "03-01-01-01-02-01-01.wav",
+      "full_input_positions": 65,
+      "gate_features": {
+        "audio_positions_per_text_position": 7.166666666666667,
+        "mean_audio_log_norm": -0.5132486165229091,
+        "mean_cosine": 0.027412087646778955,
+        "mean_log_norm_ratio": 0.10560150937496293,
+        "mean_temporal_delta_ratio": 0.7830748823977446,
+        "std_audio_log_norm": 0.24957605638332905,
+        "std_cosine": 0.046496544111925914,
+        "std_log_norm_ratio": 0.3347497119331759
+      },
+      "item_id": "actor-01-statement-02-incomplete",
+      "memory_quality": "incomplete",
+      "memory_transcript": "Are sitting by the door.",
+      "oracle_alpha": 1.0,
+      "split": "train",
+      "statement_id": "02",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 65,
+        "logits_sha256": "15614b26f0ec6423d9e30a39753ee0465549a2f4526b5fd07e550892fc56ee0a",
+        "memory_positions": null,
+        "top_token_id": 35,
+        "top_token_text": "D",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Dogs are sitting by the door.",
+      "transcript_token_positions": 6
+    },
+    {
+      "actor_id": "01",
+      "audio_feature_positions": 43,
+      "audio_quality": "clean",
+      "audio_sha256": "53970b4b7c4fd2a1efabeb74409dd06914e8c113d0e5cced4d9fceb036318739",
+      "compressed_input_positions": 27,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 27,
+          "logits_sha256": "b9463ef823d5b59fcfc28ba72660c63c9637a2fe909d71fff64e912b88b16941",
+          "memory_positions": 7,
+          "seconds": 5.724056407000717,
+          "teacher_kl": 21.24047088623047,
+          "teacher_top1_agreement": false,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 27,
+          "logits_sha256": "97d9abb965386733652466b7a53406352d28cf0ecbae1f301def5c9018662d4e",
+          "memory_positions": 7,
+          "seconds": 5.736715374999221,
+          "teacher_kl": 20.55261993408203,
+          "teacher_top1_agreement": false,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 27,
+          "logits_sha256": "91c44b6479a1726d8449f1d97c34e262322267f13af48fa22897b7d5d63bdb94",
+          "memory_positions": 7,
+          "seconds": 5.723411955999836,
+          "teacher_kl": 18.678424835205078,
+          "teacher_top1_agreement": false,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "53970b4b7c4fd2a1",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Dogs are sitting by the door.",
+      "filename": "03-01-01-01-02-01-01.wav",
+      "full_input_positions": 65,
+      "gate_features": {
+        "audio_positions_per_text_position": 6.142857142857143,
+        "mean_audio_log_norm": -0.49254845942652625,
+        "mean_cosine": 0.03072771661464477,
+        "mean_log_norm_ratio": 0.15254145302791797,
+        "mean_temporal_delta_ratio": 0.7668108989589326,
+        "std_audio_log_norm": 0.25736928378148244,
+        "std_cosine": 0.05355705648328139,
+        "std_log_norm_ratio": 0.3902284619036446
+      },
+      "item_id": "actor-01-statement-02-conflicting",
+      "memory_quality": "conflicting",
+      "memory_transcript": "Kids are talking by the door.",
+      "oracle_alpha": 1.0,
+      "split": "train",
+      "statement_id": "02",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 65,
+        "logits_sha256": "15614b26f0ec6423d9e30a39753ee0465549a2f4526b5fd07e550892fc56ee0a",
+        "memory_positions": null,
+        "top_token_id": 35,
+        "top_token_text": "D",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Dogs are sitting by the door.",
+      "transcript_token_positions": 7
+    },
+    {
+      "actor_id": "02",
+      "audio_feature_positions": 47,
+      "audio_quality": "degraded",
+      "audio_sha256": "e343477557ff71c099c7a71ef70ff65158fcab232a56ee23bd231319a0f2c845",
+      "compressed_input_positions": 27,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 27,
+          "logits_sha256": "b9463ef823d5b59fcfc28ba72660c63c9637a2fe909d71fff64e912b88b16941",
+          "memory_positions": 7,
+          "seconds": 5.73307240899976,
+          "teacher_kl": 0.003478969680145383,
+          "teacher_top1_agreement": true,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 27,
+          "logits_sha256": "d03f1698b6b96de3a1109cfb1189ffb0f8aa79478ba2bf7295101ae23c10e586",
+          "memory_positions": 7,
+          "seconds": 5.731132872000671,
+          "teacher_kl": 0.0033233475405722857,
+          "teacher_top1_agreement": true,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 27,
+          "logits_sha256": "d1f01f7b04d04ea6aaa158a25b94eefebe5b45d9378b10b40ee2a7698ae4bf07",
+          "memory_positions": 7,
+          "seconds": 5.756610839000132,
+          "teacher_kl": 0.002447989769279957,
+          "teacher_top1_agreement": true,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "e343477557ff71c0",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Kids are talking by the door.",
+      "filename": "03-01-01-01-01-01-02.wav",
+      "full_input_positions": 69,
+      "gate_features": {
+        "audio_positions_per_text_position": 6.714285714285714,
+        "mean_audio_log_norm": -0.35242974698377394,
+        "mean_cosine": 0.014483141115135448,
+        "mean_log_norm_ratio": 0.2926601654706702,
+        "mean_temporal_delta_ratio": 0.5825873946021477,
+        "std_audio_log_norm": 0.32520209413206236,
+        "std_cosine": 0.03757342032805948,
+        "std_log_norm_ratio": 0.4395285331858493
+      },
+      "item_id": "actor-02-statement-01-exact",
+      "memory_quality": "exact",
+      "memory_transcript": "Kids are talking by the door.",
+      "oracle_alpha": 1.0,
+      "split": "train",
+      "statement_id": "01",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 69,
+        "logits_sha256": "80c5c424fe75d03d283566c499e40a9d85462a73d8d8532f0d3890fd4f1fc119",
+        "memory_positions": null,
+        "top_token_id": 69433,
+        "top_token_text": "Kids",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Kids are talking by the door.",
+      "transcript_token_positions": 7
+    },
+    {
+      "actor_id": "02",
+      "audio_feature_positions": 47,
+      "audio_quality": "clean",
+      "audio_sha256": "e343477557ff71c099c7a71ef70ff65158fcab232a56ee23bd231319a0f2c845",
+      "compressed_input_positions": 26,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 26,
+          "logits_sha256": "faebfdfacc2b91b0746ecfc946074733270e8e9a5de56d566b758fa4643cba7c",
+          "memory_positions": 6,
+          "seconds": 5.737767405999875,
+          "teacher_kl": 12.377097129821777,
+          "teacher_top1_agreement": false,
+          "top_token_id": 11526,
+          "top_token_text": "Are",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 26,
+          "logits_sha256": "66870d88fe0bc8db00d637c26f02e37aabbe09817c7e1970b17f821aa586baf0",
+          "memory_positions": 6,
+          "seconds": 5.729964910999115,
+          "teacher_kl": 10.42397403717041,
+          "teacher_top1_agreement": false,
+          "top_token_id": 11526,
+          "top_token_text": "Are",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 26,
+          "logits_sha256": "67847409baa793f1e8534f9b7e50b7eb3f0b673a17570ffba9377e121939c775",
+          "memory_positions": 6,
+          "seconds": 5.725883420000173,
+          "teacher_kl": 11.472646713256836,
+          "teacher_top1_agreement": false,
+          "top_token_id": 11526,
+          "top_token_text": "Are",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "e343477557ff71c0",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Kids are talking by the door.",
+      "filename": "03-01-01-01-01-01-02.wav",
+      "full_input_positions": 69,
+      "gate_features": {
+        "audio_positions_per_text_position": 7.833333333333333,
+        "mean_audio_log_norm": -0.5328435439915971,
+        "mean_cosine": 0.01835678133399917,
+        "mean_log_norm_ratio": 0.09760120143736749,
+        "mean_temporal_delta_ratio": 0.7391982921238933,
+        "std_audio_log_norm": 0.25092293691849993,
+        "std_cosine": 0.05106833152970693,
+        "std_log_norm_ratio": 0.3356160153071347
+      },
+      "item_id": "actor-02-statement-01-incomplete",
+      "memory_quality": "incomplete",
+      "memory_transcript": "Are talking by the door.",
+      "oracle_alpha": 0.5,
+      "split": "train",
+      "statement_id": "01",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 69,
+        "logits_sha256": "80c5c424fe75d03d283566c499e40a9d85462a73d8d8532f0d3890fd4f1fc119",
+        "memory_positions": null,
+        "top_token_id": 69433,
+        "top_token_text": "Kids",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Kids are talking by the door.",
+      "transcript_token_positions": 6
+    },
+    {
+      "actor_id": "02",
+      "audio_feature_positions": 47,
+      "audio_quality": "clean",
+      "audio_sha256": "e343477557ff71c099c7a71ef70ff65158fcab232a56ee23bd231319a0f2c845",
+      "compressed_input_positions": 28,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 28,
+          "logits_sha256": "439d89dfe55d6d4fbcbfb16cb83d0861bdcaf6564d6d00da562a570fa3502f6d",
+          "memory_positions": 8,
+          "seconds": 5.673312375000023,
+          "teacher_kl": 20.873594284057617,
+          "teacher_top1_agreement": false,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 28,
+          "logits_sha256": "b20fa10588177ded99fe169c56d4c50c51325dd057607e4630aaf452675fe912",
+          "memory_positions": 8,
+          "seconds": 5.692208894000032,
+          "teacher_kl": 20.060531616210938,
+          "teacher_top1_agreement": false,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 28,
+          "logits_sha256": "60fda5df34969665d37b86875b5ba99f3bd0655e3b7dc5f757ca053562c06546",
+          "memory_positions": 8,
+          "seconds": 5.734739240999261,
+          "teacher_kl": 16.372758865356445,
+          "teacher_top1_agreement": false,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "e343477557ff71c0",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Kids are talking by the door.",
+      "filename": "03-01-01-01-01-01-02.wav",
+      "full_input_positions": 69,
+      "gate_features": {
+        "audio_positions_per_text_position": 5.875,
+        "mean_audio_log_norm": -0.4826329924977867,
+        "mean_cosine": 0.03498084309964983,
+        "mean_log_norm_ratio": 0.16329983967866396,
+        "mean_temporal_delta_ratio": 0.7564359923024851,
+        "std_audio_log_norm": 0.2510058320251597,
+        "std_cosine": 0.055679688270185504,
+        "std_log_norm_ratio": 0.40014416632311894
+      },
+      "item_id": "actor-02-statement-01-conflicting",
+      "memory_quality": "conflicting",
+      "memory_transcript": "Dogs are sitting by the door.",
+      "oracle_alpha": 1.0,
+      "split": "train",
+      "statement_id": "01",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 69,
+        "logits_sha256": "80c5c424fe75d03d283566c499e40a9d85462a73d8d8532f0d3890fd4f1fc119",
+        "memory_positions": null,
+        "top_token_id": 69433,
+        "top_token_text": "Kids",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Kids are talking by the door.",
+      "transcript_token_positions": 8
+    },
+    {
+      "actor_id": "02",
+      "audio_feature_positions": 49,
+      "audio_quality": "degraded",
+      "audio_sha256": "bf8422b8ff263607a9264f15f1db6e979aba70c7b0966c283fbf0e9ad92d424e",
+      "compressed_input_positions": 28,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 28,
+          "logits_sha256": "439d89dfe55d6d4fbcbfb16cb83d0861bdcaf6564d6d00da562a570fa3502f6d",
+          "memory_positions": 8,
+          "seconds": 5.6925320979999015,
+          "teacher_kl": 0.003634894033893943,
+          "teacher_top1_agreement": true,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 28,
+          "logits_sha256": "7ca873758633f49c85ecc49f9c5ae26abeb2cfa5baf63fe9065b01284a067578",
+          "memory_positions": 8,
+          "seconds": 5.721553180999763,
+          "teacher_kl": 0.0033960279542952776,
+          "teacher_top1_agreement": true,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 28,
+          "logits_sha256": "6306ffcd362809969e8e32392ca81d81744ac6debd25f2649c5b70206622a907",
+          "memory_positions": 8,
+          "seconds": 5.726248531000238,
+          "teacher_kl": 0.006321575492620468,
+          "teacher_top1_agreement": true,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "bf8422b8ff263607",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Dogs are sitting by the door.",
+      "filename": "03-01-01-01-02-01-02.wav",
+      "full_input_positions": 71,
+      "gate_features": {
+        "audio_positions_per_text_position": 6.125,
+        "mean_audio_log_norm": -0.3328269451115898,
+        "mean_cosine": 0.020228351284894013,
+        "mean_log_norm_ratio": 0.31310588706486087,
+        "mean_temporal_delta_ratio": 0.5966343910187604,
+        "std_audio_log_norm": 0.3587270443788548,
+        "std_cosine": 0.03455372287081355,
+        "std_log_norm_ratio": 0.4573496920001188
+      },
+      "item_id": "actor-02-statement-02-exact",
+      "memory_quality": "exact",
+      "memory_transcript": "Dogs are sitting by the door.",
+      "oracle_alpha": 0.5,
+      "split": "train",
+      "statement_id": "02",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 71,
+        "logits_sha256": "6f408f05a4b61c09a4c8a0f13229b62749d954c1cf61757e5ab5d07607c55b38",
+        "memory_positions": null,
+        "top_token_id": 35,
+        "top_token_text": "D",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Dogs are sitting by the door.",
+      "transcript_token_positions": 8
+    },
+    {
+      "actor_id": "02",
+      "audio_feature_positions": 49,
+      "audio_quality": "clean",
+      "audio_sha256": "bf8422b8ff263607a9264f15f1db6e979aba70c7b0966c283fbf0e9ad92d424e",
+      "compressed_input_positions": 26,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 26,
+          "logits_sha256": "fe75c9cc594c4cf6722a0460add3bc19aedb8d734371b3433ba6b3742f972e74",
+          "memory_positions": 6,
+          "seconds": 5.722549488999903,
+          "teacher_kl": 16.139404296875,
+          "teacher_top1_agreement": false,
+          "top_token_id": 50,
+          "top_token_text": "S",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 26,
+          "logits_sha256": "c28c97104892adeeef86a67ee7f48508f627499f2e4292e1343503d39de97de4",
+          "memory_positions": 6,
+          "seconds": 5.743779896999513,
+          "teacher_kl": 16.309337615966797,
+          "teacher_top1_agreement": false,
+          "top_token_id": 50,
+          "top_token_text": "S",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 26,
+          "logits_sha256": "72f5163d1b425565a6b639adf924aca885b462f4745451d59c41c7a87a1288d0",
+          "memory_positions": 6,
+          "seconds": 5.7459513939993485,
+          "teacher_kl": 14.397360801696777,
+          "teacher_top1_agreement": false,
+          "top_token_id": 50,
+          "top_token_text": "S",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "bf8422b8ff263607",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Dogs are sitting by the door.",
+      "filename": "03-01-01-01-02-01-02.wav",
+      "full_input_positions": 71,
+      "gate_features": {
+        "audio_positions_per_text_position": 8.166666666666666,
+        "mean_audio_log_norm": -0.5412047552475161,
+        "mean_cosine": 0.029302836042752408,
+        "mean_log_norm_ratio": 0.07764537065035605,
+        "mean_temporal_delta_ratio": 0.7827297463400631,
+        "std_audio_log_norm": 0.21785348360074627,
+        "std_cosine": 0.049640239858807014,
+        "std_log_norm_ratio": 0.3244228827043792
+      },
+      "item_id": "actor-02-statement-02-incomplete",
+      "memory_quality": "incomplete",
+      "memory_transcript": "Are sitting by the door.",
+      "oracle_alpha": 1.0,
+      "split": "train",
+      "statement_id": "02",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 71,
+        "logits_sha256": "6f408f05a4b61c09a4c8a0f13229b62749d954c1cf61757e5ab5d07607c55b38",
+        "memory_positions": null,
+        "top_token_id": 35,
+        "top_token_text": "D",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Dogs are sitting by the door.",
+      "transcript_token_positions": 6
+    },
+    {
+      "actor_id": "02",
+      "audio_feature_positions": 49,
+      "audio_quality": "clean",
+      "audio_sha256": "bf8422b8ff263607a9264f15f1db6e979aba70c7b0966c283fbf0e9ad92d424e",
+      "compressed_input_positions": 27,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 27,
+          "logits_sha256": "b9463ef823d5b59fcfc28ba72660c63c9637a2fe909d71fff64e912b88b16941",
+          "memory_positions": 7,
+          "seconds": 5.734766777999539,
+          "teacher_kl": 21.2457332611084,
+          "teacher_top1_agreement": false,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 27,
+          "logits_sha256": "7ab24b96a70f56c8a12da2ddc7fcd087a48c0fe591e62eaadc5fb0a993353d3d",
+          "memory_positions": 7,
+          "seconds": 5.7351798159998,
+          "teacher_kl": 20.807880401611328,
+          "teacher_top1_agreement": false,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 27,
+          "logits_sha256": "1ab53ff6408bce1f14cf40d4cd5a4543ec571b947619280ef638aa311727dc87",
+          "memory_positions": 7,
+          "seconds": 5.725078360000225,
+          "teacher_kl": 19.49596405029297,
+          "teacher_top1_agreement": false,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "bf8422b8ff263607",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Dogs are sitting by the door.",
+      "filename": "03-01-01-01-02-01-02.wav",
+      "full_input_positions": 71,
+      "gate_features": {
+        "audio_positions_per_text_position": 7.0,
+        "mean_audio_log_norm": -0.5201730369397078,
+        "mean_cosine": 0.027961302587162593,
+        "mean_log_norm_ratio": 0.12491687551473639,
+        "mean_temporal_delta_ratio": 0.7686239882684114,
+        "std_audio_log_norm": 0.2472258775073583,
+        "std_cosine": 0.04961148185663875,
+        "std_log_norm_ratio": 0.34646784263611513
+      },
+      "item_id": "actor-02-statement-02-conflicting",
+      "memory_quality": "conflicting",
+      "memory_transcript": "Kids are talking by the door.",
+      "oracle_alpha": 1.0,
+      "split": "train",
+      "statement_id": "02",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 71,
+        "logits_sha256": "6f408f05a4b61c09a4c8a0f13229b62749d954c1cf61757e5ab5d07607c55b38",
+        "memory_positions": null,
+        "top_token_id": 35,
+        "top_token_text": "D",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Dogs are sitting by the door.",
+      "transcript_token_positions": 7
+    },
+    {
+      "actor_id": "03",
+      "audio_feature_positions": 45,
+      "audio_quality": "degraded",
+      "audio_sha256": "d61bd344a100e9ba43b2e589912e0ce4b8c4f8be14e7e9a5b618a51728faf34f",
+      "compressed_input_positions": 27,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 27,
+          "logits_sha256": "b9463ef823d5b59fcfc28ba72660c63c9637a2fe909d71fff64e912b88b16941",
+          "memory_positions": 7,
+          "seconds": 5.7174511720004375,
+          "teacher_kl": 0.0026535135693848133,
+          "teacher_top1_agreement": true,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 27,
+          "logits_sha256": "758f526e60f05c7fc2299a474d4f4ca289fba52b626b22236b19e4617ebb8aec",
+          "memory_positions": 7,
+          "seconds": 5.7378022189996045,
+          "teacher_kl": 0.002373957773670554,
+          "teacher_top1_agreement": true,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 27,
+          "logits_sha256": "67e820828cdab3db0b2e0757ed8201971e7063c8b6b194db61050ac3059aa7a4",
+          "memory_positions": 7,
+          "seconds": 5.72554308799954,
+          "teacher_kl": 0.0009717177599668503,
+          "teacher_top1_agreement": true,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "d61bd344a100e9ba",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Kids are talking by the door.",
+      "filename": "03-01-01-01-01-01-03.wav",
+      "full_input_positions": 67,
+      "gate_features": {
+        "audio_positions_per_text_position": 6.428571428571429,
+        "mean_audio_log_norm": -0.3456705323686623,
+        "mean_cosine": 0.018465575137534027,
+        "mean_log_norm_ratio": 0.2994193800857819,
+        "mean_temporal_delta_ratio": 0.659750672695412,
+        "std_audio_log_norm": 0.31841416883062534,
+        "std_cosine": 0.03894228063721096,
+        "std_log_norm_ratio": 0.39294328863515027
+      },
+      "item_id": "actor-03-statement-01-exact",
+      "memory_quality": "exact",
+      "memory_transcript": "Kids are talking by the door.",
+      "oracle_alpha": 1.0,
+      "split": "train",
+      "statement_id": "01",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 67,
+        "logits_sha256": "8d59b8738a1a19d8900611e1f6037842c5541584df1a46dd6fae5840821c2fda",
+        "memory_positions": null,
+        "top_token_id": 69433,
+        "top_token_text": "Kids",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Kids are talking by the door.",
+      "transcript_token_positions": 7
+    },
+    {
+      "actor_id": "03",
+      "audio_feature_positions": 45,
+      "audio_quality": "clean",
+      "audio_sha256": "d61bd344a100e9ba43b2e589912e0ce4b8c4f8be14e7e9a5b618a51728faf34f",
+      "compressed_input_positions": 26,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 26,
+          "logits_sha256": "faebfdfacc2b91b0746ecfc946074733270e8e9a5de56d566b758fa4643cba7c",
+          "memory_positions": 6,
+          "seconds": 5.662866224000027,
+          "teacher_kl": 12.377182006835938,
+          "teacher_top1_agreement": false,
+          "top_token_id": 11526,
+          "top_token_text": "Are",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 26,
+          "logits_sha256": "e1eec8b06df34bdd36ddd5b94ee2aa7a9ae6524f4c7a76126274447228afdaa3",
+          "memory_positions": 6,
+          "seconds": 5.717853051999555,
+          "teacher_kl": 10.735347747802734,
+          "teacher_top1_agreement": false,
+          "top_token_id": 11526,
+          "top_token_text": "Are",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 26,
+          "logits_sha256": "6db2a30f4e114ef587484058a7caac5a3c7c35675facf7becde1d470bdc09110",
+          "memory_positions": 6,
+          "seconds": 5.735988431999431,
+          "teacher_kl": 7.759425640106201,
+          "teacher_top1_agreement": false,
+          "top_token_id": 11526,
+          "top_token_text": "Are",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "d61bd344a100e9ba",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Kids are talking by the door.",
+      "filename": "03-01-01-01-01-01-03.wav",
+      "full_input_positions": 67,
+      "gate_features": {
+        "audio_positions_per_text_position": 7.5,
+        "mean_audio_log_norm": -0.571024203343594,
+        "mean_cosine": 0.02530033895983134,
+        "mean_log_norm_ratio": 0.05942054208537051,
+        "mean_temporal_delta_ratio": 0.773970014980369,
+        "std_audio_log_norm": 0.23447154188365302,
+        "std_cosine": 0.05677054828197264,
+        "std_log_norm_ratio": 0.29507408392114776
+      },
+      "item_id": "actor-03-statement-01-incomplete",
+      "memory_quality": "incomplete",
+      "memory_transcript": "Are talking by the door.",
+      "oracle_alpha": 1.0,
+      "split": "train",
+      "statement_id": "01",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 67,
+        "logits_sha256": "8d59b8738a1a19d8900611e1f6037842c5541584df1a46dd6fae5840821c2fda",
+        "memory_positions": null,
+        "top_token_id": 69433,
+        "top_token_text": "Kids",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Kids are talking by the door.",
+      "transcript_token_positions": 6
+    },
+    {
+      "actor_id": "03",
+      "audio_feature_positions": 45,
+      "audio_quality": "clean",
+      "audio_sha256": "d61bd344a100e9ba43b2e589912e0ce4b8c4f8be14e7e9a5b618a51728faf34f",
+      "compressed_input_positions": 28,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 28,
+          "logits_sha256": "439d89dfe55d6d4fbcbfb16cb83d0861bdcaf6564d6d00da562a570fa3502f6d",
+          "memory_positions": 8,
+          "seconds": 5.7058413410004505,
+          "teacher_kl": 20.873207092285156,
+          "teacher_top1_agreement": false,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 28,
+          "logits_sha256": "399f260017c1847da7756ab7d88124e57f9e27df7aa03c0f0a0aee607a53d3e9",
+          "memory_positions": 8,
+          "seconds": 5.759884615000374,
+          "teacher_kl": 19.997879028320312,
+          "teacher_top1_agreement": false,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 28,
+          "logits_sha256": "f11bf0f73d1b9e0cb14ebce53bbb2347305624f97f769e413dc1f259c403f715",
+          "memory_positions": 8,
+          "seconds": 5.7390675039996495,
+          "teacher_kl": 16.560993194580078,
+          "teacher_top1_agreement": false,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "d61bd344a100e9ba",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Kids are talking by the door.",
+      "filename": "03-01-01-01-01-01-03.wav",
+      "full_input_positions": 67,
+      "gate_features": {
+        "audio_positions_per_text_position": 5.625,
+        "mean_audio_log_norm": -0.5303598136976503,
+        "mean_cosine": 0.040969406924537016,
+        "mean_log_norm_ratio": 0.11557301847880037,
+        "mean_temporal_delta_ratio": 0.7453463964363696,
+        "std_audio_log_norm": 0.2459341730546595,
+        "std_cosine": 0.05568499288719412,
+        "std_log_norm_ratio": 0.3705396669457638
+      },
+      "item_id": "actor-03-statement-01-conflicting",
+      "memory_quality": "conflicting",
+      "memory_transcript": "Dogs are sitting by the door.",
+      "oracle_alpha": 1.0,
+      "split": "train",
+      "statement_id": "01",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 67,
+        "logits_sha256": "8d59b8738a1a19d8900611e1f6037842c5541584df1a46dd6fae5840821c2fda",
+        "memory_positions": null,
+        "top_token_id": 69433,
+        "top_token_text": "Kids",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Kids are talking by the door.",
+      "transcript_token_positions": 8
+    },
+    {
+      "actor_id": "03",
+      "audio_feature_positions": 46,
+      "audio_quality": "degraded",
+      "audio_sha256": "d2e500826753fc20c4d095fcd4f470cd3f44d523313cc34fe568d284b2912d62",
+      "compressed_input_positions": 28,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 28,
+          "logits_sha256": "439d89dfe55d6d4fbcbfb16cb83d0861bdcaf6564d6d00da562a570fa3502f6d",
+          "memory_positions": 8,
+          "seconds": 5.741602167000565,
+          "teacher_kl": 0.0015831297496333718,
+          "teacher_top1_agreement": true,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 28,
+          "logits_sha256": "5748eb213a9cc8c8320a35ab38675e29e020bc02d167639f373f18be7d45e15b",
+          "memory_positions": 8,
+          "seconds": 5.73981703499976,
+          "teacher_kl": 0.0014962871791794896,
+          "teacher_top1_agreement": true,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 28,
+          "logits_sha256": "e308bec81fe74e840aed58e291b9740a74c060938f98d6c3fc128688625c4102",
+          "memory_positions": 8,
+          "seconds": 5.742519868000272,
+          "teacher_kl": 0.011360573582351208,
+          "teacher_top1_agreement": true,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "d2e500826753fc20",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Dogs are sitting by the door.",
+      "filename": "03-01-01-01-02-01-03.wav",
+      "full_input_positions": 68,
+      "gate_features": {
+        "audio_positions_per_text_position": 5.75,
+        "mean_audio_log_norm": -0.32648302886545044,
+        "mean_cosine": 0.024531536435244593,
+        "mean_log_norm_ratio": 0.31944980331100015,
+        "mean_temporal_delta_ratio": 0.5959396454222199,
+        "std_audio_log_norm": 0.3452776177047926,
+        "std_cosine": 0.03772184077551578,
+        "std_log_norm_ratio": 0.44066127001855315
+      },
+      "item_id": "actor-03-statement-02-exact",
+      "memory_quality": "exact",
+      "memory_transcript": "Dogs are sitting by the door.",
+      "oracle_alpha": 0.5,
+      "split": "train",
+      "statement_id": "02",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 68,
+        "logits_sha256": "88736f3e9497bb777abffbf4527db9471101ab38526e497b3ed2d10609c9b8a0",
+        "memory_positions": null,
+        "top_token_id": 35,
+        "top_token_text": "D",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Dogs are sitting by the door.",
+      "transcript_token_positions": 8
+    },
+    {
+      "actor_id": "03",
+      "audio_feature_positions": 46,
+      "audio_quality": "clean",
+      "audio_sha256": "d2e500826753fc20c4d095fcd4f470cd3f44d523313cc34fe568d284b2912d62",
+      "compressed_input_positions": 26,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 26,
+          "logits_sha256": "fe75c9cc594c4cf6722a0460add3bc19aedb8d734371b3433ba6b3742f972e74",
+          "memory_positions": 6,
+          "seconds": 5.713020031999804,
+          "teacher_kl": 16.14027976989746,
+          "teacher_top1_agreement": false,
+          "top_token_id": 50,
+          "top_token_text": "S",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 26,
+          "logits_sha256": "acea0962845819c1894e3e64ec6ca386cebf4c46398c354c621920b16a0738be",
+          "memory_positions": 6,
+          "seconds": 5.729285724000874,
+          "teacher_kl": 15.785497665405273,
+          "teacher_top1_agreement": false,
+          "top_token_id": 50,
+          "top_token_text": "S",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 26,
+          "logits_sha256": "614f444c31a47d3761184ae00252f4789fb1844399c486caa896db2ed548ff77",
+          "memory_positions": 6,
+          "seconds": 5.724640118000025,
+          "teacher_kl": 12.332179069519043,
+          "teacher_top1_agreement": false,
+          "top_token_id": 50,
+          "top_token_text": "S",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "d2e500826753fc20",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Dogs are sitting by the door.",
+      "filename": "03-01-01-01-02-01-03.wav",
+      "full_input_positions": 68,
+      "gate_features": {
+        "audio_positions_per_text_position": 7.666666666666667,
+        "mean_audio_log_norm": -0.5573228666411215,
+        "mean_cosine": 0.023699792225745378,
+        "mean_log_norm_ratio": 0.06152725925675063,
+        "mean_temporal_delta_ratio": 0.7797727259536069,
+        "std_audio_log_norm": 0.2561124952558194,
+        "std_cosine": 0.05375950167126645,
+        "std_log_norm_ratio": 0.347048463972409
+      },
+      "item_id": "actor-03-statement-02-incomplete",
+      "memory_quality": "incomplete",
+      "memory_transcript": "Are sitting by the door.",
+      "oracle_alpha": 1.0,
+      "split": "train",
+      "statement_id": "02",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 68,
+        "logits_sha256": "88736f3e9497bb777abffbf4527db9471101ab38526e497b3ed2d10609c9b8a0",
+        "memory_positions": null,
+        "top_token_id": 35,
+        "top_token_text": "D",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Dogs are sitting by the door.",
+      "transcript_token_positions": 6
+    },
+    {
+      "actor_id": "03",
+      "audio_feature_positions": 46,
+      "audio_quality": "clean",
+      "audio_sha256": "d2e500826753fc20c4d095fcd4f470cd3f44d523313cc34fe568d284b2912d62",
+      "compressed_input_positions": 27,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 27,
+          "logits_sha256": "b9463ef823d5b59fcfc28ba72660c63c9637a2fe909d71fff64e912b88b16941",
+          "memory_positions": 7,
+          "seconds": 5.726200584000253,
+          "teacher_kl": 21.246103286743164,
+          "teacher_top1_agreement": false,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 27,
+          "logits_sha256": "77198b70b93bd35615abdb4471367a20d32cab887c4897e5a28721f0d46c01fa",
+          "memory_positions": 7,
+          "seconds": 5.7319021020002765,
+          "teacher_kl": 20.80843734741211,
+          "teacher_top1_agreement": false,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 27,
+          "logits_sha256": "5c579f4139b8982008954f01aa20bf6d8fa62743161d7f510c649169c82c8e27",
+          "memory_positions": 7,
+          "seconds": 5.7428989850004655,
+          "teacher_kl": 19.058944702148438,
+          "teacher_top1_agreement": false,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "d2e500826753fc20",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Dogs are sitting by the door.",
+      "filename": "03-01-01-01-02-01-03.wav",
+      "full_input_positions": 68,
+      "gate_features": {
+        "audio_positions_per_text_position": 6.571428571428571,
+        "mean_audio_log_norm": -0.5330496331407113,
+        "mean_cosine": 0.029546997756237835,
+        "mean_log_norm_ratio": 0.11204027931373296,
+        "mean_temporal_delta_ratio": 0.7737687292632045,
+        "std_audio_log_norm": 0.2615325984131682,
+        "std_cosine": 0.05866642154602144,
+        "std_log_norm_ratio": 0.3832446016141836
+      },
+      "item_id": "actor-03-statement-02-conflicting",
+      "memory_quality": "conflicting",
+      "memory_transcript": "Kids are talking by the door.",
+      "oracle_alpha": 1.0,
+      "split": "train",
+      "statement_id": "02",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 68,
+        "logits_sha256": "88736f3e9497bb777abffbf4527db9471101ab38526e497b3ed2d10609c9b8a0",
+        "memory_positions": null,
+        "top_token_id": 35,
+        "top_token_text": "D",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Dogs are sitting by the door.",
+      "transcript_token_positions": 7
+    },
+    {
+      "actor_id": "04",
+      "audio_feature_positions": 43,
+      "audio_quality": "degraded",
+      "audio_sha256": "30ed5827386c30840f93ec49e4cf5689597a6d48412d79c94a171e71495ccee2",
+      "compressed_input_positions": 27,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 27,
+          "logits_sha256": "b9463ef823d5b59fcfc28ba72660c63c9637a2fe909d71fff64e912b88b16941",
+          "memory_positions": 7,
+          "seconds": 5.729595786000573,
+          "teacher_kl": 0.005405755713582039,
+          "teacher_top1_agreement": true,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 27,
+          "logits_sha256": "82d6eba700c8daf1538cee24f0c23a21ad2127beca3807f37a4e03b22eb3d5e2",
+          "memory_positions": 7,
+          "seconds": 5.718065408000257,
+          "teacher_kl": 0.005183442961424589,
+          "teacher_top1_agreement": true,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 27,
+          "logits_sha256": "83c97d18dd716b4151d67fa36c65e31f1f239eb9fdded46421bf110c923953af",
+          "memory_positions": 7,
+          "seconds": 5.71018874299989,
+          "teacher_kl": 0.00122821272816509,
+          "teacher_top1_agreement": true,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "30ed5827386c3084",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Kids are talking by the door.",
+      "filename": "03-01-01-01-01-01-04.wav",
+      "full_input_positions": 65,
+      "gate_features": {
+        "audio_positions_per_text_position": 6.142857142857143,
+        "mean_audio_log_norm": -0.3151785578923651,
+        "mean_cosine": 0.016278654632276398,
+        "mean_log_norm_ratio": 0.32991135456207915,
+        "mean_temporal_delta_ratio": 0.6505940892325649,
+        "std_audio_log_norm": 0.3420420150517049,
+        "std_cosine": 0.038187165681728495,
+        "std_log_norm_ratio": 0.4061654331484881
+      },
+      "item_id": "actor-04-statement-01-exact",
+      "memory_quality": "exact",
+      "memory_transcript": "Kids are talking by the door.",
+      "oracle_alpha": 1.0,
+      "split": "train",
+      "statement_id": "01",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 65,
+        "logits_sha256": "9a9861a92ed3df4b1e5cf108da20dc4ba0a230428c494f40590bd2c4471c11d7",
+        "memory_positions": null,
+        "top_token_id": 69433,
+        "top_token_text": "Kids",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Kids are talking by the door.",
+      "transcript_token_positions": 7
+    },
+    {
+      "actor_id": "04",
+      "audio_feature_positions": 43,
+      "audio_quality": "clean",
+      "audio_sha256": "30ed5827386c30840f93ec49e4cf5689597a6d48412d79c94a171e71495ccee2",
+      "compressed_input_positions": 26,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 26,
+          "logits_sha256": "faebfdfacc2b91b0746ecfc946074733270e8e9a5de56d566b758fa4643cba7c",
+          "memory_positions": 6,
+          "seconds": 5.714170195999941,
+          "teacher_kl": 12.376440048217773,
+          "teacher_top1_agreement": false,
+          "top_token_id": 11526,
+          "top_token_text": "Are",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 26,
+          "logits_sha256": "cfd0551c84ffbbdf3b06e8eddcad26df29b60b0abf022e33187907d133c1f2d5",
+          "memory_positions": 6,
+          "seconds": 5.75665992499944,
+          "teacher_kl": 11.191893577575684,
+          "teacher_top1_agreement": false,
+          "top_token_id": 11526,
+          "top_token_text": "Are",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 26,
+          "logits_sha256": "c64d17638311303cd82740886d4aa48bae1d83f0e1245d9e44e0c5bd2ed5cd7e",
+          "memory_positions": 6,
+          "seconds": 5.735841646000154,
+          "teacher_kl": 10.622529983520508,
+          "teacher_top1_agreement": false,
+          "top_token_id": 11526,
+          "top_token_text": "Are",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "30ed5827386c3084",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Kids are talking by the door.",
+      "filename": "03-01-01-01-01-01-04.wav",
+      "full_input_positions": 65,
+      "gate_features": {
+        "audio_positions_per_text_position": 7.166666666666667,
+        "mean_audio_log_norm": -0.537890505032829,
+        "mean_cosine": 0.019704359115839704,
+        "mean_log_norm_ratio": 0.09255424039613558,
+        "mean_temporal_delta_ratio": 0.7598077671448769,
+        "std_audio_log_norm": 0.2599724186534423,
+        "std_cosine": 0.055002902975614894,
+        "std_log_norm_ratio": 0.29062299341908676
+      },
+      "item_id": "actor-04-statement-01-incomplete",
+      "memory_quality": "incomplete",
+      "memory_transcript": "Are talking by the door.",
+      "oracle_alpha": 1.0,
+      "split": "train",
+      "statement_id": "01",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 65,
+        "logits_sha256": "9a9861a92ed3df4b1e5cf108da20dc4ba0a230428c494f40590bd2c4471c11d7",
+        "memory_positions": null,
+        "top_token_id": 69433,
+        "top_token_text": "Kids",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Kids are talking by the door.",
+      "transcript_token_positions": 6
+    },
+    {
+      "actor_id": "04",
+      "audio_feature_positions": 43,
+      "audio_quality": "clean",
+      "audio_sha256": "30ed5827386c30840f93ec49e4cf5689597a6d48412d79c94a171e71495ccee2",
+      "compressed_input_positions": 28,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 28,
+          "logits_sha256": "439d89dfe55d6d4fbcbfb16cb83d0861bdcaf6564d6d00da562a570fa3502f6d",
+          "memory_positions": 8,
+          "seconds": 5.738881901000241,
+          "teacher_kl": 20.873939514160156,
+          "teacher_top1_agreement": false,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 28,
+          "logits_sha256": "4913ddd4c662c86b6aff5a417e2e3bb3b9dafb0d4e73e4e74494cd1d7c8f4834",
+          "memory_positions": 8,
+          "seconds": 5.729334057999949,
+          "teacher_kl": 19.998062133789062,
+          "teacher_top1_agreement": false,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 28,
+          "logits_sha256": "17e47efe4cc6cf609db69a1f23c34db3298da4c2d654b22ae9b1dc996e2fda20",
+          "memory_positions": 8,
+          "seconds": 5.76990818899958,
+          "teacher_kl": 16.24730110168457,
+          "teacher_top1_agreement": false,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "30ed5827386c3084",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Kids are talking by the door.",
+      "filename": "03-01-01-01-01-01-04.wav",
+      "full_input_positions": 65,
+      "gate_features": {
+        "audio_positions_per_text_position": 5.375,
+        "mean_audio_log_norm": -0.5026079307102475,
+        "mean_cosine": 0.044248437976278,
+        "mean_log_norm_ratio": 0.14332490146620316,
+        "mean_temporal_delta_ratio": 0.7387778628773382,
+        "std_audio_log_norm": 0.26643697952837936,
+        "std_cosine": 0.049257178847197096,
+        "std_log_norm_ratio": 0.38583157449112826
+      },
+      "item_id": "actor-04-statement-01-conflicting",
+      "memory_quality": "conflicting",
+      "memory_transcript": "Dogs are sitting by the door.",
+      "oracle_alpha": 1.0,
+      "split": "train",
+      "statement_id": "01",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 65,
+        "logits_sha256": "9a9861a92ed3df4b1e5cf108da20dc4ba0a230428c494f40590bd2c4471c11d7",
+        "memory_positions": null,
+        "top_token_id": 69433,
+        "top_token_text": "Kids",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Kids are talking by the door.",
+      "transcript_token_positions": 8
+    },
+    {
+      "actor_id": "04",
+      "audio_feature_positions": 43,
+      "audio_quality": "degraded",
+      "audio_sha256": "7a49df186c48e1bf40bec92085831cb7dc7e3d0edfcf2d08b23a67a15a2d8ccf",
+      "compressed_input_positions": 28,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 28,
+          "logits_sha256": "439d89dfe55d6d4fbcbfb16cb83d0861bdcaf6564d6d00da562a570fa3502f6d",
+          "memory_positions": 8,
+          "seconds": 5.731709793999471,
+          "teacher_kl": 0.004926108289510012,
+          "teacher_top1_agreement": true,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 28,
+          "logits_sha256": "7692f2f3ff875c89b0eb3ed7daea09d7eaef17254f934036de518c40749d4a6a",
+          "memory_positions": 8,
+          "seconds": 5.746358377000433,
+          "teacher_kl": 0.004760256968438625,
+          "teacher_top1_agreement": true,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 28,
+          "logits_sha256": "3f37ebfa30ef86877eab7025885ca56623ea5431f6f65ffecea4220532e3a4a1",
+          "memory_positions": 8,
+          "seconds": 5.734419547000471,
+          "teacher_kl": 0.025567704811692238,
+          "teacher_top1_agreement": true,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "7a49df186c48e1bf",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Dogs are sitting by the door.",
+      "filename": "03-01-01-01-02-01-04.wav",
+      "full_input_positions": 65,
+      "gate_features": {
+        "audio_positions_per_text_position": 5.375,
+        "mean_audio_log_norm": -0.2999128589238043,
+        "mean_cosine": 0.02179903462868566,
+        "mean_log_norm_ratio": 0.34601997325264633,
+        "mean_temporal_delta_ratio": 0.6231072182268923,
+        "std_audio_log_norm": 0.3077809612450676,
+        "std_cosine": 0.03318421002907121,
+        "std_log_norm_ratio": 0.40340049670867856
+      },
+      "item_id": "actor-04-statement-02-exact",
+      "memory_quality": "exact",
+      "memory_transcript": "Dogs are sitting by the door.",
+      "oracle_alpha": 0.5,
+      "split": "train",
+      "statement_id": "02",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 65,
+        "logits_sha256": "a6c7fca119dd9c4b18b2b456d6261ec5ad6aec698b541f32567711feab7be9e3",
+        "memory_positions": null,
+        "top_token_id": 35,
+        "top_token_text": "D",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Dogs are sitting by the door.",
+      "transcript_token_positions": 8
+    },
+    {
+      "actor_id": "04",
+      "audio_feature_positions": 43,
+      "audio_quality": "clean",
+      "audio_sha256": "7a49df186c48e1bf40bec92085831cb7dc7e3d0edfcf2d08b23a67a15a2d8ccf",
+      "compressed_input_positions": 26,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 26,
+          "logits_sha256": "fe75c9cc594c4cf6722a0460add3bc19aedb8d734371b3433ba6b3742f972e74",
+          "memory_positions": 6,
+          "seconds": 5.749916970999948,
+          "teacher_kl": 16.134309768676758,
+          "teacher_top1_agreement": false,
+          "top_token_id": 50,
+          "top_token_text": "S",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 26,
+          "logits_sha256": "ac95a7914a88d9177be44256f57c751fd2070f5de8e6955c47edb98657bda19a",
+          "memory_positions": 6,
+          "seconds": 5.728462437999951,
+          "teacher_kl": 16.18271255493164,
+          "teacher_top1_agreement": false,
+          "top_token_id": 50,
+          "top_token_text": "S",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 26,
+          "logits_sha256": "5acaaeb9bea6728fc90692316b080af89938db84a843f072c617a18f96aeb5f6",
+          "memory_positions": 6,
+          "seconds": 5.725172311000279,
+          "teacher_kl": 13.812520027160645,
+          "teacher_top1_agreement": false,
+          "top_token_id": 50,
+          "top_token_text": "S",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "7a49df186c48e1bf",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Dogs are sitting by the door.",
+      "filename": "03-01-01-01-02-01-04.wav",
+      "full_input_positions": 65,
+      "gate_features": {
+        "audio_positions_per_text_position": 7.166666666666667,
+        "mean_audio_log_norm": -0.5026907134288491,
+        "mean_cosine": 0.020144425011975966,
+        "mean_log_norm_ratio": 0.116159412469023,
+        "mean_temporal_delta_ratio": 0.7731767903288915,
+        "std_audio_log_norm": 0.2883462697761629,
+        "std_cosine": 0.043657819389187204,
+        "std_log_norm_ratio": 0.3560849669375525
+      },
+      "item_id": "actor-04-statement-02-incomplete",
+      "memory_quality": "incomplete",
+      "memory_transcript": "Are sitting by the door.",
+      "oracle_alpha": 1.0,
+      "split": "train",
+      "statement_id": "02",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 65,
+        "logits_sha256": "a6c7fca119dd9c4b18b2b456d6261ec5ad6aec698b541f32567711feab7be9e3",
+        "memory_positions": null,
+        "top_token_id": 35,
+        "top_token_text": "D",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Dogs are sitting by the door.",
+      "transcript_token_positions": 6
+    },
+    {
+      "actor_id": "04",
+      "audio_feature_positions": 43,
+      "audio_quality": "clean",
+      "audio_sha256": "7a49df186c48e1bf40bec92085831cb7dc7e3d0edfcf2d08b23a67a15a2d8ccf",
+      "compressed_input_positions": 27,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 27,
+          "logits_sha256": "b9463ef823d5b59fcfc28ba72660c63c9637a2fe909d71fff64e912b88b16941",
+          "memory_positions": 7,
+          "seconds": 5.727205967999907,
+          "teacher_kl": 21.240222930908203,
+          "teacher_top1_agreement": false,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 27,
+          "logits_sha256": "ffdedf91d93304554126f13dd30fb18e0033e390b481a5fd3a47a9b9abf419b2",
+          "memory_positions": 7,
+          "seconds": 5.738268787999914,
+          "teacher_kl": 21.427228927612305,
+          "teacher_top1_agreement": false,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 27,
+          "logits_sha256": "534616865cda2882a481bc919e4cc8e9beaee3b2911bded71a32d602676176fa",
+          "memory_positions": 7,
+          "seconds": 5.722369830999924,
+          "teacher_kl": 19.553377151489258,
+          "teacher_top1_agreement": false,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "7a49df186c48e1bf",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Dogs are sitting by the door.",
+      "filename": "03-01-01-01-02-01-04.wav",
+      "full_input_positions": 65,
+      "gate_features": {
+        "audio_positions_per_text_position": 6.142857142857143,
+        "mean_audio_log_norm": -0.47659095352828035,
+        "mean_cosine": 0.02830262772358072,
+        "mean_log_norm_ratio": 0.1684989589261638,
+        "mean_temporal_delta_ratio": 0.7848282646409261,
+        "std_audio_log_norm": 0.2877393144436343,
+        "std_cosine": 0.051344677439834785,
+        "std_log_norm_ratio": 0.34994907292621164
+      },
+      "item_id": "actor-04-statement-02-conflicting",
+      "memory_quality": "conflicting",
+      "memory_transcript": "Kids are talking by the door.",
+      "oracle_alpha": 1.0,
+      "split": "train",
+      "statement_id": "02",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 65,
+        "logits_sha256": "a6c7fca119dd9c4b18b2b456d6261ec5ad6aec698b541f32567711feab7be9e3",
+        "memory_positions": null,
+        "top_token_id": 35,
+        "top_token_text": "D",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Dogs are sitting by the door.",
+      "transcript_token_positions": 7
+    },
+    {
+      "actor_id": "05",
+      "audio_feature_positions": 47,
+      "audio_quality": "degraded",
+      "audio_sha256": "d6ae1eaf5f0638d0fbbb6ea9ba040e089e741c13caca902d91059541c24c093a",
+      "compressed_input_positions": 27,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 27,
+          "logits_sha256": "b9463ef823d5b59fcfc28ba72660c63c9637a2fe909d71fff64e912b88b16941",
+          "memory_positions": 7,
+          "seconds": 5.729975005000597,
+          "teacher_kl": 0.002280956134200096,
+          "teacher_top1_agreement": true,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 27,
+          "logits_sha256": "471de91458c474e72e175cfa92869ae5c6da461fbdadf385923af5f8b219a305",
+          "memory_positions": 7,
+          "seconds": 5.737965254000301,
+          "teacher_kl": 0.0020549313630908728,
+          "teacher_top1_agreement": true,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 27,
+          "logits_sha256": "6ebc28c938d3fa763a77052dd03301b1aee8e7c413ce3f854976ab6e7ca5b3b2",
+          "memory_positions": 7,
+          "seconds": 5.725129002999893,
+          "teacher_kl": 0.0003832358052022755,
+          "teacher_top1_agreement": true,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "d6ae1eaf5f0638d0",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Kids are talking by the door.",
+      "filename": "03-01-01-01-01-01-05.wav",
+      "full_input_positions": 69,
+      "gate_features": {
+        "audio_positions_per_text_position": 6.714285714285714,
+        "mean_audio_log_norm": -0.36126849406818423,
+        "mean_cosine": 0.014775883976795,
+        "mean_log_norm_ratio": 0.28382141838625996,
+        "mean_temporal_delta_ratio": 0.5776165072540158,
+        "std_audio_log_norm": 0.3098120871780648,
+        "std_cosine": 0.038216379829514736,
+        "std_log_norm_ratio": 0.39416238750398147
+      },
+      "item_id": "actor-05-statement-01-exact",
+      "learned_condition": {
+        "alpha": 0.842498591386934,
+        "input_positions": 27,
+        "logits_sha256": "4a815dd817157449b2f451c04b8600db286cced39c192648c28b15e963ea6fcc",
+        "memory_positions": 7,
+        "seconds": 5.676197433000198,
+        "teacher_kl": 0.0016093534650281072,
+        "teacher_top1_agreement": true,
+        "top_token_id": 69433,
+        "top_token_text": "Kids",
+        "vocabulary_size": 152064
+      },
+      "memory_quality": "exact",
+      "memory_transcript": "Kids are talking by the door.",
+      "oracle_alpha": 1.0,
+      "split": "test",
+      "statement_id": "01",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 69,
+        "logits_sha256": "66af3d5c397d33e97874aa4ef30507042f0b7e953a4b328dbfbb5404e8a31567",
+        "memory_positions": null,
+        "top_token_id": 69433,
+        "top_token_text": "Kids",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Kids are talking by the door.",
+      "transcript_token_positions": 7
+    },
+    {
+      "actor_id": "05",
+      "audio_feature_positions": 47,
+      "audio_quality": "clean",
+      "audio_sha256": "d6ae1eaf5f0638d0fbbb6ea9ba040e089e741c13caca902d91059541c24c093a",
+      "compressed_input_positions": 26,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 26,
+          "logits_sha256": "faebfdfacc2b91b0746ecfc946074733270e8e9a5de56d566b758fa4643cba7c",
+          "memory_positions": 6,
+          "seconds": 5.730731251000179,
+          "teacher_kl": 12.377274513244629,
+          "teacher_top1_agreement": false,
+          "top_token_id": 11526,
+          "top_token_text": "Are",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 26,
+          "logits_sha256": "b44bf77df6b6dcb297229ad8ca2ffd99ae71204ba312ae03cf50e910b54b9f03",
+          "memory_positions": 6,
+          "seconds": 5.730112922999979,
+          "teacher_kl": 11.343997955322266,
+          "teacher_top1_agreement": false,
+          "top_token_id": 11526,
+          "top_token_text": "Are",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 26,
+          "logits_sha256": "ff076156246a77dbe9f457346c932fddc7bb939325f40aa2fc8aacc92827de78",
+          "memory_positions": 6,
+          "seconds": 5.748248300999876,
+          "teacher_kl": 9.10892391204834,
+          "teacher_top1_agreement": false,
+          "top_token_id": 11526,
+          "top_token_text": "Are",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "d6ae1eaf5f0638d0",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Kids are talking by the door.",
+      "filename": "03-01-01-01-01-01-05.wav",
+      "full_input_positions": 69,
+      "gate_features": {
+        "audio_positions_per_text_position": 7.833333333333333,
+        "mean_audio_log_norm": -0.5581151595066115,
+        "mean_cosine": 0.02928031590871082,
+        "mean_log_norm_ratio": 0.07232958592235317,
+        "mean_temporal_delta_ratio": 0.7287143363380973,
+        "std_audio_log_norm": 0.2359709554091272,
+        "std_cosine": 0.04503725840705698,
+        "std_log_norm_ratio": 0.3268208212828746
+      },
+      "item_id": "actor-05-statement-01-incomplete",
+      "learned_condition": {
+        "alpha": 0.9586565095019894,
+        "input_positions": 26,
+        "logits_sha256": "4c9f44b1e37155130540cc832e0586f53cc14adaa6a8fe2bc2f398c72607c022",
+        "memory_positions": 6,
+        "seconds": 5.7226112620001,
+        "teacher_kl": 10.74055004119873,
+        "teacher_top1_agreement": false,
+        "top_token_id": 11526,
+        "top_token_text": "Are",
+        "vocabulary_size": 152064
+      },
+      "memory_quality": "incomplete",
+      "memory_transcript": "Are talking by the door.",
+      "oracle_alpha": 1.0,
+      "split": "test",
+      "statement_id": "01",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 69,
+        "logits_sha256": "66af3d5c397d33e97874aa4ef30507042f0b7e953a4b328dbfbb5404e8a31567",
+        "memory_positions": null,
+        "top_token_id": 69433,
+        "top_token_text": "Kids",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Kids are talking by the door.",
+      "transcript_token_positions": 6
+    },
+    {
+      "actor_id": "05",
+      "audio_feature_positions": 47,
+      "audio_quality": "clean",
+      "audio_sha256": "d6ae1eaf5f0638d0fbbb6ea9ba040e089e741c13caca902d91059541c24c093a",
+      "compressed_input_positions": 28,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 28,
+          "logits_sha256": "439d89dfe55d6d4fbcbfb16cb83d0861bdcaf6564d6d00da562a570fa3502f6d",
+          "memory_positions": 8,
+          "seconds": 5.752139123999768,
+          "teacher_kl": 20.87290382385254,
+          "teacher_top1_agreement": false,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 28,
+          "logits_sha256": "1649207123bce50a8052ae009ddbb5edf466eac3dceb3e6571b29baf572fef0d",
+          "memory_positions": 8,
+          "seconds": 5.750204654000299,
+          "teacher_kl": 19.997577667236328,
+          "teacher_top1_agreement": false,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 28,
+          "logits_sha256": "d6e83405f184aba2af21ac508b890c90e180ae133c2c7f98b60858a577d835ba",
+          "memory_positions": 8,
+          "seconds": 5.732704029999695,
+          "teacher_kl": 16.685205459594727,
+          "teacher_top1_agreement": false,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "d6ae1eaf5f0638d0",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Kids are talking by the door.",
+      "filename": "03-01-01-01-01-01-05.wav",
+      "full_input_positions": 69,
+      "gate_features": {
+        "audio_positions_per_text_position": 5.875,
+        "mean_audio_log_norm": -0.5170337092278078,
+        "mean_cosine": 0.0439767441743855,
+        "mean_log_norm_ratio": 0.12889912294864284,
+        "mean_temporal_delta_ratio": 0.7227631341993028,
+        "std_audio_log_norm": 0.24177913651787392,
+        "std_cosine": 0.04587712252195681,
+        "std_log_norm_ratio": 0.38288793782160263
+      },
+      "item_id": "actor-05-statement-01-conflicting",
+      "learned_condition": {
+        "alpha": 0.9580940976515412,
+        "input_positions": 28,
+        "logits_sha256": "e014f5f48947f925ed156461e445e339093ed688766a590f09f826c48589111f",
+        "memory_positions": 8,
+        "seconds": 5.716621978999683,
+        "teacher_kl": 17.809402465820312,
+        "teacher_top1_agreement": false,
+        "top_token_id": 35,
+        "top_token_text": "D",
+        "vocabulary_size": 152064
+      },
+      "memory_quality": "conflicting",
+      "memory_transcript": "Dogs are sitting by the door.",
+      "oracle_alpha": 1.0,
+      "split": "test",
+      "statement_id": "01",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 69,
+        "logits_sha256": "66af3d5c397d33e97874aa4ef30507042f0b7e953a4b328dbfbb5404e8a31567",
+        "memory_positions": null,
+        "top_token_id": 69433,
+        "top_token_text": "Kids",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Kids are talking by the door.",
+      "transcript_token_positions": 8
+    },
+    {
+      "actor_id": "05",
+      "audio_feature_positions": 41,
+      "audio_quality": "degraded",
+      "audio_sha256": "023c14008c4810c5114b8690c3d0adeb46d97cd1cca88420a56752a5ec28fb99",
+      "compressed_input_positions": 28,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 28,
+          "logits_sha256": "439d89dfe55d6d4fbcbfb16cb83d0861bdcaf6564d6d00da562a570fa3502f6d",
+          "memory_positions": 8,
+          "seconds": 5.729272548999688,
+          "teacher_kl": 0.004776779096573591,
+          "teacher_top1_agreement": true,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 28,
+          "logits_sha256": "b275b2580a5089b495c79fbb08cdea13a5d4ab600b289362ea222cc9f49000ec",
+          "memory_positions": 8,
+          "seconds": 5.729709313000058,
+          "teacher_kl": 0.004534177482128143,
+          "teacher_top1_agreement": true,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 28,
+          "logits_sha256": "b79b9473701a792abc7bf0d2b25ef686a19cf010cee45d68206b63e29499b770",
+          "memory_positions": 8,
+          "seconds": 5.7474529030005215,
+          "teacher_kl": 0.006894632708281279,
+          "teacher_top1_agreement": true,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "023c14008c4810c5",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Dogs are sitting by the door.",
+      "filename": "03-01-01-01-02-01-05.wav",
+      "full_input_positions": 63,
+      "gate_features": {
+        "audio_positions_per_text_position": 5.125,
+        "mean_audio_log_norm": -0.34600014501581805,
+        "mean_cosine": 0.023879393667155004,
+        "mean_log_norm_ratio": 0.29993268716063254,
+        "mean_temporal_delta_ratio": 0.621223920806065,
+        "std_audio_log_norm": 0.29137092269831977,
+        "std_cosine": 0.039512690919348,
+        "std_log_norm_ratio": 0.34938717622379395
+      },
+      "item_id": "actor-05-statement-02-exact",
+      "learned_condition": {
+        "alpha": 0.8951026642731673,
+        "input_positions": 28,
+        "logits_sha256": "e05cc07697efa6975543c850d97f85992e7cde0b59fa95413b247f4fe358c09a",
+        "memory_positions": 8,
+        "seconds": 5.72531964799964,
+        "teacher_kl": 0.0022525822278112173,
+        "teacher_top1_agreement": true,
+        "top_token_id": 35,
+        "top_token_text": "D",
+        "vocabulary_size": 152064
+      },
+      "memory_quality": "exact",
+      "memory_transcript": "Dogs are sitting by the door.",
+      "oracle_alpha": 0.5,
+      "split": "test",
+      "statement_id": "02",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 63,
+        "logits_sha256": "eef4d654c9361ea88305218e910aa64180567fd3639933e77f4f33317cceafb5",
+        "memory_positions": null,
+        "top_token_id": 35,
+        "top_token_text": "D",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Dogs are sitting by the door.",
+      "transcript_token_positions": 8
+    },
+    {
+      "actor_id": "05",
+      "audio_feature_positions": 41,
+      "audio_quality": "clean",
+      "audio_sha256": "023c14008c4810c5114b8690c3d0adeb46d97cd1cca88420a56752a5ec28fb99",
+      "compressed_input_positions": 26,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 26,
+          "logits_sha256": "fe75c9cc594c4cf6722a0460add3bc19aedb8d734371b3433ba6b3742f972e74",
+          "memory_positions": 6,
+          "seconds": 5.731336009999723,
+          "teacher_kl": 16.13423728942871,
+          "teacher_top1_agreement": false,
+          "top_token_id": 50,
+          "top_token_text": "S",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 26,
+          "logits_sha256": "fef0391cdef4b16bb3ae128d6eef989a640c7c3b17905d2f6d90de9635ad28fc",
+          "memory_positions": 6,
+          "seconds": 5.724654867000027,
+          "teacher_kl": 15.654757499694824,
+          "teacher_top1_agreement": false,
+          "top_token_id": 50,
+          "top_token_text": "S",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 26,
+          "logits_sha256": "ce18a9db48228461d7c60d24e82361bf743d09380fbcce37e20e061bbfe8730e",
+          "memory_positions": 6,
+          "seconds": 5.733780205000585,
+          "teacher_kl": 12.841193199157715,
+          "teacher_top1_agreement": false,
+          "top_token_id": 50,
+          "top_token_text": "S",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "023c14008c4810c5",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Dogs are sitting by the door.",
+      "filename": "03-01-01-01-02-01-05.wav",
+      "full_input_positions": 63,
+      "gate_features": {
+        "audio_positions_per_text_position": 6.833333333333333,
+        "mean_audio_log_norm": -0.5454537247614123,
+        "mean_cosine": 0.03812982907800959,
+        "mean_log_norm_ratio": 0.07339640113645993,
+        "mean_temporal_delta_ratio": 0.810991663207294,
+        "std_audio_log_norm": 0.2537510348559006,
+        "std_cosine": 0.043497676693465916,
+        "std_log_norm_ratio": 0.32173177543709364
+      },
+      "item_id": "actor-05-statement-02-incomplete",
+      "learned_condition": {
+        "alpha": 0.9743354561799157,
+        "input_positions": 26,
+        "logits_sha256": "eb6f70db7b5a621c7040a8ccf6a8b9195628a3f3bdc989e64bb133fef8eea32b",
+        "memory_positions": 6,
+        "seconds": 5.723537187000147,
+        "teacher_kl": 13.367355346679688,
+        "teacher_top1_agreement": false,
+        "top_token_id": 50,
+        "top_token_text": "S",
+        "vocabulary_size": 152064
+      },
+      "memory_quality": "incomplete",
+      "memory_transcript": "Are sitting by the door.",
+      "oracle_alpha": 1.0,
+      "split": "test",
+      "statement_id": "02",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 63,
+        "logits_sha256": "eef4d654c9361ea88305218e910aa64180567fd3639933e77f4f33317cceafb5",
+        "memory_positions": null,
+        "top_token_id": 35,
+        "top_token_text": "D",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Dogs are sitting by the door.",
+      "transcript_token_positions": 6
+    },
+    {
+      "actor_id": "05",
+      "audio_feature_positions": 41,
+      "audio_quality": "clean",
+      "audio_sha256": "023c14008c4810c5114b8690c3d0adeb46d97cd1cca88420a56752a5ec28fb99",
+      "compressed_input_positions": 27,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 27,
+          "logits_sha256": "b9463ef823d5b59fcfc28ba72660c63c9637a2fe909d71fff64e912b88b16941",
+          "memory_positions": 7,
+          "seconds": 5.734677531999296,
+          "teacher_kl": 21.239961624145508,
+          "teacher_top1_agreement": false,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 27,
+          "logits_sha256": "34f86f576eca2e8df8020a64f6d2eb734eef0bae9958ccfa256291ff6b646ce7",
+          "memory_positions": 7,
+          "seconds": 5.728648367999995,
+          "teacher_kl": 20.802133560180664,
+          "teacher_top1_agreement": false,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 27,
+          "logits_sha256": "8e1eee07b30000c670a0b4e48dac1f95737ed6185eddd620c13f3f38b970123b",
+          "memory_positions": 7,
+          "seconds": 5.741076176999741,
+          "teacher_kl": 18.61501693725586,
+          "teacher_top1_agreement": false,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "023c14008c4810c5",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Dogs are sitting by the door.",
+      "filename": "03-01-01-01-02-01-05.wav",
+      "full_input_positions": 63,
+      "gate_features": {
+        "audio_positions_per_text_position": 5.857142857142857,
+        "mean_audio_log_norm": -0.5304823607895612,
+        "mean_cosine": 0.03522790859928181,
+        "mean_log_norm_ratio": 0.11460755166488294,
+        "mean_temporal_delta_ratio": 0.7773307709413667,
+        "std_audio_log_norm": 0.2568203530045713,
+        "std_cosine": 0.04616054274758937,
+        "std_log_norm_ratio": 0.3664754484550507
+      },
+      "item_id": "actor-05-statement-02-conflicting",
+      "learned_condition": {
+        "alpha": 0.9667119670789248,
+        "input_positions": 27,
+        "logits_sha256": "07c98c639fd2f31ff34ceeec9b4a6cd005fd4d808c599ea1b6363276ea73886d",
+        "memory_positions": 7,
+        "seconds": 5.72980286100028,
+        "teacher_kl": 19.24030113220215,
+        "teacher_top1_agreement": false,
+        "top_token_id": 69433,
+        "top_token_text": "Kids",
+        "vocabulary_size": 152064
+      },
+      "memory_quality": "conflicting",
+      "memory_transcript": "Kids are talking by the door.",
+      "oracle_alpha": 1.0,
+      "split": "test",
+      "statement_id": "02",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 63,
+        "logits_sha256": "eef4d654c9361ea88305218e910aa64180567fd3639933e77f4f33317cceafb5",
+        "memory_positions": null,
+        "top_token_id": 35,
+        "top_token_text": "D",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Dogs are sitting by the door.",
+      "transcript_token_positions": 7
+    },
+    {
+      "actor_id": "06",
+      "audio_feature_positions": 44,
+      "audio_quality": "degraded",
+      "audio_sha256": "fec3fbd174eac5a623f30ac63b09bbb28b947754ab5f1ba57aa3758d10186ea1",
+      "compressed_input_positions": 27,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 27,
+          "logits_sha256": "b9463ef823d5b59fcfc28ba72660c63c9637a2fe909d71fff64e912b88b16941",
+          "memory_positions": 7,
+          "seconds": 5.721362623999994,
+          "teacher_kl": 0.010054021142423153,
+          "teacher_top1_agreement": true,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 27,
+          "logits_sha256": "8e39c9541efccac8ec20b21d0a68697a8cf84cb53eb8b7eadf194bdad2320f2e",
+          "memory_positions": 7,
+          "seconds": 5.772788316000515,
+          "teacher_kl": 0.009072463028132915,
+          "teacher_top1_agreement": true,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 27,
+          "logits_sha256": "3e2e10d5ca0c5eb9a01c82bcbbff531f9a24e516ee9a59b0de2fcdff912d9b9a",
+          "memory_positions": 7,
+          "seconds": 5.763264721999803,
+          "teacher_kl": 0.0020229939837008715,
+          "teacher_top1_agreement": true,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "fec3fbd174eac5a6",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Kids are talking by the door.",
+      "filename": "03-01-01-01-01-01-06.wav",
+      "full_input_positions": 66,
+      "gate_features": {
+        "audio_positions_per_text_position": 6.285714285714286,
+        "mean_audio_log_norm": -0.25780850288295276,
+        "mean_cosine": 0.01796168346701558,
+        "mean_log_norm_ratio": 0.38728140957149143,
+        "mean_temporal_delta_ratio": 0.5841612927244595,
+        "std_audio_log_norm": 0.2967975866151783,
+        "std_cosine": 0.0397783807924725,
+        "std_log_norm_ratio": 0.41250461305892394
+      },
+      "item_id": "actor-06-statement-01-exact",
+      "learned_condition": {
+        "alpha": 0.8530109241075371,
+        "input_positions": 27,
+        "logits_sha256": "363835fe775e4ae830388625230ac3d019ea9723dc2ac981783505995ee3cd6c",
+        "memory_positions": 7,
+        "seconds": 5.723223332000089,
+        "teacher_kl": 0.007821334525942802,
+        "teacher_top1_agreement": true,
+        "top_token_id": 69433,
+        "top_token_text": "Kids",
+        "vocabulary_size": 152064
+      },
+      "memory_quality": "exact",
+      "memory_transcript": "Kids are talking by the door.",
+      "oracle_alpha": 1.0,
+      "split": "test",
+      "statement_id": "01",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 66,
+        "logits_sha256": "ad1b018f86a63c14fca8a8bfe14bb914a4f3923a02e5e99ccd23226faab6e756",
+        "memory_positions": null,
+        "top_token_id": 69433,
+        "top_token_text": "Kids",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Kids are talking by the door.",
+      "transcript_token_positions": 7
+    },
+    {
+      "actor_id": "06",
+      "audio_feature_positions": 44,
+      "audio_quality": "clean",
+      "audio_sha256": "fec3fbd174eac5a623f30ac63b09bbb28b947754ab5f1ba57aa3758d10186ea1",
+      "compressed_input_positions": 26,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 26,
+          "logits_sha256": "faebfdfacc2b91b0746ecfc946074733270e8e9a5de56d566b758fa4643cba7c",
+          "memory_positions": 6,
+          "seconds": 5.7792905380001685,
+          "teacher_kl": 12.377103805541992,
+          "teacher_top1_agreement": false,
+          "top_token_id": 11526,
+          "top_token_text": "Are",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 26,
+          "logits_sha256": "59dd4619164ef69c11354bd747e45395c41778216332accb8ccf333881e3b52c",
+          "memory_positions": 6,
+          "seconds": 5.757433966999997,
+          "teacher_kl": 11.119873046875,
+          "teacher_top1_agreement": false,
+          "top_token_id": 11526,
+          "top_token_text": "Are",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 26,
+          "logits_sha256": "f34804cf896d16b7f122c2fdb77401339c938ea0a72834d6b43c69a6d81fc454",
+          "memory_positions": 6,
+          "seconds": 5.768580318999739,
+          "teacher_kl": 9.24028491973877,
+          "teacher_top1_agreement": false,
+          "top_token_id": 11526,
+          "top_token_text": "Are",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "fec3fbd174eac5a6",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Kids are talking by the door.",
+      "filename": "03-01-01-01-01-01-06.wav",
+      "full_input_positions": 66,
+      "gate_features": {
+        "audio_positions_per_text_position": 7.333333333333333,
+        "mean_audio_log_norm": -0.48590511013586885,
+        "mean_cosine": 0.019150536282282648,
+        "mean_log_norm_ratio": 0.14453963529309577,
+        "mean_temporal_delta_ratio": 0.7507875313192194,
+        "std_audio_log_norm": 0.2727910450489163,
+        "std_cosine": 0.05775201222977612,
+        "std_log_norm_ratio": 0.2956164970927675
+      },
+      "item_id": "actor-06-statement-01-incomplete",
+      "learned_condition": {
+        "alpha": 0.9718331701817907,
+        "input_positions": 26,
+        "logits_sha256": "eca948921b1c307c519dc8d6e4247ba82a9b7a44f2ac9bbc8ddfac5212d180df",
+        "memory_positions": 6,
+        "seconds": 5.731113399999231,
+        "teacher_kl": 9.306371688842773,
+        "teacher_top1_agreement": false,
+        "top_token_id": 11526,
+        "top_token_text": "Are",
+        "vocabulary_size": 152064
+      },
+      "memory_quality": "incomplete",
+      "memory_transcript": "Are talking by the door.",
+      "oracle_alpha": 1.0,
+      "split": "test",
+      "statement_id": "01",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 66,
+        "logits_sha256": "ad1b018f86a63c14fca8a8bfe14bb914a4f3923a02e5e99ccd23226faab6e756",
+        "memory_positions": null,
+        "top_token_id": 69433,
+        "top_token_text": "Kids",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Kids are talking by the door.",
+      "transcript_token_positions": 6
+    },
+    {
+      "actor_id": "06",
+      "audio_feature_positions": 44,
+      "audio_quality": "clean",
+      "audio_sha256": "fec3fbd174eac5a623f30ac63b09bbb28b947754ab5f1ba57aa3758d10186ea1",
+      "compressed_input_positions": 28,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 28,
+          "logits_sha256": "439d89dfe55d6d4fbcbfb16cb83d0861bdcaf6564d6d00da562a570fa3502f6d",
+          "memory_positions": 8,
+          "seconds": 5.739799339000456,
+          "teacher_kl": 20.877395629882812,
+          "teacher_top1_agreement": false,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 28,
+          "logits_sha256": "572dc8c2d52aa7fd41b71b1e0513848c7e65809e5d1101944293ee50bd82f907",
+          "memory_positions": 8,
+          "seconds": 5.747463873000015,
+          "teacher_kl": 20.250568389892578,
+          "teacher_top1_agreement": false,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 28,
+          "logits_sha256": "16d8fca515682ab8ade0b27389f4913a5f13efee5910c5166ff01b805f055538",
+          "memory_positions": 8,
+          "seconds": 5.728026728999794,
+          "teacher_kl": 13.376702308654785,
+          "teacher_top1_agreement": false,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "fec3fbd174eac5a6",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Kids are talking by the door.",
+      "filename": "03-01-01-01-01-01-06.wav",
+      "full_input_positions": 66,
+      "gate_features": {
+        "audio_positions_per_text_position": 5.5,
+        "mean_audio_log_norm": -0.4549164195257678,
+        "mean_cosine": 0.036130757609098466,
+        "mean_log_norm_ratio": 0.19101641265068287,
+        "mean_temporal_delta_ratio": 0.7372983758500821,
+        "std_audio_log_norm": 0.29315190464957724,
+        "std_cosine": 0.05003322464639583,
+        "std_log_norm_ratio": 0.41665432381022666
+      },
+      "item_id": "actor-06-statement-01-conflicting",
+      "learned_condition": {
+        "alpha": 0.9573156001902172,
+        "input_positions": 28,
+        "logits_sha256": "be24583b3813800e1e33433de7fc5fd109d60e48db6d096787687dac537d8473",
+        "memory_positions": 8,
+        "seconds": 5.723422880999351,
+        "teacher_kl": 14.81310749053955,
+        "teacher_top1_agreement": false,
+        "top_token_id": 35,
+        "top_token_text": "D",
+        "vocabulary_size": 152064
+      },
+      "memory_quality": "conflicting",
+      "memory_transcript": "Dogs are sitting by the door.",
+      "oracle_alpha": 1.0,
+      "split": "test",
+      "statement_id": "01",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 66,
+        "logits_sha256": "ad1b018f86a63c14fca8a8bfe14bb914a4f3923a02e5e99ccd23226faab6e756",
+        "memory_positions": null,
+        "top_token_id": 69433,
+        "top_token_text": "Kids",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Kids are talking by the door.",
+      "transcript_token_positions": 8
+    },
+    {
+      "actor_id": "06",
+      "audio_feature_positions": 44,
+      "audio_quality": "degraded",
+      "audio_sha256": "90f9e5d015c898554a488ee2ad6179b43c63645993cde40fa6e468e5254922d3",
+      "compressed_input_positions": 28,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 28,
+          "logits_sha256": "439d89dfe55d6d4fbcbfb16cb83d0861bdcaf6564d6d00da562a570fa3502f6d",
+          "memory_positions": 8,
+          "seconds": 5.742649935999907,
+          "teacher_kl": 0.0046651940792799,
+          "teacher_top1_agreement": true,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 28,
+          "logits_sha256": "21cd58b84a40dbf965c32799c4ad489a58cd204475f19b9b4e8c7bbe5a00c35c",
+          "memory_positions": 8,
+          "seconds": 5.748292805000347,
+          "teacher_kl": 0.0043851579539477825,
+          "teacher_top1_agreement": true,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 28,
+          "logits_sha256": "1354c679e19ae8340e21583079f719cd2f5d045620f31c4023ea323408edb24f",
+          "memory_positions": 8,
+          "seconds": 5.757323617000111,
+          "teacher_kl": 0.013835939578711987,
+          "teacher_top1_agreement": true,
+          "top_token_id": 35,
+          "top_token_text": "D",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "90f9e5d015c89855",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Dogs are sitting by the door.",
+      "filename": "03-01-01-01-02-01-06.wav",
+      "full_input_positions": 66,
+      "gate_features": {
+        "audio_positions_per_text_position": 5.5,
+        "mean_audio_log_norm": -0.2897962459174936,
+        "mean_cosine": 0.025289624494192718,
+        "mean_log_norm_ratio": 0.35613658625895706,
+        "mean_temporal_delta_ratio": 0.5633366876553454,
+        "std_audio_log_norm": 0.2955282933433393,
+        "std_cosine": 0.0398435696253502,
+        "std_log_norm_ratio": 0.4190712916586658
+      },
+      "item_id": "actor-06-statement-02-exact",
+      "learned_condition": {
+        "alpha": 0.8447725314766482,
+        "input_positions": 28,
+        "logits_sha256": "99d1038b59592ec0f671380cac1592c6feb281716b16ec7df80998d6ce2645d8",
+        "memory_positions": 8,
+        "seconds": 5.758482630999424,
+        "teacher_kl": 0.0014214141992852092,
+        "teacher_top1_agreement": true,
+        "top_token_id": 35,
+        "top_token_text": "D",
+        "vocabulary_size": 152064
+      },
+      "memory_quality": "exact",
+      "memory_transcript": "Dogs are sitting by the door.",
+      "oracle_alpha": 0.5,
+      "split": "test",
+      "statement_id": "02",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 66,
+        "logits_sha256": "d3a8d43bbac7eaa65361f25197eccdeb2cecb20528fe5c922a93ff3ff85c7d8b",
+        "memory_positions": null,
+        "top_token_id": 35,
+        "top_token_text": "D",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Dogs are sitting by the door.",
+      "transcript_token_positions": 8
+    },
+    {
+      "actor_id": "06",
+      "audio_feature_positions": 44,
+      "audio_quality": "clean",
+      "audio_sha256": "90f9e5d015c898554a488ee2ad6179b43c63645993cde40fa6e468e5254922d3",
+      "compressed_input_positions": 26,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 26,
+          "logits_sha256": "fe75c9cc594c4cf6722a0460add3bc19aedb8d734371b3433ba6b3742f972e74",
+          "memory_positions": 6,
+          "seconds": 5.754822312000215,
+          "teacher_kl": 16.139846801757812,
+          "teacher_top1_agreement": false,
+          "top_token_id": 50,
+          "top_token_text": "S",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 26,
+          "logits_sha256": "1fe36913a29d586c5304dbfa49d5790495197fc81277bc72c49b7e9962bcf4c1",
+          "memory_positions": 6,
+          "seconds": 5.7432984060005765,
+          "teacher_kl": 15.705183982849121,
+          "teacher_top1_agreement": false,
+          "top_token_id": 50,
+          "top_token_text": "S",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 26,
+          "logits_sha256": "ee2e90b7c432fc531ec12171eb58ab5921070be5332c611801453b6147d2babe",
+          "memory_positions": 6,
+          "seconds": 5.724244876000739,
+          "teacher_kl": 12.131341934204102,
+          "teacher_top1_agreement": false,
+          "top_token_id": 50,
+          "top_token_text": "S",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "90f9e5d015c89855",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Dogs are sitting by the door.",
+      "filename": "03-01-01-01-02-01-06.wav",
+      "full_input_positions": 66,
+      "gate_features": {
+        "audio_positions_per_text_position": 7.333333333333333,
+        "mean_audio_log_norm": -0.5428133716507683,
+        "mean_cosine": 0.028087577047925787,
+        "mean_log_norm_ratio": 0.0760367542471039,
+        "mean_temporal_delta_ratio": 0.7719520789375035,
+        "std_audio_log_norm": 0.2715587560198427,
+        "std_cosine": 0.052916693661198354,
+        "std_log_norm_ratio": 0.33368598659241255
+      },
+      "item_id": "actor-06-statement-02-incomplete",
+      "learned_condition": {
+        "alpha": 0.9718438447859032,
+        "input_positions": 26,
+        "logits_sha256": "38ab3be4290f7098a6fd926bd71c0f743b358505ab7f45f9e35343bd9897ce41",
+        "memory_positions": 6,
+        "seconds": 5.710109555000599,
+        "teacher_kl": 12.336483001708984,
+        "teacher_top1_agreement": false,
+        "top_token_id": 50,
+        "top_token_text": "S",
+        "vocabulary_size": 152064
+      },
+      "memory_quality": "incomplete",
+      "memory_transcript": "Are sitting by the door.",
+      "oracle_alpha": 1.0,
+      "split": "test",
+      "statement_id": "02",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 66,
+        "logits_sha256": "d3a8d43bbac7eaa65361f25197eccdeb2cecb20528fe5c922a93ff3ff85c7d8b",
+        "memory_positions": null,
+        "top_token_id": 35,
+        "top_token_text": "D",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Dogs are sitting by the door.",
+      "transcript_token_positions": 6
+    },
+    {
+      "actor_id": "06",
+      "audio_feature_positions": 44,
+      "audio_quality": "clean",
+      "audio_sha256": "90f9e5d015c898554a488ee2ad6179b43c63645993cde40fa6e468e5254922d3",
+      "compressed_input_positions": 27,
+      "conditions": {
+        "alpha_0.00": {
+          "alpha": 0.0,
+          "input_positions": 27,
+          "logits_sha256": "b9463ef823d5b59fcfc28ba72660c63c9637a2fe909d71fff64e912b88b16941",
+          "memory_positions": 7,
+          "seconds": 5.749310196999431,
+          "teacher_kl": 21.246599197387695,
+          "teacher_top1_agreement": false,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        },
+        "alpha_0.50": {
+          "alpha": 0.5,
+          "input_positions": 27,
+          "logits_sha256": "51f680b9709a6dfed0e4ff0d020ab00024739c21222169c7de19205b6b42406f",
+          "memory_positions": 7,
+          "seconds": 5.731087341999228,
+          "teacher_kl": 20.87135887145996,
+          "teacher_top1_agreement": false,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        },
+        "alpha_1.00": {
+          "alpha": 1.0,
+          "input_positions": 27,
+          "logits_sha256": "c2a89555f6a3117638a8adbbfc6056ce2cd2f5bcd494a2cca83130b57253800e",
+          "memory_positions": 7,
+          "seconds": 5.742569948999517,
+          "teacher_kl": 17.18368148803711,
+          "teacher_top1_agreement": false,
+          "top_token_id": 69433,
+          "top_token_text": "Kids",
+          "vocabulary_size": 152064
+        }
+      },
+      "degradation": {
+        "kind": "deterministic_white_noise",
+        "seed_sha256_prefix": "90f9e5d015c89855",
+        "snr_db": -10.0
+      },
+      "expected_transcript": "Dogs are sitting by the door.",
+      "filename": "03-01-01-01-02-01-06.wav",
+      "full_input_positions": 66,
+      "gate_features": {
+        "audio_positions_per_text_position": 6.285714285714286,
+        "mean_audio_log_norm": -0.5287192847566734,
+        "mean_cosine": 0.032511171341887635,
+        "mean_log_norm_ratio": 0.11637062769777073,
+        "mean_temporal_delta_ratio": 0.7592433576769052,
+        "std_audio_log_norm": 0.29380480262864933,
+        "std_cosine": 0.054180112215685645,
+        "std_log_norm_ratio": 0.3556712003815308
+      },
+      "item_id": "actor-06-statement-02-conflicting",
+      "learned_condition": {
+        "alpha": 0.9696385138388681,
+        "input_positions": 27,
+        "logits_sha256": "c5e7191e11ff93d0c7c8d1fb18808da69de5a8c1ff15678c389489253b9e3170",
+        "memory_positions": 7,
+        "seconds": 5.743436818999726,
+        "teacher_kl": 17.93433380126953,
+        "teacher_top1_agreement": false,
+        "top_token_id": 69433,
+        "top_token_text": "Kids",
+        "vocabulary_size": 152064
+      },
+      "memory_quality": "conflicting",
+      "memory_transcript": "Kids are talking by the door.",
+      "oracle_alpha": 1.0,
+      "split": "test",
+      "statement_id": "02",
+      "teacher": {
+        "alpha": null,
+        "input_positions": 66,
+        "logits_sha256": "d3a8d43bbac7eaa65361f25197eccdeb2cecb20528fe5c922a93ff3ff85c7d8b",
+        "memory_positions": null,
+        "top_token_id": 35,
+        "top_token_text": "D",
+        "vocabulary_size": 152064
+      },
+      "teacher_generated_text": "Dogs are sitting by the door.",
+      "transcript_token_positions": 7
+    }
+  ],
+  "learned_evaluation": {
+    "directional_success": false,
+    "fixed_alpha_mean_teacher_kl": 9.100457246730608,
+    "fixed_alpha_selected_on_train": 1.0,
+    "item_count": 12,
+    "items_better_than_fixed_alpha": 2,
+    "mean_teacher_kl": 9.630084137723316,
+    "median_teacher_kl": 11.538516521453857,
+    "oracle_alpha_orders_memory_quality": true,
+    "oracle_grid_mean_teacher_kl": 9.099472976993033,
+    "predicted_alpha_orders_memory_quality": true,
+    "quality_evaluation": {
+      "conflicting": {
+        "fixed_mean_teacher_kl": 16.46515154838562,
+        "item_count": 4,
+        "items_better_than_fixed_alpha": 0,
+        "learned_mean_teacher_kl": 17.449286222457886,
+        "mean_oracle_alpha": 1.0,
+        "mean_predicted_alpha": 0.9629400446898878
+      },
+      "exact": {
+        "fixed_mean_teacher_kl": 0.005784200518974103,
+        "item_count": 4,
+        "items_better_than_fixed_alpha": 2,
+        "learned_mean_teacher_kl": 0.003276171104516834,
+        "mean_oracle_alpha": 0.75,
+        "mean_predicted_alpha": 0.8588461778110716
+      },
+      "incomplete": {
+        "fixed_mean_teacher_kl": 10.830435991287231,
+        "item_count": 4,
+        "items_better_than_fixed_alpha": 0,
+        "learned_mean_teacher_kl": 11.437690019607544,
+        "mean_oracle_alpha": 1.0,
+        "mean_predicted_alpha": 0.9691672451623998
+      }
+    },
+    "transcript_only_mean_teacher_kl": 11.77392496964118
+  },
+  "observations": {
+    "execution_seconds": 1341.370730834,
+    "item_count": 36,
+    "model_load_seconds": 0.0,
+    "peak_gpu_allocated_bytes": 40489047552
+  },
+  "preflight": {
+    "correct": 2,
+    "items": [
+      {
+        "correct": true,
+        "expected": "kids are talking by the door",
+        "generated_text": "Kids are talking by the door.",
+        "item_id": "actor-01-statement-01-exact",
+        "predicted": "kids are talking by the door"
+      },
+      {
+        "correct": true,
+        "expected": "dogs are sitting by the door",
+        "generated_text": "Dogs are sitting by the door.",
+        "item_id": "actor-01-statement-02-exact",
+        "predicted": "dogs are sitting by the door"
+      }
+    ],
+    "minimum_correct": 2,
+    "passed": true
+  },
+  "schema_version": "exploratory-1.0.0",
+  "source": {
+    "experiment_commit": "3480585e36cea3d284e19fb17bb83e1b8516d334",
+    "smoke_review_commit": "da6c799431411a8c48102503b00df26145af7dc1"
+  },
+  "status": "completed",
+  "test_aggregate": {
+    "all": {
+      "alpha_0.00": {
+        "alpha": 0.0,
+        "item_count": 12,
+        "mean_teacher_kl": 11.77392496964118,
+        "median_teacher_kl": 14.25575590133667
+      },
+      "alpha_0.50": {
+        "alpha": 0.5,
+        "item_count": 12,
+        "mean_teacher_kl": 11.31379147527817,
+        "median_teacher_kl": 13.499377727508545
+      },
+      "alpha_1.00": {
+        "alpha": 1.0,
+        "item_count": 12,
+        "mean_teacher_kl": 9.100457246730608,
+        "median_teacher_kl": 10.685813426971436
+      }
+    },
+    "conflicting": {
+      "alpha_0.00": {
+        "alpha": 0.0,
+        "item_count": 4,
+        "mean_teacher_kl": 21.05921506881714,
+        "median_teacher_kl": 21.05867862701416
+      },
+      "alpha_0.50": {
+        "alpha": 0.5,
+        "item_count": 4,
+        "mean_teacher_kl": 20.480409622192383,
+        "median_teacher_kl": 20.52635097503662
+      },
+      "alpha_1.00": {
+        "alpha": 1.0,
+        "item_count": 4,
+        "mean_teacher_kl": 16.46515154838562,
+        "median_teacher_kl": 16.934443473815918
+      }
+    },
+    "exact": {
+      "alpha_0.00": {
+        "alpha": 0.0,
+        "item_count": 4,
+        "mean_teacher_kl": 0.005444237613119185,
+        "median_teacher_kl": 0.004720986587926745
+      },
+      "alpha_0.50": {
+        "alpha": 0.5,
+        "item_count": 4,
+        "mean_teacher_kl": 0.0050116824568249285,
+        "median_teacher_kl": 0.004459667718037963
+      },
+      "alpha_1.00": {
+        "alpha": 1.0,
+        "item_count": 4,
+        "mean_teacher_kl": 0.005784200518974103,
+        "median_teacher_kl": 0.004458813345991075
+      }
+    },
+    "incomplete": {
+      "alpha_0.00": {
+        "alpha": 0.0,
+        "item_count": 4,
+        "mean_teacher_kl": 14.257115602493286,
+        "median_teacher_kl": 14.25575590133667
+      },
+      "alpha_0.50": {
+        "alpha": 0.5,
+        "item_count": 4,
+        "mean_teacher_kl": 13.455953121185303,
+        "median_teacher_kl": 13.499377727508545
+      },
+      "alpha_1.00": {
+        "alpha": 1.0,
+        "item_count": 4,
+        "mean_teacher_kl": 10.830435991287231,
+        "median_teacher_kl": 10.685813426971436
+      }
+    }
+  },
+  "train_aggregate": {
+    "all": {
+      "alpha_0.00": {
+        "alpha": 0.0,
+        "item_count": 24,
+        "mean_teacher_kl": 11.773014427371285,
+        "median_teacher_kl": 14.255745887756348
+      },
+      "alpha_0.50": {
+        "alpha": 0.5,
+        "item_count": 24,
+        "mean_teacher_kl": 11.296429765764818,
+        "median_teacher_kl": 13.488695621490479
+      },
+      "alpha_1.00": {
+        "alpha": 1.0,
+        "item_count": 24,
+        "mean_teacher_kl": 9.783938884497426,
+        "median_teacher_kl": 11.739847183227539
+      }
+    },
+    "conflicting": {
+      "alpha_0.00": {
+        "alpha": 0.0,
+        "item_count": 8,
+        "mean_teacher_kl": 21.058210611343384,
+        "median_teacher_kl": 21.05708122253418
+      },
+      "alpha_0.50": {
+        "alpha": 0.5,
+        "item_count": 8,
+        "mean_teacher_kl": 20.518712282180786,
+        "median_teacher_kl": 20.524839401245117
+      },
+      "alpha_1.00": {
+        "alpha": 1.0,
+        "item_count": 8,
+        "mean_teacher_kl": 18.034491777420044,
+        "median_teacher_kl": 18.493297576904297
+      }
+    },
+    "exact": {
+      "alpha_0.00": {
+        "alpha": 0.0,
+        "item_count": 8,
+        "mean_teacher_kl": 0.0039074455125955865,
+        "median_teacher_kl": 0.0036873365752398968
+      },
+      "alpha_0.50": {
+        "alpha": 0.5,
+        "item_count": 8,
+        "mean_teacher_kl": 0.0037073270796099678,
+        "median_teacher_kl": 0.003493469674140215
+      },
+      "alpha_1.00": {
+        "alpha": 1.0,
+        "item_count": 8,
+        "mean_teacher_kl": 0.006907283546752296,
+        "median_teacher_kl": 0.004041868960484862
+      }
+    },
+    "incomplete": {
+      "alpha_0.00": {
+        "alpha": 0.0,
+        "item_count": 8,
+        "mean_teacher_kl": 14.256925225257874,
+        "median_teacher_kl": 14.255745887756348
+      },
+      "alpha_0.50": {
+        "alpha": 0.5,
+        "item_count": 8,
+        "mean_teacher_kl": 13.366869688034058,
+        "median_teacher_kl": 13.488695621490479
+      },
+      "alpha_1.00": {
+        "alpha": 1.0,
+        "item_count": 8,
+        "mean_teacher_kl": 11.310417592525482,
+        "median_teacher_kl": 11.739847183227539
+      }
+    }
+  }
+}
