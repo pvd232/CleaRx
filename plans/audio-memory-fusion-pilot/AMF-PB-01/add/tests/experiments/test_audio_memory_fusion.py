@@ -7,6 +7,7 @@ from typing import Any
 
 import numpy as np
 import pytest
+
 from tools.research.audio_memory_fusion import (
     CONTRACT_PACKAGE_SHA256,
     EXPERIMENT_ID,

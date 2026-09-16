@@ -20,6 +20,11 @@ import librosa
 import numpy as np
 import torch
 import transformers
+from transformers import (
+    Qwen3OmniMoeForConditionalGeneration,
+    Qwen3OmniMoeProcessor,
+)
+
 from tools.research.audio_memory_fusion import (
     CONTRACT_PACKAGE_SHA256,
     EXPERIMENT_ID,
@@ -28,10 +33,6 @@ from tools.research.audio_memory_fusion import (
     fuse_memory_vectors,
     mean_pool_ordered,
     validate_smoke_result,
-)
-from transformers import (
-    Qwen3OmniMoeForConditionalGeneration,
-    Qwen3OmniMoeProcessor,
 )
 
 _GIT_COMMIT = re.compile(r"^[0-9a-f]{40}$")
