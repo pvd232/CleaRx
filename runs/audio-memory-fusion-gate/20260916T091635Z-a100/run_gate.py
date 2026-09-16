@@ -8,6 +8,7 @@ from __future__ import annotations
 import argparse
 import gc
 import hashlib
+import importlib.util
 import json
 import re
 import statistics
@@ -80,12 +81,16 @@ def load_smoke_helpers(checkout: Path) -> Any:
     if observed != SMOKE_REVIEW_COMMIT:
         raise RuntimeError("smoke checkout does not match the reviewed commit")
     sys.path.insert(0, str(checkout))
-    # This module exists only in the exact reviewed checkout inserted above.
-    from experiments import (
-        audio_memory_smoke_worker,  # pyright: ignore[reportAttributeAccessIssue]
+    module_path = checkout / "experiments" / "audio_memory_smoke_worker.py"
+    specification = importlib.util.spec_from_file_location(
+        "clearx_reviewed_audio_memory_smoke_worker",
+        module_path,
     )
-
-    return audio_memory_smoke_worker
+    if specification is None or specification.loader is None:
+        raise RuntimeError("could not load the reviewed smoke helper module")
+    module = importlib.util.module_from_spec(specification)
+    specification.loader.exec_module(module)
+    return module
 
 
 def items() -> tuple[dict[str, str], ...]:
