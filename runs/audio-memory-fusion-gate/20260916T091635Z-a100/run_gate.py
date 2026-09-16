@@ -188,7 +188,7 @@ def heartbeat(stop: threading.Event, started: float) -> None:
 
 
 def restricted_label(logits: torch.Tensor, tokenizer: Any) -> str:
-    """Choose the highest-scoring declared emotion label at the next token."""
+    """Choose the highest-scoring label token at the next model position."""
     scores: dict[str, float] = {}
     for label, _code in EMOTIONS:
         token_ids: set[int] = set()
@@ -224,14 +224,22 @@ def condition_record(
         memory_positions=memory_positions,
         teacher=teacher_logits,
     )
-    record["restricted_emotion"] = restricted_label(logits, tokenizer)
+    record["restricted_next_token_label"] = restricted_label(logits, tokenizer)
     return record
+
+
+def generated_emotion(text: str) -> str:
+    """Return the last declared emotion word in generated assistant text."""
+    labels = "|".join(label for label, _code in EMOTIONS)
+    matches = re.findall(rf"\b({labels})\b", text.lower())
+    return matches[-1] if matches else "unparsed"
 
 
 def prepare_item(
     item: dict[str, str],
     audio_path: Path,
     processor: Any,
+    model: Any,
     thinker: Any,
     smoke: Any,
 ) -> dict[str, Any]:
@@ -263,6 +271,13 @@ def prepare_item(
     first_device = embedding_layer.weight.device
     prepared = smoke.move_inputs_to_device(inputs, first_device, thinker.dtype)
     with torch.inference_mode():
+        generated_ids = model.generate(
+            **prepared,
+            return_audio=False,
+            thinker_max_new_tokens=32,
+            thinker_do_sample=False,
+            use_audio_in_video=False,
+        )
         full_output = thinker(
             **prepared,
             use_cache=False,
@@ -275,6 +290,10 @@ def prepare_item(
             feature_attention_mask=prepared["feature_attention_mask"],
             return_dict=True,
         )
+    generated_text = processor.tokenizer.decode(
+        generated_ids[0, prepared["input_ids"].shape[1] :],
+        skip_special_tokens=True,
+    ).strip()
     audio_features = (
         audio_output.last_hidden_state.detach()
         .to(device="cpu", dtype=torch.float32)
@@ -328,6 +347,8 @@ def prepare_item(
             memory_positions=None,
             teacher_logits=None,
         ),
+        "teacher_generated_text": generated_text,
+        "teacher_generated_emotion": generated_emotion(generated_text),
     }
     del full_output, audio_output, prepared
     return {
@@ -407,16 +428,11 @@ def split_aggregate(
         divergences = [
             float(item["conditions"][key]["teacher_kl"]) for item in selected
         ]
-        accuracy = sum(
-            item["conditions"][key]["restricted_emotion"] == item["emotion"]
-            for item in selected
-        )
         aggregate[key] = {
             "alpha": alpha,
             "item_count": len(selected),
             "mean_teacher_kl": statistics.fmean(divergences),
             "median_teacher_kl": statistics.median(divergences),
-            "emotion_accuracy": accuracy / len(selected),
         }
     return aggregate
 
@@ -475,23 +491,25 @@ def main() -> int:
                 item,
                 recordings[item["filename"]],
                 processor,
+                model,
                 thinker,
                 smoke,
             )
             prepared_cache[item["item_id"]] = prepared
-            prediction = prepared["metadata"]["teacher"]["restricted_emotion"]
+            prediction = prepared["metadata"]["teacher_generated_emotion"]
             observation = {
                 "item_id": item["item_id"],
                 "expected": item["emotion"],
                 "predicted": prediction,
                 "correct": prediction == item["emotion"],
+                "generated_text": prepared["metadata"]["teacher_generated_text"],
             }
             preflight_observations.append(observation)
             emit("preflight_item", **observation)
 
         correct = sum(bool(item["correct"]) for item in preflight_observations)
         unique_predictions = len(
-            {str(item["predicted"]) for item in preflight_observations}
+            {str(item["predicted"]) for item in preflight_observations} - {"unparsed"}
         )
         preflight_passed = correct >= PREFLIGHT_MIN_CORRECT and unique_predictions >= 4
         preflight = {
@@ -542,6 +560,7 @@ def main() -> int:
                     item,
                     recordings[item["filename"]],
                     processor,
+                    model,
                     thinker,
                     smoke,
                 )
@@ -556,7 +575,7 @@ def main() -> int:
                     item_id=item["item_id"],
                     alpha=alpha,
                     teacher_kl=record["teacher_kl"],
-                    predicted_emotion=record["restricted_emotion"],
+                    restricted_next_token_label=record["restricted_next_token_label"],
                     seconds=record["seconds"],
                 )
             metadata = prepared["metadata"]
@@ -588,7 +607,7 @@ def main() -> int:
                 item_id=item["item_id"],
                 alpha=alpha,
                 teacher_kl=record["teacher_kl"],
-                predicted_emotion=record["restricted_emotion"],
+                restricted_next_token_label=record["restricted_next_token_label"],
             )
 
         train_aggregate = split_aggregate(item_results, "train")
@@ -609,22 +628,12 @@ def main() -> int:
             min(float(record["teacher_kl"]) for record in item["conditions"].values())
             for item in test_items
         ]
-        learned_accuracy = statistics.fmean(
-            item["learned_condition"]["restricted_emotion"] == item["emotion"]
-            for item in test_items
-        )
-        fixed_accuracy = statistics.fmean(
-            item["conditions"][fixed_key]["restricted_emotion"] == item["emotion"]
-            for item in test_items
-        )
         learned_evaluation = {
             "item_count": len(test_items),
             "mean_teacher_kl": statistics.fmean(learned_divergences),
             "median_teacher_kl": statistics.median(learned_divergences),
-            "emotion_accuracy": learned_accuracy,
             "fixed_alpha_selected_on_train": fixed_alpha,
             "fixed_alpha_mean_teacher_kl": statistics.fmean(fixed_divergences),
-            "fixed_alpha_emotion_accuracy": fixed_accuracy,
             "transcript_only_mean_teacher_kl": statistics.fmean(transcript_divergences),
             "oracle_grid_mean_teacher_kl": statistics.fmean(oracle_divergences),
             "items_better_than_fixed_alpha": sum(
