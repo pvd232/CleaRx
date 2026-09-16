@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Verify the learned audio-memory gate through one immutable VIPER run."""
 
 from __future__ import annotations
@@ -8,7 +7,6 @@ import math
 from pathlib import Path
 from typing import Any
 
-from pydantic import HttpUrl
 from viper import execution
 from viper.authoring import experiment, input, plan, replicate, stage, variant
 from viper.config import DiagnosticConfig
@@ -21,8 +19,6 @@ from viper.stages import StageContext, diagnostic
 from tools.research.audio_memory_gate import gate_payload
 
 RESULT_PATH = "runs/audio-memory-fusion-gate/20260916T091635Z-a100/result.json"
-VIPER_REPOSITORY = "https://github.com/pvd232/viper.git"
-VIPER_COMMIT = "66ab5e0399bd6ffc633343c38be8d83281ca1da5"
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -177,9 +173,9 @@ def main() -> None:
     source = read_source()
     environment = LocalEnvSpec(
         lockfile=GitFileRef(
-            repository=HttpUrl(VIPER_REPOSITORY),
-            commit=VIPER_COMMIT,
-            path="pyproject.toml",
+            repository=source.repository,
+            commit=source.commit,
+            path="environment.yml",
         ),
         python_env=observe_python_env(),
     )
