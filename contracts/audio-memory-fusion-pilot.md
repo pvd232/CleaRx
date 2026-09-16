@@ -18,7 +18,7 @@ broader quality comparisons to a later pilot.
 
 #### <nobr><code>AMF-PB-01</code></nobr>
 
-**Status:** drafting
+**Status:** review
 
 **Requirement contribution:** Add the frozen fusion functions, local rejection tests, A100 worker, bootstrap entrypoint, and result validator required for one auditable smoke run.
 
@@ -32,7 +32,7 @@ broader quality comparisons to a later pilot.
 
 **Plan deviations:** The implementation contains only the approved three-condition smoke scope. Coefficient sweeps, Whisper alignment, training, and in-Thinker compression remain future work.
 
-**Start work:** [Open current plan](../plans/audio-memory-fusion-pilot/AMF-PB-01/plan.toml)
+**Start review:** [Open tested GitHub comparison](https://github.com/pvd232/CleaRx/compare/3c63f268c1317bf071456c1c814bebcaa0f21475...da6c799431411a8c48102503b00df26145af7dc1)
 
 **Review these files**
 
@@ -40,9 +40,9 @@ broader quality comparisons to a later pilot.
 - [A100 smoke worker](../plans/audio-memory-fusion-pilot/AMF-PB-01/add/experiments/audio_memory_smoke_worker.py#L1)
 - [Contract rejection tests](../plans/audio-memory-fusion-pilot/AMF-PB-01/add/tests/experiments/test_audio_memory_fusion.py#L1)
 
-**Evidence:** No passing gate receipt.
+**Evidence:** [Passing gate receipt](../evidence/audio-memory-fusion-pilot/gates/amf-pb-01-20260916t070727z.json)
 
-**Decision:** Run the current PairBlock plan.
+**Decision:** Approve <nobr><code>AMF-PB-01</code></nobr>, or return it with findings.
 
 <details>
 <summary>Implementation details</summary>
