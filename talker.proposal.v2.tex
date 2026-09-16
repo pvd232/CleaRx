@@ -1,0 +1,462 @@
+\documentclass[10pt,letterpaper]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{tabularx}
+\usepackage{xcolor}
+
+\setlist[itemize]{leftmargin=1.35em,itemsep=2pt,topsep=3pt}
+\setlist[enumerate]{leftmargin=1.55em,itemsep=2pt,topsep=3pt}
+\newcommand{\code}[1]{\texttt{#1}}
+
+\title{\textbf{Native Qwen3-Omni Waveform Runtime and Bounded Audio Context on a 24~GB L4}\\
+\large Implementation Proposal Outline --- Revision 2}
+\author{Systems Architecture and Experimental Plan}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Implementation sequence at a glance}
+
+\begin{table}[h]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.18}
+\begin{tabularx}{\textwidth}{@{}>{\bfseries}p{0.42in}p{2.35in}p{1.75in}X@{}}
+\toprule
+Stage & Input representation & Historical policy & Purpose and runtime status \\
+\midrule
+A & Full native AuT sequence & Protected prefix plus recent window & Establish the uncompressed, fixed-budget C++/GGUF baseline. \\
+B & Fixed-rate AuT temporal pooling & Protected prefix plus recent window & Establish a deterministic, ASR-free compression baseline at matched token budgets. \\
+C & F16 Whisper-Turbo semantic anchoring & Protected prefix plus recent window & Reproduce VoxZip Stage~1 method on the A100: transcript timestamps, Qwen text embeddings, and aligned AuT pooling. \\
+D & F16 Whisper-Turbo semantic anchoring & VoxZip temporally decayed attention eviction & Reproduce the complete VoxZip method on the A100, documenting any backbone-precision or context-length deviation forced by single-GPU capacity. \\
+E & Fixed-rate AuT temporal pooling & The same temporal eviction used in D & Isolate the value of text-derived semantic anchors by removing Whisper while holding eviction constant. \\
+F & Learned monotonic AuT compactor & Protected prefix plus recent window & Learn transcript-free, chronologically aligned AuT anchors using A100 teacher--student distillation. \\
+G & Learned monotonic AuT compactor & The same temporal eviction used in D and E & Evaluate the intended ASR-free compressed-context method at identical KV bytes. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\noindent\textbf{Whisper precision and residency ladder.}
+\begin{enumerate}
+    \item Use F16 Whisper-Turbo on the A100 for the unquantized-ASR, method-faithful VoxZip reference in Stages C and D.
+    \item For the native L4 adaptation, first test Q8\_0 Whisper-Turbo. Q8 is preferred because the additional weight cost over Q5\_0 is only approximately 0.3~GiB and its numerical perturbation is smaller.
+    \item Attempt concurrent Q8 residency during listening. Run Whisper in bounded chunks on a separate, lower-priority CUDA stream while AuT and Thinker work remains higher priority.
+    \item If concurrent residency or compute contention is unacceptable, use sequential Q8 residency: finish AuT, release its weights and workspace, load Whisper into the same arena, construct the anchors, then release Whisper before output generation.
+    \item Use Q5\_0 only if Q8 still exceeds the measured deployment envelope. Apply the same concurrent-then-sequential residency tests to Q5.
+    \item Treat the F16 A100 result as the exact reference and the Q8/Q5 L4 results as quantized deployment adaptations of the same algorithm.
+\end{enumerate}
+
+\section*{Project objective}
+\begin{itemize}
+    \item Execute \textbf{Qwen3-Omni-30B-A3B-Instruct} as a native waveform-to-waveform system in one C++ process using GGML and GGUF.
+    \item Fit the complete runtime on one \textbf{24~GB NVIDIA L4}; this is a hard deployment constraint.
+    \item Preserve the intelligence-critical Thinker at \textbf{Q4\_K\_M} and the Talker at \textbf{Q8\_0}.
+    \item Bound accelerator-resident conversational memory independently of interaction length.
+    \item Avoid Python serving and external TTS. Whisper is admitted only as a VoxZip reference baseline; the intended final method remains ASR-free.
+    \item Expose sufficient native runtime state to instrument allocation, routing, attention, and KV behavior and to implement custom bounded-memory policies.
+\end{itemize}
+
+\section{Native Qwen3-Omni waveform runtime}
+
+\subsection{Establish the native Thinker baseline}
+\begin{itemize}
+    \item Build the current Qwen3-Omni Q4\_K\_M GGUF path in \code{llama.cpp}.
+    \item Validate audio input through the existing multimodal projector path before adding output synthesis.
+    \item Record a reproducible baseline for:
+    \begin{itemize}
+        \item tensor inventory, names, dimensions, data types, and GGUF metadata;
+        \item loaded-weight memory by module and backend;
+        \item CUDA graph workspace and allocator overhead;
+        \item Thinker KV allocation at each supported context size;
+        \item peak VRAM during prefill and decode;
+        \item prefill latency, decode latency, and throughput.
+    \end{itemize}
+    \item Separate decimal file size, binary device allocation, and measured CUDA peak memory. Do not infer deployability from GGUF file size alone.
+    \item Preserve fixed reference inputs and Thinker logits for regression testing throughout the port.
+\end{itemize}
+
+\subsection{Freeze cross-runtime parity fixtures}
+\begin{itemize}
+    \item Capture the reference PyTorch outputs before implementing the speech-output graphs. Store fixtures for Thinker layer-24 hidden states and token embeddings; Talker router scores, selected experts, layer outputs, primary-code logits, and sampled primary code; all 15 residual MTP codes; and decoded PCM for fixed codec sequences.
+    \item Use the \code{commons-jfk-inaugural} corpus item for the Thinker long-context fixture. Before capture, freeze the decode and resampling path, exact PCM bytes, sample format, channel count, sample rate, sample count, SHA-256 digest, and resulting model-input dimensions. The source OGG digest and duration identify the recording but do not determine those decoded bytes.
+    \item Use one exact \code{int64} Code2Wav tensor with shape \code{[1,16,601]}; freeze all code values and the tensor's SHA-256 digest. With the \href{https://github.com/huggingface/transformers/blob/7d9754a05193eb79b1d86aa744b622b8068008cd/src/transformers/models/qwen3_omni_moe/modeling_qwen3_omni_moe.py\#L3505-L3515}{pinned 300-frame chunk and 25-frame left-context implementation}, the tensor exercises the first slice \code{0:300}, the steady context-inclusive slice \code{275:600}, and the final partial context-inclusive slice \code{575:601}.
+    \item Record model revision, preprocessing inputs, generation parameters, tensor names, shapes, data types, tolerances, and checksums with every fixture so that a passing comparison identifies one reproducible reference execution.
+    \item Port and verify MTP and Code2Wav independently against these fixtures before connecting either component to the Talker. Join the complete Thinker--Talker--MTP--Code2Wav chain only after each boundary passes its frozen-input comparison.
+    \item Do not reduce the implementation schedule or declare the native waveform path complete until the frozen-input chain passes end to end.
+\end{itemize}
+
+\subsection{Build an audio-only GGUF package}
+\begin{itemize}
+    \item Retain the Q8 AuT encoder and every audio projection, normalization, and temporal-encoding tensor required by the Thinker and Talker.
+    \item Remove the vision encoder, vision-only projector tensors, and vision-only runtime paths.
+    \item Preserve sensitive audio projection and normalization tensors at their selected higher precision where conversion requires it.
+    \item Validate the audio-only package against the original multimodal package on identical audio inputs: final AuT and projector representations, Thinker logits, internal generated token sequence, memory, and latency.
+\end{itemize}
+
+\subsection{Extend GGUF conversion for speech output}
+\begin{itemize}
+    \item Convert and package the Q8\_0 Talker, reference-precision MTP and Code2Wav tensors, speaker/voice-conditioning embeddings, and all metadata required for streaming generation.
+    \item Reuse existing GGUF metadata keys and tensor names when they represent the same operation. Add Qwen3-Omni-specific names only for tensors or state that existing formats cannot represent.
+    \item Verify tensor names, dimensions, strides, data types, checksums, and correspondence with the reference PyTorch weights.
+    \item Preserve the reference weights for norms, routers, embeddings, and sensitive output heads; select each native storage and compute type from backend support and parity measurements.
+\end{itemize}
+
+\subsection{Port the Talker to GGML}
+\begin{itemize}
+    \item Implement the 20-layer Talker MoE graph and its independent KV state.
+    \item Implement prompt processing and transfer of model-native conditioning representations from the Thinker.
+    \item Preserve Q8 Talker weights exactly; CPU residency changes placement, not numerical precision.
+    \item Validate dense sublayers, router logits and expert identifiers, expert outputs, layer hidden states, Talker logits, and primary codec predictions against fixed PyTorch references.
+\end{itemize}
+
+\subsection{Port the hierarchical MTP loop}
+\begin{itemize}
+    \item Generate the primary codec value from the Talker.
+    \item Start from the existing \code{llama.cpp} residual-code predictor graph where its operations and tensor semantics match Qwen3-Omni. Treat this as graph reuse, not proof of model compatibility.
+    \item Autoregressively generate the remaining residual codebooks through MTP, conditioned on preceding codebooks in the same codec frame.
+    \item Maintain fixed, bounded MTP state for the current codec frame.
+    \item Require frozen-logit parity at each residual step, then validate all 15 residual-code predictions and intermediate MTP hidden states against the reference implementation.
+    \item Reuse one MTP scratch allocation across residual-codebook substeps.
+\end{itemize}
+
+\subsection{Port streaming Code2Wav}
+\begin{itemize}
+    \item Reconstruct the complete Qwen3-Omni causal Code2Wav graph with GGML CPU operators, adding kernels only where profiling demonstrates a gap.
+    \item Reuse existing decoder operations and streaming-state machinery only when their dimensions, tensor semantics, padding, and state transitions match. Do not assume that the existing Qwen3-TTS codebook front end or decoder graph is architecture-compatible with Qwen3-Omni.
+    \item Maintain bounded causal left context and produce incremental 24~kHz PCM.
+    \item Resample only at the external audio interface when another sample rate is required.
+    \item Validate waveform reconstruction from fixed codec sequences before integrating generation.
+    \item Measure CPU real-time factor, thread count, memory bandwidth, and interference with pinned expert storage.
+\end{itemize}
+
+\subsection{Implement the Thinker--Talker scheduler}
+\begin{itemize}
+    \item Coordinate incoming chunks, AuT encoding, Thinker prefill/generation, Talker conditioning, MTP codec generation, and Code2Wav streaming.
+    \item Preserve separate state domains for AuT frames, Thinker positions, Talker positions, codec frames, and PCM samples.
+    \item Implement asynchronous Thinker--Talker operation and bounded inter-module queues.
+    \item Support cancellation, cleanup, and phase transitions during barge-in.
+    \item Keep the entire serving path in one native C++ process.
+\end{itemize}
+
+\section{Static L4 memory architecture}
+
+\subsection{Select native types from backend support and parity}
+\begin{itemize}
+    \item Thinker: Q4\_K\_M.
+    \item AuT/projector: Q8\_0, with sensitive tensors at higher precision where required.
+    \item Talker: Q8\_0.
+    \item MTP and Code2Wav: BF16 defines the reference weights. Select native storage and compute types per tensor from backend support and frozen-fixture parity; permit F16 or F32 where GGML operators do not support BF16 or parity requires higher precision.
+    \item Thinker and Talker KV: Q8\_0.
+    \item Norms, routers, embeddings, and sensitive heads: preserve reference precision where required by parity; do not assume one native type across all operators.
+    \item Vision tensors: absent.
+    \item Recalculate module sizes, shared-arena requirements, and peak L4 memory after the actual per-tensor storage and compute types are fixed.
+\end{itemize}
+
+\subsection{Implement phase-overlaid module residency}
+\begin{itemize}
+    \item Keep the Thinker resident throughout the session.
+    \item During ordinary listening, place AuT in the shared modality arena.
+    \item During VoxZip-reference listening, allow AuT and Whisper to coexist only if measured allocation remains safe.
+    \item During sequential VoxZip execution, release AuT before loading Whisper into the same arena.
+    \item During speaking, release AuT and Whisper and use the arena for the Talker residency or offload buffers selected by the measured decision in Section~3.
+    \item Keep Code2Wav on CPU throughout output synthesis.
+    \item Maintain CPU-side endpointing and interruption detection while speaking.
+\end{itemize}
+
+\subsection{Build a lifetime-managed GGML workspace}
+\begin{itemize}
+    \item Replace separate maximum-sized workspaces with a lifetime-aware shared arena.
+    \item Reuse temporary allocations across AuT, Whisper when enabled, Thinker, Talker, repeated MTP substeps, and Code2Wav chunks.
+    \item Recycle logits, temporary embeddings, and emitted codec/PCM buffers after their last consumer.
+    \item Tune batch and microbatch sizes for one streaming conversation rather than generic serving.
+    \item Instrument high-water marks for weights, KV, scratch, transfer staging, and allocator overhead separately.
+\end{itemize}
+
+\section{Measured Q8 Talker residency and conditional expert paging}
+
+\subsection{Select the least complex residency mode that fits}
+\begin{itemize}
+    \item First test whether the exact Q8\_0 Talker can remain fully GPU-resident during speaking after AuT and Whisper weights and workspaces have been released.
+    \item If full residency exceeds the measured envelope, benchmark ordinary \code{llama.cpp} CPU/GPU layer and tensor offload before introducing a new paging subsystem.
+    \item Collect L4 peak-memory, routing, PCIe-transfer, and generation-latency traces for both modes under the final streaming workload.
+    \item Implement per-expert paging only if neither full residency nor ordinary offload satisfies the memory and latency gates.
+    \item Preserve exact Q8 expert weights in every mode; placement changes latency and capacity, not numerical precision.
+\end{itemize}
+
+\subsection{Implement expert-slot addressing only if required}
+\begin{itemize}
+    \item Keep dense attention tensors, routers, embeddings, norms, and codec output heads resident during output generation, and keep authoritative Q8 copies of routed experts in pinned CPU RAM.
+    \item Derive the GPU slot-pool size from measured speaking-phase headroom and trace-derived expert working sets; do not reserve a fixed 1.5~GiB pool in advance.
+    \item Maintain an expert-to-slot mapping independently for each Talker layer.
+    \item Dispatch cache hits directly to resident Q8 tensors.
+    \item On a miss, select a victim, transfer the exact expert asynchronously into a staging slot, wait only for uncovered transfer time, atomically update the mapping, and execute it.
+    \item Track raw transfer time and uncovered stall time separately:
+    \[
+    T_{\mathrm{stall}}=\max\left(0,T_{\mathrm{copy}}-T_{\mathrm{overlap}}\right).
+    \]
+\end{itemize}
+
+\subsection{Implement deterministic latency controls}
+\begin{itemize}
+    \item Use pinned host storage, persistent GPU slots, a dedicated DMA stream, and per-layer active/staging buffers.
+    \item Prefetch experts from current generation state and trace-derived hot sets.
+    \item Begin with fixed-frequency hot sets, LRU, and segmented LRU.
+    \item Collect L4 routing traces and replay them offline to calculate reuse distance, working sets, hit curves, and oracle performance.
+    \item Add predicted future-stall eviction only if deterministic policies leave a meaningful measured gap to the oracle.
+\end{itemize}
+
+\subsection{Isolate playback from inference jitter}
+\begin{itemize}
+    \item Place an initial 320~ms PCM buffer between Code2Wav and the audio interface.
+    \item Track occupancy as
+    \[
+    B_{t+1}=B_t+T_{\mathrm{generated}}-T_{\mathrm{elapsed}}.
+    \]
+    \item Prefetch the initial Talker hot set before playback begins.
+    \item Keep occupancy above a measured threshold and use bounded clause-boundary pause extension only as an underflow safeguard.
+    \item Measure audible interruptions, underflows, first-audio latency, and 99th-percentile generation real-time factor.
+\end{itemize}
+
+\section{Native bounded-KV foundation}
+
+\subsection{Implement native KV instrumentation}
+\begin{itemize}
+    \item Begin only after short-context waveform inference is correct.
+    \item Track Thinker positions by conversational block and associate audio positions with original AuT intervals.
+    \item Record per-layer/head KV allocation, attention statistics, boundaries, and eviction decisions without Python serving.
+    \item Distinguish weights, KV, workspace, transfer staging, and allocator overhead.
+    \item Maintain a recoverable CPU ledger containing original audio intervals, AuT ranges, compacted representations, and position metadata.
+\end{itemize}
+
+\subsection{Define the fixed Thinker budget}
+\begin{itemize}
+    \item Begin with 4,096 Q8 KV positions: 512 protected positions, 2,560 exact recent positions, and 1,024 historical positions.
+    \item Make the recent/historical boundary elastic while keeping the total fixed.
+    \item Preserve the protected prefix, current input, and immediately preceding conversational neighborhood.
+    \item Exclude confidently detected silence, ringback, and hold music before inference.
+    \item Preserve wall-clock time and non-neural runtime state outside KV.
+\end{itemize}
+
+\subsection{Implement bounded context reconstruction}
+\begin{itemize}
+    \item Keep recent blocks as exact native representations.
+    \item Generate and retain a compacted candidate for every completed audio block in CPU memory.
+    \item At budget pressure, rebuild at a safe boundary from
+    \[
+    [\text{protected prefix};\ \text{compacted history};\ \text{exact recent context}].
+    \]
+    \item Re-prefill this bounded sequence to produce ordinary model KV.
+    \item Apply consistent history decisions to Talker conditioning state that spans turns; keep MTP and Code2Wav independently bounded.
+    \item Measure rebuild frequency, amortized prefill cost, and divergence from full context.
+\end{itemize}
+
+\section{Staged bounded-context experiments}
+
+\subsection{Stage A: full AuT with a recent window}
+\begin{itemize}
+    \item Retain the protected prefix and newest complete blocks that fit.
+    \item Evict the oldest unprotected complete block.
+    \item Use no compression, learned representation, or attention selection.
+    \item Establish the simplest fixed-budget quality, latency, and memory curve.
+\end{itemize}
+
+\subsection{Stage B: fixed-rate AuT temporal pooling}
+\begin{itemize}
+    \item Insert the hook after final AuT projection and before Thinker prefill.
+    \item For $E=[e_1,\ldots,e_L]$ and factor $c$, compute
+    \[
+    r=\left\lceil\frac{L}{c}\right\rceil,\qquad
+    z_j=\frac{1}{|\mathcal G_j|}\sum_{k\in\mathcal G_j}e_k.
+    \]
+    \item Test $c\in\{2,4,8\}$, approximately one vector per 160, 320, and 640~ms at AuT's 12.5~Hz rate.
+    \item Never pool across speech boundaries, speaker turns, independent events, or streaming discontinuities.
+    \item Compare dense renumbering, first-frame time, and center-frame time for temporal positions.
+    \item Stream with at most $c-1$ unfinished frames and flush residual groups at boundaries.
+    \item Call this fixed-rate native AuT temporal pooling, not semantic anchoring.
+    \item Implement it directly in GGML/C++; it has no new weights to serialize.
+\end{itemize}
+
+\subsection{Stage C: reproduce VoxZip semantic anchoring}
+\begin{itemize}
+    \item Reproduce the published first stage on the A100 with F16 Whisper-Turbo.
+    \item Attempt the published backbone precision and context length only if the available single A100 can hold them. Otherwise run the same method on the target Q4 backbone and explicitly report the precision/context deviation from the published eight-A100 setup.
+    \item Whisper supplies transcript text, timestamps, and confidence; Qwen supplies AuT representations and its text embedding matrix.
+    \item Retain Whisper segments above the published confidence threshold of 0.3 and map each interval to its AuT range.
+    \item For $L_t$ Qwen transcript tokens, partition $L_a$ AuT vectors into $L_t$ groups and compute
+    \[
+    \widetilde e_{a,j}=\frac{1}{|\mathcal G_j|}\sum_{k\in\mathcal G_j}e_{a,k}.
+    \]
+    \item Fuse pooled audio and corresponding Qwen text embedding:
+    \[
+    e_{f,j}=\widetilde e_{a,j}+e_{t,j}.
+    \]
+    \item Preserve background intervals without high-confidence transcripts and concatenate all intervals chronologically.
+    \item Use recent-window retention so Stage C isolates semantic anchoring from eviction.
+    \item Verify the A100 reproduction before adapting it to the L4.
+\end{itemize}
+
+\subsection{Native L4 Whisper adaptation for Stages C and D}
+\begin{itemize}
+    \item Integrate \code{whisper.cpp} into the native process; no Python server is permitted.
+    \item Attempt Q8\_0 before Q5\_0. Compare both with F16 on transcripts, timestamps, anchor count, fused-anchor similarity, and downstream output.
+    \item \textbf{Concurrent path:}
+    \begin{enumerate}
+        \item keep Q8 Whisper resident while listening if peak memory permits;
+        \item process bounded chunks on a separate, lower-priority CUDA stream;
+        \item prioritize AuT and Thinker work;
+        \item finalize Whisper immediately after endpointing;
+        \item construct anchors;
+        \item release AuT and Whisper before loading Talker expert slots.
+    \end{enumerate}
+    \item Under concurrency, added latency is approximately
+    \[
+    T_{\mathrm{added}}=T_{\mathrm{Whisper\ tail}}+T_{\mathrm{anchor\ assembly}}.
+    \]
+    \item \textbf{Sequential path:}
+    \begin{enumerate}
+        \item AuT processes the complete turn and retains projected representations;
+        \item endpoint detection closes the turn;
+        \item release AuT weights and workspace;
+        \item load Q8 Whisper into the shared arena;
+        \item transcribe the buffered turn and generate timestamps;
+        \item construct VoxZip anchors;
+        \item release Whisper;
+        \item prefill Thinker and transition to Talker generation.
+    \end{enumerate}
+    \item Sequential residency yields
+    \[
+    M_{\mathrm{shared}}=\max\left(M_{\mathrm{AuT}},M_{\mathrm{Whisper}},M_{\mathrm{Talker\ expert\ pool}}\right).
+    \]
+    \item Keep weights in pinned CPU RAM, pre-create reusable state, and use asynchronous DMA to amortize transfer and initialization.
+    \item If Q8 fails both residency paths, repeat with Q5\_0. Q5 is a fallback, not reference precision.
+    \item Also benchmark CPU-only Whisper; retain it only if its real-time and post-endpoint latency gates pass without interference.
+\end{itemize}
+
+\subsection{Stage D: complete VoxZip reproduction}
+\begin{itemize}
+    \item Add temporally decayed accumulated-attention eviction to Stage C anchors.
+    \item Reproduce published decay $\gamma=0.95$ before tuning.
+    \item Decay historical scores before adding current attention contribution, reducing early-token accumulation bias.
+    \item Retain protected positions and select remaining KV entries under a fixed byte budget.
+    \item Reproduce the method on the A100 first, documenting any single-GPU deviation, then validate Q8 and, if required, Q5 L4 adaptations.
+    \item Treat D as the strongest external-ASR reference, not the intended final single-model method.
+\end{itemize}
+
+\subsection{Stage E: fixed pooling with the same temporal eviction}
+\begin{itemize}
+    \item Apply D's identical retention budget and temporal policy to B's fixed pooled representations.
+    \item Match initial representation length to VoxZip anchor count or enforce identical total KV bytes.
+    \item Attribute the D--E difference to Whisper-derived semantic anchoring, subject to quantization/runtime controls.
+    \item Establish the strongest train-free, ASR-free native baseline.
+\end{itemize}
+
+\subsection{Stage F: learned monotonic AuT compactor}
+\begin{itemize}
+    \item Implement one selected learned monotonic architecture, not separate learned and monotonic variants.
+    \item For length $L$ and compression $c$, emit $r=\lceil L/c\rceil$ chronologically ordered vectors.
+    \item Associate query $q_j$ with temporal neighborhood $\mathcal N_j$:
+    \[
+    u_j=\operatorname{Attention}(q_j,E[\mathcal N_j]),\qquad
+    z_j=\overline e_j+\operatorname{MLP}(u_j).
+    \]
+    \item Initialize near fixed pooling, preserving ordered outputs and unambiguous representative timestamps.
+    \item Freeze AuT, Thinker, Talker, MTP, and Code2Wav; train only the compactor initially.
+    \item Distill continuation-token behavior from full-input A100 teacher runs:
+    \[
+    \mathcal L_{\mathrm{KL}}=\sum_t D_{\mathrm{KL}}\left(p_{\mathrm{full}}(y_t)\Vert p_{\mathrm{compact}}(y_t)\right).
+    \]
+    \item Optionally match selected hidden states at common continuation-token positions:
+    \[
+    \mathcal L_h=\sum_{\ell\in\mathcal S}\sum_{t\in\mathrm{continuation}}
+    \left\|h_{\ell,t}^{\mathrm{full}}-h_{\ell,t}^{\mathrm{compact}}\right\|_2^2.
+    \]
+    \item Train with $\mathcal L=\mathcal L_{\mathrm{KL}}+\lambda_h\mathcal L_h$.
+    \item Use checkpointing, minimal microbatches, and cached teacher outputs as required by A100 memory.
+    \item Compare fixed and learned methods at identical output lengths and temporal policies.
+    \item Advance only if learned compaction materially improves quality at the same budget.
+\end{itemize}
+
+\subsection{Export and execute the learned compactor natively}
+\begin{itemize}
+    \item Define GGUF metadata for architecture, widths, compression rate, query count, temporal neighborhood, and precision.
+    \item Convert compactor parameters into GGUF tensors traceable by name and checksum to the PyTorch checkpoint.
+    \item Implement the GGML graph at the validated post-projection/pre-Thinker interface.
+    \item Validate embeddings and Thinker logits against PyTorch.
+    \item Measure weight allocation, workspace, latency, and L4 peak memory.
+    \item This export is compactor-specific; all other KV policies still require native C++/GGML execution even without new weights.
+\end{itemize}
+
+\subsection{Stage G: learned compactor with temporal eviction}
+\begin{itemize}
+    \item Combine F's learned native anchors with the identical decay policy and byte budget used in D and E.
+    \item Compare G versus F for eviction value, G versus E for learned versus fixed transcript-free compaction, and G versus D for native versus transcript-derived anchors.
+    \item Adopt G only if it improves on E without violating L4 memory or latency gates.
+\end{itemize}
+
+\section{Evaluation and decision gates}
+
+\subsection{Representation and memory comparisons}
+\begin{itemize}
+    \item Compare every stage at identical total KV bytes, not merely nominal positions.
+    \item Report input compression, KV allocation, peak VRAM, prefill/rebuild latency, decode throughput, and shared-arena high-water mark.
+    \item Separate representation compression from retention policy through the A--G ablations.
+    \item Report average quality and long-context behavior across duration buckets.
+\end{itemize}
+
+\subsection{Whisper quantization checks}
+\begin{itemize}
+    \item Compare F16, Q8\_0, and Q5\_0 on identical audio.
+    \item Measure word error, insertion/deletion, timestamp error, confidence-threshold crossings, transcript-token-count disagreement, anchor similarity, and downstream divergence.
+    \item Prefer Q8 unless peak memory fails. Accept Q5 only within a predeclared downstream tolerance of F16.
+\end{itemize}
+
+\subsection{Waveform and interaction gates}
+\begin{itemize}
+    \item Require measured peak below the 24~GB ceiling with safety headroom; initial target: below 22~GiB under worst-case prefill and synthesis.
+    \item Require 99th-percentile generation real-time factor below one.
+    \item Measure endpointing, first-audio latency, barge-in response, buffer underflows, expert stalls, and uninterrupted-output rate.
+    \item Compare end-to-end semantic behavior and waveform quality against the reference PyTorch system.
+    \item Require Q8 Talker output to match the all-resident Q8 reference apart from documented floating-point nondeterminism.
+\end{itemize}
+
+\subsection{Implementation gates}
+\begin{enumerate}
+    \item Freeze the PyTorch parity fixtures before implementing the native speech-output graphs.
+    \item Verify MTP and Code2Wav independently, then require the complete frozen-input waveform chain to pass before reducing scope or schedule.
+    \item Correct short-context native waveform inference precedes bounded-KV work.
+    \item The static runtime fits before conversational compression is relied upon for survival.
+    \item The selected Talker residency mode passes fidelity and latency gates before cache-policy research; custom expert paging is required only if full residency and ordinary offload fail.
+    \item Stage A establishes the fixed-budget baseline.
+    \item Stages C and D reproduce VoxZip before replacing its components.
+    \item Stage E establishes the strongest train-free ASR-free baseline.
+    \item Stage F advances to GGUF only if it beats B at matched length.
+    \item Stage G becomes final only if it beats E at matched bytes and remains deployable on L4.
+\end{enumerate}
+
+\section{Deferred work}
+\begin{itemize}
+    \item Learned slotted episodic memory, learned memory-access gates, and reinforcement-trained cache actions are deferred.
+    \item They may be revisited after the native runtime, Talker residency selection, fixed pooling, exact VoxZip reproduction, learned compactor, and bounded temporal retention are stable.
+    \item They are not required for the first complete L4 implementation or the core A--G comparison.
+\end{itemize}
+
+\section*{Primary references}
+\small
+\begin{itemize}
+    \item Qwen Team, \href{https://arxiv.org/abs/2509.17765}{Qwen3-Omni Technical Report}.
+    \item Qwen, \href{https://huggingface.co/Qwen/Qwen3-Omni-30B-A3B-Instruct}{Qwen3-Omni-30B-A3B-Instruct model and configuration}.
+    \item ggml-org, \href{https://huggingface.co/ggml-org/Qwen3-Omni-30B-A3B-Instruct-GGUF}{Qwen3-Omni GGUF artifacts}.
+    \item VoxZip, \href{https://arxiv.org/abs/2608.08569}{Semantic-Anchored Temporal KV Cache Compression for Long-Context Audio Inference}.
+    \item ggml-org, \href{https://github.com/ggml-org/whisper.cpp}{whisper.cpp native runtime, CUDA backend, quantization, and model inventory}.
+    \item NVIDIA, \href{https://www.nvidia.com/en-us/data-center/l4/}{L4 specifications}.
+\end{itemize}
+
+\end{document}

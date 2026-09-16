@@ -89,3 +89,143 @@ First action tomorrow: write the upstream-shaped `context_size` and chunk-slice 
 - [A100 load probe](../runs/P0-003B/20260823T161735Z-a100/load_probe.json)
 - [Evaluation corpus manifest](../evaluation_corpus_manifest.json)
 - Hugging Face Transformers, [`Qwen3OmniMoeCode2Wav.chunked_decode` at pinned commit `7d9754a`](https://github.com/huggingface/transformers/blob/7d9754a05193eb79b1d86aa744b622b8068008cd/src/transformers/models/qwen3_omni_moe/modeling_qwen3_omni_moe.py#L3505-L3515)
+
+---
+
+## Retrospective technical reconstruction
+
+This reconstruction records the system understanding and evidence produced during the August 23 workday. Its execution claims come only from repository artifacts saved that day.
+
+### The dependency chain
+
+CleaRx follows one dependency chain:
+
+```text
+freeze the reference model's behavior
+-> implement native modules that reproduce it
+-> connect those modules into streaming speech
+-> fit and run the correct system on one L4
+-> add bounded conversational memory without losing correctness
+```
+
+The August 23 work established most of the first link. Production native model implementation remained ahead.
+
+### The target system
+
+CleaRx aims to run Qwen3-Omni as one native C++ process that accepts speech and returns speech. One NVIDIA L4 with 24 GB of VRAM is the deployment target. Python and external text-to-speech systems remain development tools outside deployed inference. The [runtime proposal](../docs/proposal.tex) defines those constraints.
+
+The model transforms one turn through this path:
+
+```text
+input PCM
+-> audio preprocessing and AuT encoder
+-> Thinker
+-> Talker
+-> primary codec value
+-> fifteen ordered MTP residual values
+-> complete sixteen-value codec frame
+-> Code2Wav
+-> output PCM
+```
+
+AuT converts PCM into audio representations. Its final 1,280-dimensional states pass through a 2,048-dimensional projection into the Thinker. The Thinker performs multimodal reasoning and produces the representation that conditions speech generation. The 20-layer Talker routes each position through six of 128 experts and produces the primary codec value. MTP generates 15 residual codec values in order. Code2Wav converts the complete 16-value frames into waveform samples.
+
+A native scheduler will surround that numerical path. The scheduler must accept incoming PCM, close a turn, start generation, commit completed waveform chunks, process interruptions, cancel queued work, release buffers, and rebuild bounded conversational context.
+
+### Why reference fixtures come first
+
+The native baseline supplies useful loading, backend, convolution, attention, and mixture-of-experts machinery. CleaRx still owns the complete Talker, MTP, Code2Wav, conversion, and scheduling path described in the [runtime gap matrix](../docs/architecture/runtime_gap_matrix.md).
+
+A wrong final waveform could originate in audio preprocessing, Thinker-to-Talker conditioning, expert routing, primary codec prediction, any MTP residual step, Code2Wav chunking, or scheduler ordering. End-to-end audio reveals the final failure while leaving its first faulty operation unknown.
+
+The [fixture contract](../docs/architecture/fixture_contract.md) therefore saves reference arrays at each meaningful handoff. Each fixture identifies its input and output arrays, shapes, dtypes, comparison rule, model revision, generator revision, seed, and content hashes. A later native test can then report the first boundary that diverges.
+
+The boundary matrix contains 162 boundary-and-case pairs. PyTorch can produce 154 of them. The future native scheduler owns the remaining eight because they describe interruption, cancellation, scheduler transitions, or bounded-context reconstruction. The [fixture validation tests](../tests/orchestration/test_fixture_validation.py) enforce that evidence-origin split.
+
+### Each machine answers a different question
+
+| Environment | Role | Evidence it can produce |
+| --- | --- | --- |
+| Local Mac | Control plane | Schema validation, orchestration, fixture comparison, small builds, and CPU scheduler tests |
+| Colab A100 | PyTorch oracle | Full reference-model outputs and boundary fixtures |
+| `mantra-g2` L4 | Deployment target | Measured VRAM, PCIe transfer behavior, expert residency, latency, underflow, and stability |
+
+The A100 defines what the pinned reference model computes. The L4 must later establish whether the native implementation fits and runs in real time. The [memory model](../docs/architecture/memory_model.md) remained a planning model on August 23 because every `measured_bytes` field was still empty.
+
+### The phased program
+
+The phases answer their questions in dependency order:
+
+| Phase | Question | August 23 position |
+| --- | --- | --- |
+| Bootstrap | Can immutable packets, artifacts, and state transitions control the work? | Complete |
+| Phase 0 | What must the native runtime reproduce, load, own, measure, and reject? | Fixture generation remained open |
+| Phase 1 | Can each native module reproduce its reference arrays? | Production implementation remained pending |
+| Phase 2 | Can the correct modules stream speech together? | Planned |
+| Phase 3 | Can the correct streaming system fit and run in real time on one L4? | Planned |
+| Phase 4 | Can live conversational state stay bounded while retaining useful history? | Planned |
+
+Phase 0 pins upstream revisions, inventories model tensors, defines fixture boundaries, freezes evaluation inputs, and establishes the native interface contract. Phase 1 implements conversion, AuT, Talker, MTP, Code2Wav, and scheduler tracks independently against stored arrays. Phase 2 connects the verified modules into short-context streaming. Phase 3 measures the native system on the L4. Phase 4 changes history retention only after the short-context runtime is correct.
+
+### One long speech turn
+
+The `commons-jfk-inaugural` corpus item provides the long Thinker case. The [evaluation corpus manifest](../evaluation_corpus_manifest.json) identifies the compressed recording, its SHA-256 digest, its 840.228345-second descriptive duration, its prompt, and a 384-token output cap.
+
+The generator must convert that recording into one exact PCM input and record the PCM bytes, sample format, channels, sample rate, sample count, digest, AuT frame count, and resulting Thinker dimensions. The 384-token cap applies after input processing and leaves the full audio intact.
+
+The reference path then records these transformations:
+
+```text
+PCM
+-> log-mel input [1, 128, aut_frames]
+-> AuT output [aut_frames, 1280]
+-> AuT projection [aut_frames, 2048]
+-> Thinker hidden state [1, thinker_positions, 2048]
+-> Talker conditioning [1, talker_positions, 1024]
+-> primary plus fifteen residual codec values [1, 16, codec_frames]
+-> Code2Wav waveform chunks
+```
+
+Every discrete codec value requires exact agreement. A fixture with a different codec sequence fails even when its waveform similarity passes.
+
+### Why the isolated Code2Wav input has 601 frames
+
+The isolated Code2Wav fixture is one exact, hashed `int64` tensor with shape `[1, 16, 601]`. The pinned helper decodes 300 new frames per call and repeats as many as 25 earlier frames as left context.
+
+The 601-frame tensor produces three decoder windows:
+
+```text
+input 0:300   -> first 300 new frames
+input 275:600 -> 25 context frames plus 300 new frames
+input 575:601 -> 25 context frames plus one final frame
+```
+
+Code2Wav trims the waveform produced from repeated context before concatenating each new chunk. A 301-frame tensor reaches a first chunk and a partial ending. A 600-frame tensor reaches the first and steady chunks. Frame 601 creates the smallest single input that reaches the first, steady, and final-partial states.
+
+The model's 72-frame attention window serves a separate internal purpose. The 601-frame decision comes from the public 300-frame decode boundary and its 25-frame overlap.
+
+These frozen lengths serve as test inputs. The eventual native interface must accept variable-length sequences while fixture descriptors retain the observed dimensions.
+
+### Evidence completed on August 23
+
+The tensor inventory reconciled 28,010 tensors across 15 checkpoint shards. The fixture schema, comparison profiles, provenance joins, boundary matrix, and evidence-origin split were executable. The [A100 preflight](../runs/P0-003B/20260823T155524Z-a100/preflight.json) verified the pinned model and Transformers revisions, checkpoint access, 20 Talker layers, 15 residual codebooks, and 16 Code2Wav quantizers.
+
+Automatic placement loaded the model and then encountered a meta-device tensor during generation. The explicit map placed Thinker layers 0–20, Talker, and Code2Wav on the A100 while Thinker layers 21–47 remained in CPU memory. The [saved A100 probe](../runs/P0-003B/20260823T161735Z-a100/load_probe.json) completed Thinker, Talker, MTP, and Code2Wav. It produced one codec frame and a `[1, 1, 1365]` float32 waveform in 26.692 seconds with 36,511,910,400 bytes of peak GPU allocation.
+
+That probe established executable reference-model access. L4 fit, PCIe cost, native latency, scheduler behavior, and bounded-context reconstruction still required their own implementations and measurements.
+
+### Handoff at the end of the workday
+
+The orchestration ledger marked P0-003B as `running`, while the stored evidence showed a completed probe and an absent fixture generator. The practical next sequence was:
+
+```text
+freeze exact JFK PCM and exact [1, 16, 601] codec values
+-> implement the reference-fixture generator
+-> run it on the A100
+-> download and validate 154 model-reference fixture pairs
+-> complete P0-003B
+-> freeze the native module interfaces
+-> begin independent native module work
+```
+
+The workday ended before generator implementation so the frozen inputs and first observation hook could receive owner review. The project had built the answer-key contract; the next workday would begin manufacturing the answer key itself.
