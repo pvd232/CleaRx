@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import math
 import statistics
@@ -30,6 +31,35 @@ def load_json(path: Path) -> dict[str, Any]:
     if not isinstance(value, dict):
         raise TypeError("JSON artifact must contain an object")
     return value
+
+
+def degrade_audio(
+    audio: np.ndarray,
+    identity: bytes,
+    *,
+    snr_db: float,
+) -> np.ndarray:
+    """Add deterministic white noise at a declared signal-to-noise ratio."""
+    signal = np.asarray(audio, dtype=np.float32)
+    if signal.ndim != 1 or signal.size == 0 or not np.isfinite(signal).all():
+        raise ValueError("audio degradation requires one finite nonempty waveform")
+    if not math.isfinite(snr_db):
+        raise ValueError("audio degradation requires a finite SNR")
+    seed = int.from_bytes(hashlib.sha256(identity).digest()[:8], "big")
+    generator = np.random.default_rng(seed)
+    noise = generator.standard_normal(signal.shape).astype(np.float32)
+    signal_rms = float(np.sqrt(np.mean(np.square(signal), dtype=np.float64)))
+    noise_rms = float(np.sqrt(np.mean(np.square(noise), dtype=np.float64)))
+    if signal_rms == 0.0 or noise_rms == 0.0:
+        raise ValueError("audio degradation requires non-silent audio")
+    target_noise_rms = signal_rms / (10.0 ** (snr_db / 20.0))
+    mixture = signal + noise * np.float32(target_noise_rms / noise_rms)
+    peak = float(np.max(np.abs(mixture)))
+    if peak > 0.99:
+        mixture *= np.float32(0.99 / peak)
+    if not np.isfinite(mixture).all():
+        raise ValueError("audio degradation produced a non-finite sample")
+    return mixture
 
 
 def segment_features(

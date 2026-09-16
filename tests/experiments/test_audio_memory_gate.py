@@ -9,6 +9,7 @@ import numpy as np
 
 from tools.research.audio_memory_gate import (
     FEATURE_NAMES,
+    degrade_audio,
     fit_gate,
     gate_payload,
     load_json,
@@ -17,6 +18,21 @@ from tools.research.audio_memory_gate import (
     segment_features,
     select_fixed_alpha,
 )
+
+
+def test_audio_degradation_is_deterministic_and_finite() -> None:
+    """The frozen noise transform repeats exactly and preserves waveform shape."""
+    audio = np.linspace(-0.5, 0.5, 1600, dtype=np.float32)
+
+    first = degrade_audio(audio, b"recording-one", snr_db=-10.0)
+    repeated = degrade_audio(audio, b"recording-one", snr_db=-10.0)
+    different = degrade_audio(audio, b"recording-two", snr_db=-10.0)
+
+    assert np.array_equal(first, repeated)
+    assert not np.array_equal(first, different)
+    assert first.shape == audio.shape
+    assert np.isfinite(first).all()
+    assert float(np.max(np.abs(first))) <= 0.990001
 
 
 def test_load_json_requires_an_object(tmp_path: Path) -> None:

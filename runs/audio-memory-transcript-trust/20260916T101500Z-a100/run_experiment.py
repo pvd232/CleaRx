@@ -30,6 +30,7 @@ from transformers import (
 )
 
 from tools.research.audio_memory_gate import (
+    degrade_audio,
     gate_payload,
     oracle_alpha,
     segment_features,
@@ -55,6 +56,7 @@ PROMPT = "Repeat the spoken sentence exactly. Answer only with the sentence."
 SEED = 7
 ALPHAS = (0.0, 0.5, 1.0)
 MEMORY_QUALITIES = ("exact", "incomplete", "conflicting")
+NOISE_SNR_DB = -10.0
 TRAIN_ACTORS = ("01", "02", "03", "04")
 TEST_ACTORS = ("05", "06")
 PREFLIGHT_MIN_CORRECT = 2
@@ -104,6 +106,11 @@ def items() -> tuple[dict[str, str], ...]:
                 "incomplete": INCOMPLETE_TRANSCRIPTS[statement_id],
                 "conflicting": TRANSCRIPTS[other_statement],
             }
+            audio_qualities = {
+                "exact": "degraded",
+                "incomplete": "clean",
+                "conflicting": "clean",
+            }
             for memory_quality in MEMORY_QUALITIES:
                 selected.append(
                     {
@@ -116,6 +123,7 @@ def items() -> tuple[dict[str, str], ...]:
                         "expected_transcript": transcript,
                         "memory_quality": memory_quality,
                         "memory_transcript": memories[memory_quality],
+                        "audio_quality": audio_qualities[memory_quality],
                         "split": split,
                         "filename": filename,
                     }
@@ -233,6 +241,8 @@ def prepare_audio(
 ) -> dict[str, Any]:
     """Run one recording through the full-audio teacher and Audio Tower."""
     audio, _ = librosa.load(audio_path, sr=16000, mono=True)
+    audio_bytes = audio_path.read_bytes()
+    degraded_audio = degrade_audio(audio, audio_bytes, snr_db=NOISE_SNR_DB)
     conversation = [
         {
             "role": "user",
@@ -254,10 +264,22 @@ def prepare_audio(
         padding=True,
         use_audio_in_video=False,
     )
+    degraded_inputs = processor(
+        text=prompt,
+        audio=[degraded_audio],
+        return_tensors="pt",
+        padding=True,
+        use_audio_in_video=False,
+    )
 
     embedding_layer = thinker.get_input_embeddings()
     first_device = embedding_layer.weight.device
     prepared = smoke.move_inputs_to_device(inputs, first_device, thinker.dtype)
+    degraded_prepared = smoke.move_inputs_to_device(
+        degraded_inputs,
+        first_device,
+        thinker.dtype,
+    )
     with torch.inference_mode():
         generated_ids = model.generate(
             **prepared,
@@ -278,12 +300,22 @@ def prepare_audio(
             feature_attention_mask=prepared["feature_attention_mask"],
             return_dict=True,
         )
+        degraded_audio_output = thinker.get_audio_features(
+            degraded_prepared["input_features"],
+            feature_attention_mask=degraded_prepared["feature_attention_mask"],
+            return_dict=True,
+        )
     generated_text = processor.tokenizer.decode(
         generated_ids[0, prepared["input_ids"].shape[1] :],
         skip_special_tokens=True,
     ).strip()
     audio_features = (
         audio_output.last_hidden_state.detach()
+        .to(device="cpu", dtype=torch.float32)
+        .numpy()
+    )
+    degraded_audio_features = (
+        degraded_audio_output.last_hidden_state.detach()
         .to(device="cpu", dtype=torch.float32)
         .numpy()
     )
@@ -295,10 +327,20 @@ def prepare_audio(
     )
     if audio_features.shape[0] != int(audio_positions.numel()):
         raise RuntimeError("Audio Tower vectors do not match processor positions")
+    if degraded_audio_features.shape != audio_features.shape:
+        raise RuntimeError("degraded and clean Audio Tower vectors do not align")
     state = {
-        "audio_sha256": hashlib.sha256(audio_path.read_bytes()).hexdigest(),
+        "audio_sha256": hashlib.sha256(audio_bytes).hexdigest(),
         "audio_feature_positions": int(audio_features.shape[0]),
-        "audio_features": audio_features,
+        "audio_features": {
+            "clean": audio_features,
+            "degraded": degraded_audio_features,
+        },
+        "degradation": {
+            "kind": "deterministic_white_noise",
+            "snr_db": NOISE_SNR_DB,
+            "seed_sha256_prefix": hashlib.sha256(audio_bytes).hexdigest()[:16],
+        },
         "full_input_positions": int(input_ids.shape[1]),
         "input_ids": input_ids,
         "span_start": span_start,
@@ -307,7 +349,7 @@ def prepare_audio(
         "teacher_logits": teacher_logits,
         "teacher_generated_text": generated_text,
     }
-    del full_output, audio_output, prepared
+    del full_output, audio_output, degraded_audio_output, prepared, degraded_prepared
     return state
 
 
@@ -343,12 +385,13 @@ def prepare_item(
         .numpy()
     )
     pooled_audio = smoke.mean_pool_ordered(
-        audio_state["audio_features"], transcript_length
+        audio_state["audio_features"][item["audio_quality"]], transcript_length
     )
     metadata: dict[str, Any] = {
         **item,
         "audio_sha256": audio_state["audio_sha256"],
         "audio_feature_positions": audio_state["audio_feature_positions"],
+        "degradation": audio_state["degradation"],
         "transcript_token_positions": transcript_length,
         "full_input_positions": audio_state["full_input_positions"],
         "compressed_input_positions": int(compressed_ids.shape[1]),
@@ -470,6 +513,7 @@ def main() -> int:
     parser.add_argument("--smoke-checkout", type=Path, required=True)
     parser.add_argument("--experiment-commit", required=True)
     parser.add_argument("--dataset-cache", type=Path, default=Path("/content/ravdess"))
+    parser.add_argument("--reuse-state", action="store_true")
     args = parser.parse_args()
     if _GIT_COMMIT.fullmatch(args.experiment_commit) is None:
         raise ValueError("--experiment-commit must be a full lowercase commit")
@@ -486,25 +530,38 @@ def main() -> int:
     started = time.monotonic()
     stop = threading.Event()
     threading.Thread(target=heartbeat, args=(stop, started), daemon=True).start()
-    recordings = prepare_dataset(args.dataset_cache)
-    emit("model_load_started", experiment_commit=args.experiment_commit)
-    model_started = time.monotonic()
-    model = Qwen3OmniMoeForConditionalGeneration.from_pretrained(
-        MODEL_REPOSITORY,
-        revision=MODEL_COMMIT,
-        dtype=torch.bfloat16,
-        device_map="auto",
-        max_memory={0: "38GiB", "cpu": "76GiB"},
-        attn_implementation="sdpa",
-        low_cpu_mem_usage=True,
-    )
-    model.disable_talker()
-    model.eval()
-    thinker = model.thinker
-    processor = Qwen3OmniMoeProcessor.from_pretrained(
-        MODEL_REPOSITORY,
-        revision=MODEL_COMMIT,
-    )
+    if args.reuse_state:
+        required = {"model", "thinker", "processor", "recordings"}
+        missing = sorted(required - set(PERSISTENT_STATE))
+        if missing:
+            raise RuntimeError(f"persistent model state lacks {missing}")
+        model = PERSISTENT_STATE["model"]
+        thinker = PERSISTENT_STATE["thinker"]
+        processor = PERSISTENT_STATE["processor"]
+        recordings = PERSISTENT_STATE["recordings"]
+        model_load_seconds = 0.0
+        emit("model_reused", experiment_commit=args.experiment_commit)
+    else:
+        recordings = prepare_dataset(args.dataset_cache)
+        emit("model_load_started", experiment_commit=args.experiment_commit)
+        model_started = time.monotonic()
+        model = Qwen3OmniMoeForConditionalGeneration.from_pretrained(
+            MODEL_REPOSITORY,
+            revision=MODEL_COMMIT,
+            dtype=torch.bfloat16,
+            device_map="auto",
+            max_memory={0: "38GiB", "cpu": "76GiB"},
+            attn_implementation="sdpa",
+            low_cpu_mem_usage=True,
+        )
+        model.disable_talker()
+        model.eval()
+        thinker = model.thinker
+        processor = Qwen3OmniMoeProcessor.from_pretrained(
+            MODEL_REPOSITORY,
+            revision=MODEL_COMMIT,
+        )
+        model_load_seconds = time.monotonic() - model_started
     PERSISTENT_STATE.update(
         {
             "model": model,
@@ -513,7 +570,6 @@ def main() -> int:
             "recordings": recordings,
         }
     )
-    model_load_seconds = time.monotonic() - model_started
     emit("model_ready", seconds=model_load_seconds)
 
     frozen_items = items()
@@ -751,6 +807,7 @@ def main() -> int:
                 "transcripts": TRANSCRIPTS,
                 "incomplete_transcripts": INCOMPLETE_TRANSCRIPTS,
                 "memory_qualities": list(MEMORY_QUALITIES),
+                "noise_snr_db": NOISE_SNR_DB,
                 "prompt": PROMPT,
                 "seed": SEED,
                 "alphas": list(ALPHAS),

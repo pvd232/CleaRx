@@ -29,17 +29,20 @@ The experiment uses the two neutral RAVDESS speech statements:
 - `Kids are talking by the door.`
 - `Dogs are sitting by the door.`
 
-For each recording, compacted memory contains one of three transcript variants:
+For each recording, compacted memory contains one of three trust conditions. The
+full-audio teacher always receives the original clean recording. Only the acoustic
+vectors available to compressed memory are degraded.
 
-| Memory quality | Example for statement 1 | What the gate should learn |
-| --- | --- | --- |
-| Exact | `Kids are talking by the door.` | Trust the compact transcript; avoid unnecessary acoustic perturbation. |
-| Incomplete | `Are talking by the door.` | Add acoustic evidence to recover the missing subject. |
-| Conflicting | `Dogs are sitting by the door.` | Add acoustic evidence because the transcript describes the other recording. |
+| Memory condition | Transcript example for statement 1 | Acoustic memory | What the gate should learn |
+| --- | --- | --- | --- |
+| Reliable transcript | `Kids are talking by the door.` | Deterministic white noise at −10 dB SNR | Trust the compact transcript and suppress unreliable acoustic memory. |
+| Incomplete transcript | `Are talking by the door.` | Clean | Add acoustic evidence to recover the missing subject. |
+| Conflicting transcript | `Dogs are sitting by the door.` | Clean | Add acoustic evidence because the transcript describes the other recording. |
 
 Actors 01–04 form the training split. Actors 05–06 are held out until the final
 evaluation. Each actor contributes both statements under all three memory
-conditions, producing 24 training items and 12 held-speaker test items.
+conditions, producing 24 training items and 12 held-speaker test items. The noise
+seed derives from the recording bytes, so every rerun produces identical samples.
 
 The model first runs on the original audio and the prompt:
 
@@ -51,7 +54,7 @@ actual files rather than assuming it from the model description.
 
 ## Fusion and gate
 
-The Audio Tower produces a sequence of acoustic vectors. Ordered mean pooling
+The Audio Tower produces clean and degraded acoustic-vector sequences. Ordered mean pooling
 reduces those vectors to the same number of positions as the transcript. Each
 grid condition then supplies the Thinker with:
 
@@ -79,8 +82,9 @@ on the training set.
 Two supporting checks show whether that improvement represents the intended
 behavior:
 
-1. The oracle coefficient is lower for exact memory than for incomplete and
-   conflicting memory.
+1. The oracle coefficient is lower when the transcript is exact and acoustic
+   memory is degraded than when transcript memory is incomplete or conflicting
+   and acoustic memory is clean.
 2. The learned coefficient preserves that ordering for held-out speakers.
 
 A positive result would not establish a production compactor. It would show that
