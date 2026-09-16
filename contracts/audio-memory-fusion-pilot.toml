@@ -1,0 +1,65 @@
+schema_version = 1
+contract_id = "audio-memory-fusion-pilot"
+title = "Audio Memory Fusion Pilot"
+
+[[requirements]]
+id = "AMF-REQ-01"
+claim = "Freeze one short audio item, its transcript, prompt, model revisions, and the full-audio, transcript-only, and VoxZip-addition smoke conditions."
+depends_on = []
+verifier_ids = ["AMF-VR-01"]
+
+[[requirements]]
+id = "AMF-REQ-02"
+claim = "Construct every compressed condition from the same chronological mean-pooled Audio Tower vectors and the same transcript-token positions."
+depends_on = ["AMF-REQ-01"]
+verifier_ids = ["AMF-VR-02"]
+
+[[requirements]]
+id = "AMF-REQ-03"
+claim = "Retain one locally revalidated A100 smoke result that binds the source commit, input hash, model revisions, condition shapes, finite logits, and comparison metrics."
+depends_on = ["AMF-REQ-02"]
+verifier_ids = ["AMF-VR-03"]
+
+[[verifiers]]
+id = "AMF-VR-01"
+requirement_ids = ["AMF-REQ-01"]
+acceptance_conditions = [
+  "The smoke contract selects fsdd-george-0 and rejects another item, audio hash, transcript, prompt, model revision, or coefficient set.",
+]
+success_case = { repository_id = "clearx", path = "tests/experiments/test_audio_memory_fusion.py", symbol = "test_accepts_frozen_smoke_identity" }
+rejection_cases = [
+  { repository_id = "clearx", path = "tests/experiments/test_audio_memory_fusion.py", symbol = "test_rejects_changed_smoke_identity" },
+]
+
+[[verifiers]]
+id = "AMF-VR-02"
+requirement_ids = ["AMF-REQ-02"]
+acceptance_conditions = [
+  "Mean pooling emits exactly one ordered audio vector per transcript token.",
+  "Alpha zero returns the transcript vectors and alpha one returns their element-wise sum with the pooled audio vectors.",
+]
+success_case = { repository_id = "clearx", path = "tests/experiments/test_audio_memory_fusion.py", symbol = "test_constructs_equal_budget_memory_vectors" }
+rejection_cases = [
+  { repository_id = "clearx", path = "tests/experiments/test_audio_memory_fusion.py", symbol = "test_rejects_invalid_fusion_inputs" },
+]
+
+[[verifiers]]
+id = "AMF-VR-03"
+requirement_ids = ["AMF-REQ-03"]
+acceptance_conditions = [
+  "The result records the source commit, audio and logits hashes, exact revisions, position counts, peak GPU allocation, and finite comparison metrics.",
+  "Transcript-only and VoxZip-addition conditions have identical compressed input and memory-position counts.",
+]
+success_case = { repository_id = "clearx", path = "tests/experiments/test_audio_memory_fusion.py", symbol = "test_accepts_complete_smoke_result" }
+rejection_cases = [
+  { repository_id = "clearx", path = "tests/experiments/test_audio_memory_fusion.py", symbol = "test_rejects_unequal_memory_budgets" },
+  { repository_id = "clearx", path = "tests/experiments/test_audio_memory_fusion.py", symbol = "test_rejects_nonfinite_comparison" },
+]
+
+[[pair_blocks]]
+id = "AMF-PB-01"
+requirement_ids = ["AMF-REQ-01", "AMF-REQ-02", "AMF-REQ-03"]
+depends_on = []
+repository_id = "clearx"
+requirement_contribution = "Add the frozen fusion functions, local rejection tests, A100 worker, bootstrap entrypoint, and result validator required for one auditable smoke run."
+completion_evidence = ["implementation_review"]

@@ -1,0 +1,35 @@
+schema_version = 1
+checklist_id = "audio-memory-pilot"
+title = "Audio memory pilot"
+coordination_repository_id = "clearx"
+checklist_path = "checklists/audio-memory-pilot.md"
+contract_paths = ["contracts/audio-memory-fusion-pilot.toml"]
+
+[[phases]]
+number = 1
+title = "Fusion smoke"
+requirement_ids = ["AMF-REQ-01", "AMF-REQ-02", "AMF-REQ-03"]
+
+[[repository_bindings]]
+repository_id = "clearx"
+checkout = "/Users/machina/Developer/ChatGPT/CleaRx"
+
+[[repository_bindings.executables]]
+command = "python"
+path = "/Users/machina/miniconda3/envs/clearx/bin/python"
+
+[[repository_bindings.executables]]
+command = "pyright"
+path = "/Users/machina/miniconda3/bin/pyright"
+
+[[repository_bindings.executables]]
+command = "node"
+path = "/usr/local/bin/node"
+
+[[repository_bindings.executables]]
+command = "ruff"
+path = "/Users/machina/miniconda3/bin/ruff"
+
+[[repository_bindings.executables]]
+command = "git"
+path = "/usr/bin/git"
