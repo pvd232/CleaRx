@@ -3,6 +3,10 @@
 This pilot tests whether audio--text agreement can allocate a fixed acoustic
 token budget better than uniform retention or an audio-only policy.
 
+**Result:** agreement-adaptive retention improved the point estimate by 7.96%
+over fixed retention but was slightly worse than the audio-only control, with
+uncertainty spanning zero. See [RESULTS.md](RESULTS.md) for the full summary.
+
 The A100 stage crosses three transcript conditions with clean and degraded
 audio for twelve RAVDESS recordings. It preserves every transcript embedding
 and evaluates zero, two, or four appended chronological mean-pooled acoustic
