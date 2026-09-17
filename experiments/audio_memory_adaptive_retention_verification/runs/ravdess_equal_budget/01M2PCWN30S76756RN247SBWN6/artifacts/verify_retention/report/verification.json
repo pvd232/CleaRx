@@ -1,0 +1,18 @@
+{
+  "adaptive_high_positions": 4,
+  "adaptive_mean_teacher_kl": 9.540516756979438,
+  "adaptive_minus_fixed_mean_teacher_kl": -1.4744473703904077,
+  "adaptive_selected_count": 6,
+  "adaptive_total_acoustic_positions": 24,
+  "directional_success": true,
+  "experiment_commit": "1a91c455f7bd955fc6f91c316ddb77164bc0a182",
+  "fixed_mean_teacher_kl": 11.014964127369845,
+  "fixed_positions_per_item": 2,
+  "fixed_total_acoustic_positions": 24,
+  "item_count": 36,
+  "maximum_numeric_delta": 1.2212453270876722e-15,
+  "oracle_mean_teacher_kl": 9.354854646332873,
+  "schema_version": "1.0.0",
+  "test_item_count": 12,
+  "verified": true
+}

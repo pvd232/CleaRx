@@ -1,0 +1,26 @@
+schema_version: 2
+spec:
+  sha256: d8bb4477f7a030ed733cbfe38fe9b291f1d801eb89fb4e0316919d539e3e1c2d
+  bytes: 5435
+  stored_at:
+    kind: local
+    workspace: /Users/machina/Developer/ChatGPT/CleaRx-adaptive-retention-viper
+    store: .viper/store
+    store_id: 87d5f8d9d3b309ee3c794ae19514a169
+    commit: 69be811fffd77fef2721be55d8b0d6630d05502fdc6cb5bd004aa06d242aa491
+    path: experiments/audio_memory_adaptive_retention_verification/runs/ravdess_equal_budget/01M2PCWN30S76756RN247SBWN6/spec.yaml
+  kind: run_spec
+status: succeeded
+attempts:
+- sha256: 70561e5b016997d13ca72f5e8eaee12b224d2303597d035dbe9af52144bedf55
+  bytes: 2884
+  stored_at:
+    kind: local
+    workspace: /Users/machina/Developer/ChatGPT/CleaRx-adaptive-retention-viper
+    store: .viper/store
+    store_id: 87d5f8d9d3b309ee3c794ae19514a169
+    commit: 3d79e79a593846ae2d62c5f508fa2773799df59c363fa7b8ad325e68136200e0
+    path: experiments/audio_memory_adaptive_retention_verification/runs/ravdess_equal_budget/01M2PCWN30S76756RN247SBWN6/attempts/1/resolved.yaml
+  kind: resolved_attempt
+successful_attempt_id: 1
+completed_at: '2026-09-17T00:40:03.254179Z'
