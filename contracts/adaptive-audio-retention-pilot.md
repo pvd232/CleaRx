@@ -4,7 +4,7 @@
 
 The pilot is approved for one diagnostic A100 execution. It compares allocation
 policies, not fusion strength: every retained acoustic vector uses
-\(\alpha=1\).
+$\alpha=1$.
 
 <!-- contract-protocol:generated:start -->
 **In progress.** [Jump to current PairBlock](#aar-pb-01)
@@ -100,16 +100,16 @@ For held-out items, a learned policy may reduce divergence from the full-audio
 Thinker by concentrating the same total number of acoustic positions on the
 items predicted to benefit most.
 
-For item \(i\), the Thinker receives every transcript embedding \(T_i\) plus
-\(b_i\) chronological mean-pooled acoustic vectors:
+For item $i$, the Thinker receives every transcript embedding $T_i$ plus
+$b_i$ chronological mean-pooled acoustic vectors:
 
-\[
+$$
 H_i = [T_i; P_{b_i}(A_i)], \qquad b_i \in \{0,2,4\}.
-\]
+$$
 
-The fixed arm assigns \(b_i=2\) to every item. The adaptive arm ranks items by
-a model fitted on actors 01--04, assigns \(b_i=4\) to the top half of actors
-05--06, and assigns \(b_i=0\) to the rest. Both arms therefore spend the same
+The fixed arm assigns $b_i=2$ to every item. The adaptive arm ranks items by
+a model fitted on actors 01--04, assigns $b_i=4$ to the top half of actors
+05--06, and assigns $b_i=0$ to the rest. Both arms therefore spend the same
 aggregate acoustic-position budget.
 
 ## 3. Models
@@ -118,9 +118,9 @@ aggregate acoustic-position budget.
 audio--text agreement features. Its target is the measured benefit of four
 acoustic positions over transcript only:
 
-\[
+$$
 \Delta_i = \mathrm{KL}_{i,0} - \mathrm{KL}_{i,4}.
-\]
+$$
 
 Leave-one-training-speaker-out error selects the ridge penalty. The model never
 reads held-out KL values when choosing the adaptive allocation.
@@ -130,7 +130,7 @@ reads held-out KL values when choosing the adaptive allocation.
 1. Load the pinned Qwen3-Omni Thinker and the frozen RAVDESS items.
 2. Produce the full-audio teacher logits and Audio Tower vectors.
 3. Preserve all transcript embeddings and evaluate 0, 2, and 4 appended pooled
-   acoustic vectors with \(\alpha=1\).
+   acoustic vectors with $\alpha=1$.
 4. Fit the benefit model on actors 01--04.
 5. Compare fixed and adaptive allocations on actors 05--06 at equal total
    acoustic positions.

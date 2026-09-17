@@ -296,8 +296,8 @@ def _validate_features(item: Mapping[str, Any]) -> None:
         ("audio_only_features", AUDIO_ONLY_FEATURE_NAMES),
     ):
         features = item.get(field)
-        if not isinstance(features, Mapping) or tuple(features) != names:
-            raise ValueError(f"{field} differs from its frozen feature order")
+        if not isinstance(features, Mapping) or set(features) != set(names):
+            raise ValueError(f"{field} differs from its frozen feature names")
         if not all(math.isfinite(float(features[name])) for name in names):
             raise ValueError(f"{field} must contain finite values")
 

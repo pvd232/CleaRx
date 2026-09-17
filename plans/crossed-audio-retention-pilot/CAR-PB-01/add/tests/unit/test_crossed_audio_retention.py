@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import subprocess
 import sys
 from collections import Counter
@@ -250,8 +251,9 @@ def test_learned_allocations_ignore_held_out_labels() -> None:
 
 def test_result_validation_binds_commit_hardware_and_recomputed_payload() -> None:
     """Validation accepts only the independent commit and observed A100 identity."""
+    serialized = json.dumps(completed_result(), allow_nan=False, sort_keys=True)
     report = validate_result(
-        completed_result(), expected_experiment_commit=EXPERIMENT_COMMIT
+        json.loads(serialized), expected_experiment_commit=EXPERIMENT_COMMIT
     )
     assert report["verified"] is True
     assert report["experiment_commit"] == EXPERIMENT_COMMIT
