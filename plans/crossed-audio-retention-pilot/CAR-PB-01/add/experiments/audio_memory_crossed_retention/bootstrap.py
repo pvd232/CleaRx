@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import re
 import subprocess
 import sys
@@ -39,12 +40,18 @@ def main() -> int:
     if _GIT_COMMIT.fullmatch(args.git_commit) is None:
         raise ValueError("--git-commit must be a full lowercase commit")
     checkout = validate_checkout_path(args.checkout)
+    runtime = checkout.with_name(f"{checkout.name}-env")
+    if runtime.exists():
+        raise FileExistsError(
+            "isolated runtime already exists; choose a fresh checkout"
+        )
     run(
         sys.executable,
         "-m",
         "pip",
         "install",
         "--quiet",
+        "virtualenv>=20,<21",
         f"git+https://github.com/huggingface/transformers.git@{TRANSFORMERS_COMMIT}",
         f"git+https://github.com/pvd232/viper.git@{VIPER_COMMIT}",
         "accelerate>=1.10,<2",
@@ -52,9 +59,38 @@ def main() -> int:
         "qwen-omni-utils>=0.0.8,<0.1",
         "soundfile>=0.13,<1",
     )
-    # Colab exposes system six 1.16 and pip may add six 1.17. VIPER rejects
-    # ambiguous distribution identities, so retain the image-owned copy only.
-    run(sys.executable, "-m", "pip", "uninstall", "--yes", "six")
+    run(
+        sys.executable,
+        "-m",
+        "virtualenv",
+        "--no-seed",
+        "--system-site-packages",
+        str(runtime),
+    )
+    runtime_python = runtime / "bin/python"
+    site_packages = Path(
+        subprocess.check_output(
+            [
+                str(runtime_python),
+                "-c",
+                "import site; print(site.getsitepackages()[0])",
+            ],
+            text=True,
+        ).strip()
+    )
+    (site_packages / "sitecustomize.py").write_text(
+        "import sys\n"
+        "sys.path[:] = [path for path in sys.path "
+        "if path != '/usr/lib/python3/dist-packages']\n",
+        encoding="utf-8",
+    )
+    os.environ["PATH"] = f"{runtime / 'bin'}{os.pathsep}{os.environ['PATH']}"
+    prior_python_path = os.environ.get("PYTHONPATH")
+    os.environ["PYTHONPATH"] = (
+        str(site_packages)
+        if prior_python_path is None
+        else f"{site_packages}{os.pathsep}{prior_python_path}"
+    )
     run(
         "git",
         "clone",
@@ -79,7 +115,7 @@ def main() -> int:
         cwd=checkout,
     )
     run(
-        sys.executable,
+        str(runtime_python),
         "experiments/audio_memory_crossed_retention/run_viper.py",
         "--expected-commit",
         args.git_commit,
