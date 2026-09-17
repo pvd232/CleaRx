@@ -554,7 +554,7 @@ def build_study(
             dataset_cache=str(dataset_cache),
         ),
         outputs=StageOutputs(
-            result=output(path="result.json", loader=load_json, data_role="evaluation")
+            result=output(path="result.json", loader=load_json, data_role="eval")
         ),
         env=gpu_environment,
     )
@@ -564,9 +564,7 @@ def build_study(
         config=VerificationConfig(expected_experiment_commit=experiment_commit),
         inputs=(input("a100_result", source=measurement.outputs["result"]),),
         outputs=StageOutputs(
-            report=output(
-                path="verification.json", loader=load_json, data_role="evaluation"
-            )
+            report=output(path="verification.json", loader=load_json, data_role="eval")
         ),
         env=cpu_environment,
     )
