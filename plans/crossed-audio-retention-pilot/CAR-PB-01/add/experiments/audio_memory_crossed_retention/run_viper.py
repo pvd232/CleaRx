@@ -16,6 +16,7 @@ import tarfile
 import tempfile
 import threading
 import time
+import urllib.error
 import urllib.request
 import zipfile
 from collections.abc import Mapping
@@ -114,13 +115,27 @@ def prepare_dataset(cache: Path) -> dict[str, Path]:
     cache.mkdir(parents=True, exist_ok=True)
     archive = cache / "Audio_Speech_Actors_01-24.zip"
     if not archive.exists() or md5(archive) != RAVDESS_ARCHIVE_MD5:
-        emit("dataset_download_started", url=RAVDESS_URL)
-        with (
-            urllib.request.urlopen(RAVDESS_URL, timeout=600) as response,
-            archive.open("wb") as destination,
-        ):
-            while block := response.read(1024 * 1024):
-                destination.write(block)
+        partial = archive.with_suffix(".zip.partial")
+        for attempt in range(1, 6):
+            emit("dataset_download_started", url=RAVDESS_URL, attempt=attempt)
+            try:
+                with (
+                    urllib.request.urlopen(RAVDESS_URL, timeout=600) as response,
+                    partial.open("wb") as destination,
+                ):
+                    while block := response.read(1024 * 1024):
+                        destination.write(block)
+                if md5(partial) != RAVDESS_ARCHIVE_MD5:
+                    raise RuntimeError("downloaded RAVDESS archive has another MD5")
+                partial.replace(archive)
+                break
+            except (OSError, RuntimeError, TimeoutError, urllib.error.URLError):
+                partial.unlink(missing_ok=True)
+                if attempt == 5:
+                    raise
+                delay = 5 * 2 ** (attempt - 1)
+                emit("dataset_download_retry", attempt=attempt, delay_seconds=delay)
+                time.sleep(delay)
     if md5(archive) != RAVDESS_ARCHIVE_MD5:
         raise RuntimeError("RAVDESS archive differs from its published MD5")
     names = set(RAVDESS_AUDIO_SHA256)
