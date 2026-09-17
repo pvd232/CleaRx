@@ -1,0 +1,35 @@
+schema_version = 1
+checklist_id = "adaptive-audio-retention-pilot"
+title = "Adaptive audio retention pilot"
+coordination_repository_id = "clearx"
+checklist_path = "checklists/adaptive-audio-retention-pilot.md"
+contract_paths = ["contracts/adaptive-audio-retention-pilot.toml"]
+
+[[phases]]
+number = 1
+title = "Equal-budget retention pilot"
+requirement_ids = ["AAR-REQ-01", "AAR-REQ-02", "AAR-REQ-03", "AAR-REQ-04"]
+
+[[repository_bindings]]
+repository_id = "clearx"
+checkout = "/Users/machina/Developer/ChatGPT/CleaRx"
+
+[[repository_bindings.executables]]
+command = "python"
+path = "/Users/machina/miniconda3/envs/clearx/bin/python"
+
+[[repository_bindings.executables]]
+command = "pyright"
+path = "/Users/machina/miniconda3/bin/pyright"
+
+[[repository_bindings.executables]]
+command = "node"
+path = "/usr/local/bin/node"
+
+[[repository_bindings.executables]]
+command = "ruff"
+path = "/Users/machina/miniconda3/bin/ruff"
+
+[[repository_bindings.executables]]
+command = "git"
+path = "/usr/bin/git"

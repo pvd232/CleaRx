@@ -1,0 +1,138 @@
+schema_version = 1
+contract_id = "adaptive-audio-retention-pilot"
+package_sha256 = "a12080859632efd07b093d00bed0d29256161ef511cdc734968bd43e5c9dc125"
+pair_block_id = "AAR-PB-01"
+baseline_commit = "a074c895d29bdc7ec64c5bba122246d9c1a407b9"
+change_summary = [
+  "Add chronological pooling and a held-speaker ridge policy that predicts the benefit of four acoustic positions.",
+  "Add an A100 runner that preserves transcript positions and measures 0, 2, and 4 appended acoustic positions with alpha fixed at one.",
+  "Add focused counterexample tests and a VIPER diagnostic that recomputes the retained model, allocation, budgets, and metrics.",
+]
+deviation_summary = "The pilot allocates across independent RAVDESS items rather than among several transcript segments in one prompt. It establishes the allocation signal and equal-budget comparison without claiming end-to-end context-window savings."
+
+[[actions]]
+operation = "add"
+source_path = "add/src/clearx/audio_memory/retention.py"
+target_path = "src/clearx/audio_memory/retention.py"
+
+[[actions]]
+operation = "add"
+source_path = "add/tests/unit/test_audio_memory_retention.py"
+target_path = "tests/unit/test_audio_memory_retention.py"
+
+[[actions]]
+operation = "add"
+source_path = "add/experiments/audio_memory_adaptive_retention/README.md"
+target_path = "experiments/audio_memory_adaptive_retention/README.md"
+
+[[actions]]
+operation = "add"
+source_path = "add/experiments/audio_memory_adaptive_retention/bootstrap.py"
+target_path = "experiments/audio_memory_adaptive_retention/bootstrap.py"
+
+[[actions]]
+operation = "add"
+source_path = "add/experiments/audio_memory_adaptive_retention/run_experiment.py"
+target_path = "experiments/audio_memory_adaptive_retention/run_experiment.py"
+
+[[actions]]
+operation = "add"
+source_path = "add/experiments/audio_memory_adaptive_retention_verification/spec.yaml"
+target_path = "experiments/audio_memory_adaptive_retention_verification/spec.yaml"
+
+[[actions]]
+operation = "add"
+source_path = "add/experiments/audio_memory_adaptive_retention_verification/variants/ravdess_equal_budget.spec.yaml"
+target_path = "experiments/audio_memory_adaptive_retention_verification/variants/ravdess_equal_budget.spec.yaml"
+
+[[actions]]
+operation = "add"
+source_path = "add/experiments/audio_memory_adaptive_retention_verification/verify.py"
+target_path = "experiments/audio_memory_adaptive_retention_verification/verify.py"
+
+[[handoff_targets]]
+label = "Retention policy and evidence validator"
+source = "plan"
+path = "add/src/clearx/audio_memory/retention.py"
+line = 1
+
+[[handoff_targets]]
+label = "A100 equal-budget experiment"
+source = "plan"
+path = "add/experiments/audio_memory_adaptive_retention/run_experiment.py"
+line = 1
+
+[[handoff_targets]]
+label = "VIPER result verifier"
+source = "plan"
+path = "add/experiments/audio_memory_adaptive_retention_verification/verify.py"
+line = 1
+
+[[handoff_targets]]
+label = "Contract counterexamples"
+source = "plan"
+path = "add/tests/unit/test_audio_memory_retention.py"
+line = 1
+
+[gate]
+source_roots = [
+  "src/clearx",
+  "experiments/audio_memory_adaptive_retention",
+  "experiments/audio_memory_adaptive_retention_verification",
+]
+test_roots = ["tests/unit"]
+
+[[gate.steps]]
+role = "typecheck"
+working_directory = "."
+argv = [
+  "pyright",
+  "--pythonpath", "/Users/machina/miniconda3/envs/clearx/bin/python",
+  "src/clearx/audio_memory/retention.py",
+  "experiments/audio_memory_adaptive_retention/bootstrap.py",
+  "experiments/audio_memory_adaptive_retention/run_experiment.py",
+  "experiments/audio_memory_adaptive_retention_verification/verify.py",
+  "tests/unit/test_audio_memory_retention.py",
+]
+
+[[gate.steps]]
+role = "test"
+working_directory = "src"
+argv = ["python", "-m", "pytest", "-q", "../tests/unit/test_audio_memory_retention.py"]
+
+[[gate.steps]]
+role = "documentation"
+working_directory = "."
+argv = [
+  "python",
+  "/Users/machina/.agents/skills/code-documentation/scripts/check-schema-descriptions.py",
+  "src/clearx/audio_memory/retention.py",
+  "experiments/audio_memory_adaptive_retention/bootstrap.py",
+  "experiments/audio_memory_adaptive_retention/run_experiment.py",
+  "experiments/audio_memory_adaptive_retention_verification/verify.py",
+  "tests/unit/test_audio_memory_retention.py",
+]
+
+[[gate.steps]]
+role = "lint"
+working_directory = "."
+argv = [
+  "ruff", "format", "--check",
+  "src/clearx/audio_memory/retention.py",
+  "experiments/audio_memory_adaptive_retention/bootstrap.py",
+  "experiments/audio_memory_adaptive_retention/run_experiment.py",
+  "experiments/audio_memory_adaptive_retention_verification/verify.py",
+  "tests/unit/test_audio_memory_retention.py",
+]
+
+[[gate.steps]]
+role = "lint"
+working_directory = "."
+argv = [
+  "ruff", "check",
+  "src/clearx/audio_memory/retention.py",
+  "experiments/audio_memory_adaptive_retention/bootstrap.py",
+  "experiments/audio_memory_adaptive_retention/run_experiment.py",
+  "experiments/audio_memory_adaptive_retention_verification/verify.py",
+  "tests/unit/test_audio_memory_retention.py",
+]

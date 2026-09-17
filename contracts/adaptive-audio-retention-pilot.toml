@@ -1,0 +1,83 @@
+schema_version = 1
+contract_id = "adaptive-audio-retention-pilot"
+title = "Adaptive Audio Retention Pilot"
+
+[[requirements]]
+id = "AAR-REQ-01"
+claim = "Freeze the RAVDESS speaker split, transcript conditions, model revisions, alpha 1 fusion strength, and acoustic-position grid 0, 2, and 4."
+depends_on = []
+verifier_ids = ["AAR-VR-01"]
+
+[[requirements]]
+id = "AAR-REQ-02"
+claim = "Preserve every transcript-token embedding and append exactly the requested number of chronological mean-pooled acoustic positions."
+depends_on = ["AAR-REQ-01"]
+verifier_ids = ["AAR-VR-02"]
+
+[[requirements]]
+id = "AAR-REQ-03"
+claim = "Compare a fixed two-position allocation with a learned zero-or-four-position allocation on held-out speakers at the same aggregate acoustic-position budget."
+depends_on = ["AAR-REQ-02"]
+verifier_ids = ["AAR-VR-03"]
+
+[[requirements]]
+id = "AAR-REQ-04"
+claim = "Retain one A100 result whose source, inputs, conditions, budgets, and adaptive evaluation are independently recomputed by VIPER."
+depends_on = ["AAR-REQ-03"]
+verifier_ids = ["AAR-VR-04"]
+
+[[verifiers]]
+id = "AAR-VR-01"
+requirement_ids = ["AAR-REQ-01"]
+acceptance_conditions = [
+  "The experiment identity fixes alpha 1, position counts 0, 2, and 4, actors 01 through 04 for fitting, and actors 05 and 06 for evaluation.",
+]
+success_case = { repository_id = "clearx", path = "tests/unit/test_audio_memory_retention.py", symbol = "test_frozen_protocol_has_equal_budget_arms" }
+rejection_cases = [
+  { repository_id = "clearx", path = "tests/unit/test_audio_memory_retention.py", symbol = "test_payload_rejects_unequal_or_incomplete_position_grids" },
+]
+
+[[verifiers]]
+id = "AAR-VR-02"
+requirement_ids = ["AAR-REQ-02"]
+acceptance_conditions = [
+  "Ordered mean pooling returns exactly the requested count without changing transcript positions.",
+  "Zero requested acoustic positions returns an empty acoustic sequence.",
+]
+success_case = { repository_id = "clearx", path = "tests/unit/test_audio_memory_retention.py", symbol = "test_mean_pool_ordered_preserves_order_and_requested_count" }
+rejection_cases = [
+  { repository_id = "clearx", path = "tests/unit/test_audio_memory_retention.py", symbol = "test_mean_pool_ordered_rejects_invalid_inputs" },
+]
+
+[[verifiers]]
+id = "AAR-VR-03"
+requirement_ids = ["AAR-REQ-03"]
+acceptance_conditions = [
+  "The regressor fits only training actors and uses the declared gate features.",
+  "The adaptive arm assigns four positions to exactly half of held-out items and zero to the remainder, matching the fixed arm's total budget.",
+  "Reported fixed, adaptive, and oracle means are recomputed from measured KL values.",
+]
+success_case = { repository_id = "clearx", path = "tests/unit/test_audio_memory_retention.py", symbol = "test_retention_payload_fits_train_and_allocates_equal_test_budget" }
+rejection_cases = [
+  { repository_id = "clearx", path = "tests/unit/test_audio_memory_retention.py", symbol = "test_payload_rejects_held_out_label_shortcuts" },
+]
+
+[[verifiers]]
+id = "AAR-VR-04"
+requirement_ids = ["AAR-REQ-04"]
+acceptance_conditions = [
+  "The result binds the experiment commit, pinned model and Transformers revisions, RAVDESS digest, A100 device, and finite per-condition KL values.",
+  "VIPER reloads the retained result, recomputes the allocation payload, and rejects any budget or metric mismatch.",
+]
+success_case = { repository_id = "clearx", path = "tests/unit/test_audio_memory_retention.py", symbol = "test_validate_result_accepts_recomputable_evidence" }
+rejection_cases = [
+  { repository_id = "clearx", path = "tests/unit/test_audio_memory_retention.py", symbol = "test_validate_result_rejects_tampered_evaluation" },
+]
+
+[[pair_blocks]]
+id = "AAR-PB-01"
+requirement_ids = ["AAR-REQ-01", "AAR-REQ-02", "AAR-REQ-03", "AAR-REQ-04"]
+depends_on = []
+repository_id = "clearx"
+requirement_contribution = "Add the fixed-budget retention policy, A100 experiment, local counterexamples, and VIPER result verifier for one held-speaker pilot."
+completion_evidence = ["implementation_review", "viper_registration"]
