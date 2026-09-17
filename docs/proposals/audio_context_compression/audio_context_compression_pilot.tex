@@ -16,13 +16,13 @@
 
 \section{Question}
 
-\textbf{Under a fixed memory budget, can Qwen3-Omni preserve more useful speech history by allocating acoustic positions according to the information they add beyond the transcript?} \href{https://arxiv.org/html/2608.08569v1}{VoxZip}, the immediate prior method, pools each ASR-defined interval to its transcript-token count, fuses audio and text by addition, then prunes KV entries~\hyperlink{ref:voxzip}{[1]}. Its acoustic budget is therefore fixed by transcript length.
+\textbf{Under a fixed memory budget, can Qwen3-Omni compress each modality in proportion to its marginal utility---the information it contributes beyond the others?} \href{https://arxiv.org/html/2608.08569v1}{VoxZip} provides the starting point: it pools each ASR-defined interval to its transcript-token count, fuses audio and text by addition, then prunes KV entries~\hyperlink{ref:voxzip}{[1]}. Its acoustic budget is therefore fixed by transcript length.
 
-We instead allocate \(b_i=g_\phi(z_i,B)\) positions to segment \(i\) according to evidence \(z_i\), subject to \(\sum_i b_i\leq B\). The budget should follow \emph{marginal acoustic value}: evidence not already carried by text.
+We test the principle first on audio: allocate \(b_i=g_\phi(z_i,B)\) acoustic positions to segment \(i\) from segment evidence \(z_i\), subject to \(\sum_i b_i\leq B\), rather than deriving \(b_i\) from transcript length. We thereby generalize VoxZip's fixed transcript-anchored allocation into content-dependent allocation.
 
 \section{Preliminary evidence}
 
-Three frozen-Qwen3-Omni experiments support this question~\hyperlink{ref:clearx}{[3]}. Mean-pooled audio reduced teacher KL from 2.136 to 1.966 in one clip and improved mean KL by 7\% across ten clips, with gains on 7/10. Continuous weighting was 5.8\% worse than the best fixed weight and saved no positions. Under a fixed 48-position budget, agreement-based retention improved KL by 7.96\% over uniform retention, but not an audio-only allocator. Its robust contribution was the measured heterogeneity:
+Under a fixed 48-position budget, agreement-based retention using frozen-Qwen3-Omni improved KL by 7.96\% over uniform retention, but not an audio-only allocator. Its robust contribution was the measured heterogeneity:
 
 \begin{center}
 \small
@@ -45,7 +45,7 @@ Exact transcripts gained almost nothing; incomplete or conflicting transcripts g
 
 \textbf{2. Compression location.} Compare the best pre-Thinker method with SpeechKV-style pooling inside early and middle Thinker layers~\hyperlink{ref:speechkv}{[2]}. With Qwen3-Omni frozen, measure KL, task agreement, KV memory, and latency on held-out conversations.
 
-Adaptive allocation must beat uniform, random, and audio-only policies at equal cost; learned fusion must beat VoxZip-style addition. The result will map what acoustic evidence merits retention, how much memory it receives, and where it can first be compressed safely.
+Adaptive allocation must beat uniform, random, and audio-only policies at equal cost; learned fusion must beat VoxZip-style addition. Success would map what acoustic evidence merits retention, how much memory it receives, and where it can first be compressed safely. More broadly, it would establish a principle for multimodal memory: preserve evidence another modality cannot replace, and compress the rest.
 
 {\small\paragraph{References.}
 \hypertarget{ref:voxzip}{[1]} Liu et al. \href{https://arxiv.org/html/2608.08569v1}{VoxZip}. ACM MM, 2026.
