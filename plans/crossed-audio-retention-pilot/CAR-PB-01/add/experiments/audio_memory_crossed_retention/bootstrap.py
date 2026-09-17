@@ -52,6 +52,9 @@ def main() -> int:
         "qwen-omni-utils>=0.0.8,<0.1",
         "soundfile>=0.13,<1",
     )
+    # Colab exposes system six 1.16 and pip may add six 1.17. VIPER rejects
+    # ambiguous distribution identities, so retain the image-owned copy only.
+    run(sys.executable, "-m", "pip", "uninstall", "--yes", "six")
     run(
         "git",
         "clone",

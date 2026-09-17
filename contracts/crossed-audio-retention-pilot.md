@@ -31,7 +31,7 @@ with both clean and degraded audio.
 
 **Plan deviations:** The pilot allocates across independent RAVDESS items rather than among several transcript segments in one prompt. It tests the allocation mechanism without claiming publication-level generalization or end-to-end context-window savings.
 
-**Start review:** [Open tested GitHub comparison](https://github.com/pvd232/CleaRx/compare/3b5ec4ae94fe368d4e5bc0be0ddcd786e582f38a...ca27d05e041745e5d64b6032af738ed2b82f3998)
+**Start review:** [Open tested GitHub comparison](https://github.com/pvd232/CleaRx/compare/ad50a0c949cf379f2a65742caa8405618e12f61f...cccfa63d75ec5420c59a4945cc13f86f8b853631)
 
 **Review these files**
 
@@ -39,7 +39,7 @@ with both clean and degraded audio.
 - [Connected VIPER A100 execution](../plans/crossed-audio-retention-pilot/CAR-PB-01/add/experiments/audio_memory_crossed_retention/run_viper.py#L1)
 - [Contract counterexamples](../plans/crossed-audio-retention-pilot/CAR-PB-01/add/tests/unit/test_crossed_audio_retention.py#L1)
 
-**Evidence:** [Passing gate receipt](../evidence/crossed-audio-retention-pilot/gates/car-pb-01-20260917t014550z.json)
+**Evidence:** [Passing gate receipt](../evidence/crossed-audio-retention-pilot/gates/car-pb-01-20260917t014937z.json)
 
 **Decision:** Approve <nobr><code>CAR-PB-01</code></nobr>, or return it with findings.
 
