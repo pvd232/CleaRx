@@ -1,0 +1,117 @@
+schema_version = 1
+contract_id = "crossed-audio-retention-pilot"
+package_sha256 = "ce4b7dbf3c27ff55d89ad84958dea8880d695acd5328b43ae62d50b8e9bd354f"
+pair_block_id = "CAR-PB-01"
+baseline_commit = "3b5ec4ae94fe368d4e5bc0be0ddcd786e582f38a"
+change_summary = [
+  "Add the complete transcript-quality by audio-quality experiment and two equal-budget learned allocation policies.",
+  "Preserve transcript embeddings while measuring zero, two, and four chronological mean-pooled acoustic positions at alpha one.",
+  "Run the A100 measurement and independent CPU recomputation as connected VIPER stages and retain the complete audit graph.",
+]
+deviation_summary = "The pilot allocates across independent RAVDESS items rather than among several transcript segments in one prompt. It tests the allocation mechanism without claiming publication-level generalization or end-to-end context-window savings."
+
+[[actions]]
+operation = "add"
+source_path = "add/src/clearx/audio_memory/crossed_retention.py"
+target_path = "src/clearx/audio_memory/crossed_retention.py"
+
+[[actions]]
+operation = "add"
+source_path = "add/experiments/audio_memory_crossed_retention/__init__.py"
+target_path = "experiments/audio_memory_crossed_retention/__init__.py"
+
+[[actions]]
+operation = "add"
+source_path = "add/experiments/audio_memory_crossed_retention/README.md"
+target_path = "experiments/audio_memory_crossed_retention/README.md"
+
+[[actions]]
+operation = "add"
+source_path = "add/experiments/audio_memory_crossed_retention/bootstrap.py"
+target_path = "experiments/audio_memory_crossed_retention/bootstrap.py"
+
+[[actions]]
+operation = "add"
+source_path = "add/experiments/audio_memory_crossed_retention/run_viper.py"
+target_path = "experiments/audio_memory_crossed_retention/run_viper.py"
+
+[[actions]]
+operation = "add"
+source_path = "add/tests/unit/test_crossed_audio_retention.py"
+target_path = "tests/unit/test_crossed_audio_retention.py"
+
+[[handoff_targets]]
+label = "Crossed retention policy and verifier"
+source = "plan"
+path = "add/src/clearx/audio_memory/crossed_retention.py"
+line = 1
+
+[[handoff_targets]]
+label = "Connected VIPER A100 execution"
+source = "plan"
+path = "add/experiments/audio_memory_crossed_retention/run_viper.py"
+line = 1
+
+[[handoff_targets]]
+label = "Contract counterexamples"
+source = "plan"
+path = "add/tests/unit/test_crossed_audio_retention.py"
+line = 1
+
+[gate]
+source_roots = [
+  "src/clearx",
+  "experiments/audio_memory_crossed_retention",
+]
+test_roots = ["tests/unit"]
+
+[[gate.steps]]
+role = "typecheck"
+working_directory = "."
+argv = [
+  "pyright",
+  "--pythonpath", "/Users/machina/miniconda3/envs/clearx/bin/python",
+  "src/clearx/audio_memory/crossed_retention.py",
+  "experiments/audio_memory_crossed_retention/bootstrap.py",
+  "experiments/audio_memory_crossed_retention/run_viper.py",
+  "tests/unit/test_crossed_audio_retention.py",
+]
+
+[[gate.steps]]
+role = "test"
+working_directory = "src"
+argv = ["python", "-m", "pytest", "-q", "../tests/unit/test_crossed_audio_retention.py"]
+
+[[gate.steps]]
+role = "documentation"
+working_directory = "."
+argv = [
+  "python",
+  "/Users/machina/.agents/skills/code-documentation/scripts/check-schema-descriptions.py",
+  "src/clearx/audio_memory/crossed_retention.py",
+  "experiments/audio_memory_crossed_retention/bootstrap.py",
+  "experiments/audio_memory_crossed_retention/run_viper.py",
+  "tests/unit/test_crossed_audio_retention.py",
+]
+
+[[gate.steps]]
+role = "lint"
+working_directory = "."
+argv = [
+  "ruff", "format", "--check",
+  "src/clearx/audio_memory/crossed_retention.py",
+  "experiments/audio_memory_crossed_retention/bootstrap.py",
+  "experiments/audio_memory_crossed_retention/run_viper.py",
+  "tests/unit/test_crossed_audio_retention.py",
+]
+
+[[gate.steps]]
+role = "lint"
+working_directory = "."
+argv = [
+  "ruff", "check",
+  "src/clearx/audio_memory/crossed_retention.py",
+  "experiments/audio_memory_crossed_retention/bootstrap.py",
+  "experiments/audio_memory_crossed_retention/run_viper.py",
+  "tests/unit/test_crossed_audio_retention.py",
+]

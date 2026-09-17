@@ -1,0 +1,35 @@
+schema_version = 1
+checklist_id = "crossed-audio-retention-pilot"
+title = "Crossed audio retention pilot"
+coordination_repository_id = "clearx"
+checklist_path = "checklists/crossed-audio-retention-pilot.md"
+contract_paths = ["contracts/crossed-audio-retention-pilot.toml"]
+
+[[phases]]
+number = 1
+title = "Crossed equal-budget retention pilot"
+requirement_ids = ["CAR-REQ-01", "CAR-REQ-02", "CAR-REQ-03", "CAR-REQ-04"]
+
+[[repository_bindings]]
+repository_id = "clearx"
+checkout = "/Users/machina/Developer/ChatGPT/CleaRx"
+
+[[repository_bindings.executables]]
+command = "python"
+path = "/Users/machina/miniconda3/envs/clearx/bin/python"
+
+[[repository_bindings.executables]]
+command = "pyright"
+path = "/Users/machina/miniconda3/bin/pyright"
+
+[[repository_bindings.executables]]
+command = "node"
+path = "/usr/local/bin/node"
+
+[[repository_bindings.executables]]
+command = "ruff"
+path = "/Users/machina/miniconda3/bin/ruff"
+
+[[repository_bindings.executables]]
+command = "git"
+path = "/usr/bin/git"
