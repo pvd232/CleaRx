@@ -1,0 +1,16 @@
+schema_version: 2
+experiment_id: audio_memory_crossed_retention
+variant_id: ravdess_crossed_equal_budget
+levels: {}
+stage_configs:
+- kind: build
+  stage_id: measure_retention
+  config:
+    schema_version: 2
+    experiment_commit: 8ce7bbb7432e02cdbace99fb504a6f599d405a2a
+    dataset_cache: /content/ravdess
+- kind: diagnostic
+  stage_id: verify_retention
+  config:
+    schema_version: 2
+    expected_experiment_commit: 8ce7bbb7432e02cdbace99fb504a6f599d405a2a

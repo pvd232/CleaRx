@@ -1,0 +1,28 @@
+implementation:
+  path: experiments/audio_memory_crossed_retention/run_viper.py
+  symbol: verify_retention
+  sha256: e2a430b4f949887b28da69604ad3cf7149ce8ea657ce239a1e363041fa552711
+  bytes: 29530
+context:
+  schema_version: 2
+  run_id: 01M2PHRQCCHEAHXN4TGX3011E5
+  attempt_id: 1
+  stage_id: verify_retention
+  config_type:
+    owner: workspace
+    path: experiments/audio_memory_crossed_retention/run_viper.py
+    symbol: VerificationConfig
+    sha256: e2a430b4f949887b28da69604ad3cf7149ce8ea657ce239a1e363041fa552711
+    bytes: 29530
+  config_digest: af7eca3812d47fda1bf2092d45757c3ff9b5aa3e05e42827a463187b0a264158
+  inputs:
+    a100_result: experiments/audio_memory_crossed_retention/runs/ravdess_crossed_equal_budget/01M2PHRQCCHEAHXN4TGX3011E5/artifacts/measure_retention/result/result.json
+  outputs:
+    report: experiments/audio_memory_crossed_retention/runs/ravdess_crossed_equal_budget/01M2PHRQCCHEAHXN4TGX3011E5/artifacts/verify_retention/report/verification.json
+  metric_ids: []
+  numpy_generator_names: []
+context_digest: 4d8d2062c845acde9efdb9f22d301cd0d8e5387e1c4c9f614bdda6f7895ecc31
+started_at: '2026-09-17T02:36:16.055654Z'
+completed_at: '2026-09-17T02:36:21.433226Z'
+outcome: failed
+file_access: null

@@ -1,0 +1,95 @@
+schema_version: 2
+attempt_id: 1
+purpose: run
+status: failed
+started_at: '2026-09-17T02:05:12.865798Z'
+completed_at: '2026-09-17T02:36:22.555650Z'
+resolved_stages:
+- stage_id: measure_retention
+  snapshot:
+    kind: local
+    workspace: /content/clearx-crossed-retention-20260917-5
+    store: .viper/store
+    store_id: cc0054d1c881e72a9970920c001b6fd4
+    commit: fdefb52c9668ac5ac45af9305158e505c473c6cade6a46905ba7b06b9f2ec973
+  resolved_spec:
+    sha256: 119318c66f13da3f1a0c652c5991e1721334a9c14ec74df6af776ac430ab89e4
+    bytes: 75769
+    path: experiments/audio_memory_crossed_retention/runs/ravdess_crossed_equal_budget/01M2PHRQCCHEAHXN4TGX3011E5/stages/measure_retention/resolved.yaml
+invocations:
+- sha256: c1585b0484e343e2e2d7ee19fb14e50c333b796aec012a0516944e3db3808110
+  bytes: 1054
+  stored_at:
+    kind: local
+    workspace: /content/clearx-crossed-retention-20260917-5
+    store: .viper/store
+    store_id: cc0054d1c881e72a9970920c001b6fd4
+    commit: a2ab62efd929158573bb3eee43b55382b2c9cdca614664e15e1ff8f0a76714cc
+    path: experiments/audio_memory_crossed_retention/runs/ravdess_crossed_equal_budget/01M2PHRQCCHEAHXN4TGX3011E5/attempts/1/invocations/measure_retention.yaml
+  kind: stage_invocation
+- sha256: 414e468972ef0f51363fe7edb5c1ac62beaa49dc1d43c90ac6c65bffefcbc717
+  bytes: 1220
+  stored_at:
+    kind: local
+    workspace: /content/clearx-crossed-retention-20260917-5
+    store: .viper/store
+    store_id: cc0054d1c881e72a9970920c001b6fd4
+    commit: 67ff66a70d299ab4ee224bef57d74c4b492ad191b7eb8dd13ed3b0667b915a27
+    path: experiments/audio_memory_crossed_retention/runs/ravdess_crossed_equal_budget/01M2PHRQCCHEAHXN4TGX3011E5/attempts/1/invocations/verify_retention.yaml
+  kind: stage_invocation
+journal:
+  sha256: 79f4ce0be0179b95286b4e6edc1154bbf11efc1e268fb79a1acb29f2678dd2c3
+  bytes: 1058
+  stored_at:
+    kind: local
+    workspace: /content/clearx-crossed-retention-20260917-5
+    store: .viper/store
+    store_id: cc0054d1c881e72a9970920c001b6fd4
+    commit: 0df9e7e0d37d296c041abf4c3c1450538bd7908563d4023222028ffb4ca8cecf
+    path: experiments/audio_memory_crossed_retention/runs/ravdess_crossed_equal_budget/01M2PHRQCCHEAHXN4TGX3011E5/attempts/1/journal.jsonl
+  kind: attempt_journal
+measurement_files: []
+metric_verification_files: []
+log_files:
+- sha256: f8a01159cc4dc84c186e22f1612afd5dc384c2cb328ae2ccac2ad1c9885b8f22
+  bytes: 626187
+  stored_at:
+    kind: local
+    workspace: /content/clearx-crossed-retention-20260917-5
+    store: .viper/store
+    store_id: cc0054d1c881e72a9970920c001b6fd4
+    commit: 0df9e7e0d37d296c041abf4c3c1450538bd7908563d4023222028ffb4ca8cecf
+    path: experiments/audio_memory_crossed_retention/runs/ravdess_crossed_equal_budget/01M2PHRQCCHEAHXN4TGX3011E5/attempts/1/logs/measure_retention.stderr.log
+- sha256: 988c97d42412b4af317d397648a685e6a6d89e4879867654b007806cde317aec
+  bytes: 39636
+  stored_at:
+    kind: local
+    workspace: /content/clearx-crossed-retention-20260917-5
+    store: .viper/store
+    store_id: cc0054d1c881e72a9970920c001b6fd4
+    commit: 0df9e7e0d37d296c041abf4c3c1450538bd7908563d4023222028ffb4ca8cecf
+    path: experiments/audio_memory_crossed_retention/runs/ravdess_crossed_equal_budget/01M2PHRQCCHEAHXN4TGX3011E5/attempts/1/logs/measure_retention.stdout.log
+- sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  bytes: 0
+  stored_at:
+    kind: local
+    workspace: /content/clearx-crossed-retention-20260917-5
+    store: .viper/store
+    store_id: cc0054d1c881e72a9970920c001b6fd4
+    commit: 0df9e7e0d37d296c041abf4c3c1450538bd7908563d4023222028ffb4ca8cecf
+    path: experiments/audio_memory_crossed_retention/runs/ravdess_crossed_equal_budget/01M2PHRQCCHEAHXN4TGX3011E5/attempts/1/logs/verify_retention.stderr.log
+- sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  bytes: 0
+  stored_at:
+    kind: local
+    workspace: /content/clearx-crossed-retention-20260917-5
+    store: .viper/store
+    store_id: cc0054d1c881e72a9970920c001b6fd4
+    commit: 0df9e7e0d37d296c041abf4c3c1450538bd7908563d4023222028ffb4ca8cecf
+    path: experiments/audio_memory_crossed_retention/runs/ravdess_crossed_equal_budget/01M2PHRQCCHEAHXN4TGX3011E5/attempts/1/logs/verify_retention.stdout.log
+failure:
+  code: execution_failed
+  stage_id: verify_retention
+  message: 'stage command exited with status 1: ValueError: gate_features differs
+    from its frozen feature order'
+  occurred_at: '2026-09-17T02:36:22.530400Z'

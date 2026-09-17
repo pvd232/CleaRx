@@ -1,0 +1,6 @@
+{"sequence":1,"state":"allocated","recorded_at":"2026-09-17T02:05:12.865798Z","event":"attempt allocated","details":{}}
+{"sequence":2,"state":"preflighting","recorded_at":"2026-09-17T02:05:29.836402Z","event":"preflight completed and immutable plan located","details":{"plan_commit":"84b5a62dfe65ffe3e10f68341f82a3bfe5e0de9da1c4e35075a0e2f42c3c650e","report":"control/preflight.json"}}
+{"sequence":3,"state":"running_stage","recorded_at":"2026-09-17T02:05:29.958925Z","event":"stage execution started","details":{"stage_id":"measure_retention"}}
+{"sequence":4,"state":"publishing_stage","recorded_at":"2026-09-17T02:36:04.542458Z","event":"stage snapshot publication started","details":{"stage_id":"measure_retention"}}
+{"sequence":5,"state":"running_stage","recorded_at":"2026-09-17T02:36:04.675833Z","event":"stage execution started","details":{"stage_id":"verify_retention"}}
+{"sequence":6,"state":"terminal","recorded_at":"2026-09-17T02:36:22.530400Z","event":"attempt failed","details":{"stage_id":"verify_retention","exception":"StageExecutionError"}}

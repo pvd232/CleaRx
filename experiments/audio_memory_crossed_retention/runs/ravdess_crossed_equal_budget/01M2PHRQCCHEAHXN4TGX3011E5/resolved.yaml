@@ -1,0 +1,26 @@
+schema_version: 2
+spec:
+  sha256: 4a621f52de66ca6ba5eff1c8bcd045ea0032ad36cc7a3093b2624a80edb5fc9b
+  bytes: 33689
+  stored_at:
+    kind: local
+    workspace: /content/clearx-crossed-retention-20260917-5
+    store: .viper/store
+    store_id: cc0054d1c881e72a9970920c001b6fd4
+    commit: 84b5a62dfe65ffe3e10f68341f82a3bfe5e0de9da1c4e35075a0e2f42c3c650e
+    path: experiments/audio_memory_crossed_retention/runs/ravdess_crossed_equal_budget/01M2PHRQCCHEAHXN4TGX3011E5/spec.yaml
+  kind: run_spec
+status: failed
+attempts:
+- sha256: d0c7ef83d4deef5e9c45adf8d1d9aac669160488130e6d0d18c61d60cd72997d
+  bytes: 4448
+  stored_at:
+    kind: local
+    workspace: /content/clearx-crossed-retention-20260917-5
+    store: .viper/store
+    store_id: cc0054d1c881e72a9970920c001b6fd4
+    commit: 4ad05a6fbf235349d829ddb9b0675443a9bf4552d8f72e11ae6b1304ec3d81b2
+    path: experiments/audio_memory_crossed_retention/runs/ravdess_crossed_equal_budget/01M2PHRQCCHEAHXN4TGX3011E5/attempts/1/resolved.yaml
+  kind: resolved_attempt
+successful_attempt_id: null
+completed_at: '2026-09-17T02:36:22.569051Z'
