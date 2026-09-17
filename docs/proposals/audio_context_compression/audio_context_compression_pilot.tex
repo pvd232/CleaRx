@@ -1,93 +1,107 @@
-\documentclass[9pt]{extarticle}
-\usepackage[letterpaper,margin=0.58in,top=0.48in,bottom=0.50in]{geometry}
+\documentclass[10pt]{extarticle}
+\usepackage[letterpaper,margin=0.68in,top=0.54in,bottom=0.58in]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{microtype}
 \usepackage{xcolor}
 \usepackage{enumitem}
-\usepackage{multicol}
+\usepackage{booktabs}
+\usepackage{amsmath}
 \usepackage[colorlinks=true,urlcolor=blue!60!black,linkcolor=black,citecolor=black]{hyperref}
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{2.4pt}
-\setlist[itemize]{leftmargin=1.05em,itemsep=0.5pt,topsep=1.5pt,parsep=0pt}
-\setlength{\columnsep}{0.20in}
+\setlength{\parskip}{3pt}
+\setlist[itemize]{leftmargin=1.15em,itemsep=1pt,topsep=2pt,parsep=0pt}
 \pagestyle{empty}
 
-\newcommand{\heading}[1]{\vspace{2pt}{\color{blue!45!black}\bfseries\fontsize{9.5}{10.5}\selectfont #1}\par\vspace{0.5pt}}
+\newcommand{\heading}[1]{\vspace{3pt}{\color{blue!45!black}\bfseries\fontsize{10}{11}\selectfont #1}\par\vspace{1pt}}
 \newcommand{\method}[1]{\textbf{#1}}
 
 \begin{document}
 
-{\fontsize{15}{16}\selectfont\bfseries Where Should an Omni Speech Model Compress Conversational Audio?}\par
+{\fontsize{15}{16}\selectfont\bfseries The Content-Dependent Limits of Acoustic Compression}\par
 \vspace{1pt}
-{\fontsize{9.5}{11}\selectfont\itshape A pilot study of ASR-free input compaction versus in-model KV pooling}\hfill
+{\fontsize{10}{11}\selectfont\itshape Learning what acoustic evidence to retain---and where to compress it---under a fixed memory budget}\par
+\vspace{1pt}
 {\fontsize{8.5}{10}\selectfont Proposal for discussion with Professor Richard Zemel}\par
-\vspace{3pt}\hrule\vspace{4pt}
+\vspace{3pt}\hrule\vspace{5pt}
 
-\textbf{Problem.} Long audio produces thousands of model positions, so multi-turn speech systems spend increasing memory and time rereading old audio. The engineering question is \emph{when} the model has extracted enough meaning to compress speech history while preserving words, prosody, speaker identity, and other evidence needed later.
+\textbf{Central question.} Can a speech-native omni model use a fixed memory budget more effectively by preserving acoustic representations according to their \emph{marginal value}---the information they add beyond text and other retained audio---and by compressing them only after the representation contains enough context to identify that value?
 
-\textbf{What VoxZip actually establishes.} VoxZip is a strong train-free reference. It uses Whisper transcripts and timestamps to divide a speech model's audio features into semantic intervals, pools each interval to the transcript-token count, adds each pooled vector to the matching text embedding, and then evicts KV entries using temporally decayed attention scores~\cite{voxzip}. In \href{https://arxiv.org/html/2608.08569v1#S5}{Section~5 (Limitations)}, its authors call the element-wise audio--text addition simplistic and suggest a \emph{learnable fusion mechanism}. Their proposed future work ends at this fusion operator; learned summaries, latent bottlenecks, and ASR-free compactors come from later work and our proposal.
+\textbf{Working hypothesis.} Acoustic history is not uniformly compressible. When a transcript already carries the relevant content, additional acoustic positions can be redundant; when text is incomplete, conflicting, or insufficient for prosody, speaker, or background sound, the same positions can be essential. Compression is therefore bounded by the evidence the transcript and retained state fail to carry, and that boundary depends jointly on content, audio reliability, and representation depth.
 
-\begin{multicols}{2}
-\raggedcolumns
+\heading{From VoxZip to content-dependent acoustic memory}
 
-\heading{The research gap}
+\href{https://arxiv.org/html/2608.08569v1}{VoxZip} is the immediate prior work and starting mechanism. It uses ASR timestamps to divide audio into semantic intervals, mean-pools each interval to the number of transcript tokens, and adds each pooled acoustic vector to its matching text embedding. It then reduces the growing KV cache using temporally decayed attention~\cite{voxzip}. VoxZip therefore answers an important first question: transcript-anchored pooling can preserve useful audio while reducing long-context cost.
 
-Recent papers already establish learned audio compression. \emph{Distilling Conversations} maps each previous turn into a fixed number of learned latent tokens, retains the transcript, and evaluates an ASR system~\cite{distill}. \emph{SpeechKV} pools keys and values inside early-to-middle language-model layers; it preserves full-resolution queries and residual states, and reports that this placement outperforms compression at the speech-adapter output~\cite{speechkv}. Other recent work reduces pre-LLM audio tokens through pooling or segmentation~\cite{tokens} and prunes audio KV state with fixed rules~\cite{audiokv,headrouter}.
+Its compression rule is fixed by the transcript. An interval with $m_i$ transcript tokens receives $m_i$ pooled acoustic positions, and fusion is element-wise addition. That leaves open whether every interval deserves the same acoustic budget relative to its transcript, whether a learned fusion can preserve information that addition loses, and whether compression should occur before the Thinker or after early Thinker layers have integrated acoustic and linguistic evidence. SpeechKV provides the strongest contrasting placement: it passes full speech through early language-model layers and learns to pool keys and values while retaining full-resolution queries and residual states~\cite{speechkv}.
 
-The unresolved question is narrower and more useful:
+We express the extension as two separate decisions:
 
-\begin{quote}\small\bfseries
-At the same memory budget, does a speech-native omni model preserve more usable conversational evidence by compressing AuT representations before the Thinker, or by pooling KV state after early Thinker layers have integrated the audio?
-\end{quote}
+\[
+\underbrace{b_i}_{\text{positions retained for segment }i}
+=g_\phi(z_i,B),
+\qquad \sum_i b_i\leq B,
+\qquad
+\underbrace{H_i}_{\text{memory passed onward}}
+=F_\theta\!\left(T_i,P_{b_i}(A_i)\right).
+\]
 
-The inspected literature leaves this comparison open in a single speech-to-speech model tested on both linguistic and non-linguistic evidence. That is the provisional novelty claim; the pilot will test it directly.
+Here $A_i$ is the acoustic sequence, $T_i$ its transcript representation, $z_i$ the evidence available to the allocator, $P_{b_i}$ a compressor that returns $b_i$ acoustic positions, $F_\theta$ the fusion rule, and $B$ the conversation-level budget. VoxZip uses transcript length to set $b_i$ and fixed addition for $F$. We propose to learn how much acoustic memory each segment receives, what its retained representation contains, and where that representation can be compressed safely.
 
-\heading{Competing mechanisms}
+\heading{Preliminary result: acoustic value is heterogeneous}
 
-\method{A. Pre-Thinker compaction.} A small monotonic module converts the Audio Tower (AuT) sequence into one ordered vector per local interval. Only this module is trained; Qwen3-Omni remains frozen. This saves Thinker prefill from its first layer. Its risk is discarding acoustic evidence before the model knows what matters.
+CleaRx ran three frozen-Qwen3-Omni studies that progressively separated fusion strength from actual memory allocation~\cite{clearx}. A one-clip smoke test showed that one transcript position plus mean-pooled audio moved the model closer to its full-audio continuation: teacher KL fell from 2.136 to 1.966. Across ten clips, fixed-strength pooled audio improved mean KL by 7\% over transcript-only and improved 7/10 items. This established that aggressively pooled audio could still carry useful evidence into the frozen Thinker.
 
-\method{B. In-Thinker KV pooling.} Full audio passes through early Thinker layers. At a chosen layer, a learned gate pools local keys and values while queries and the residual stream stay at full resolution, following SpeechKV's key design choice. This spends early-layer compute; compression can then use representations that already mix acoustic and linguistic evidence.
+The next study learned a continuous audio--text weight. It recovered the intended ordering of exact, incomplete, and conflicting transcript conditions, but its held-out KL was 5.8\% worse than the best fixed weight. The result redirected the work: scaling a pooled vector changes its influence but does not save positions. The relevant decision is how to spend a fixed number of acoustic positions.
 
-\columnbreak
+The crossed-retention pilot held that budget at 48 positions. Uniform retention kept two positions for every one of 24 test items; concentrated policies kept four positions for 12 items and zero for 12. Agreement-based allocation reduced mean KL by 7.96\% relative to uniform retention. It did not beat the audio-only allocator, and the improvement over uniform retention changed sign across the two held-out speakers. The allocator is therefore not the result. The result is the measured structure of acoustic value:
 
-\heading{Exploratory pilot}
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+Benefit of four acoustic positions over transcript-only & Clean audio & Degraded audio \\
+\midrule
+Exact transcript & 0.0025 & 0.0011 \\
+Incomplete transcript & 4.5444 & 1.7199 \\
+Conflicting transcript & 4.3288 & 0.8755 \\
+\bottomrule
+\end{tabular}
+\end{center}
 
-Use the frozen Qwen3-Omni reference implementation, CleaRx's existing long-speech items, and a separate exploratory stress set for speaker, emotion, prosody, and background-sound recall. Add short multi-turn sequences and keep the frozen acceptance corpus intact. Full-context Qwen is the teacher.
+\newpage
+\heading{What the result changes}
 
-\method{Step 1: locate redundancy before training.}
-Record AuT outputs and Thinker hidden/KV states. At each layer, measure adjacent-vector cosine similarity, effective rank, and the damage caused by matched 4$\times$ mean pooling. This tests whether redundancy exists before the Thinker or emerges inside it.
+In this controlled fixture, acoustic positions added almost nothing when the transcript was exact, added substantially more when text omitted or contradicted usable speech, and lost value when the audio was degraded. This is direct evidence that equal-length segments can have sharply different marginal acoustic value. It motivates the research problem without claiming that a linear heuristic trained on independent clips has solved conversation-level allocation.
 
-\method{Step 2: train only the bottleneck.}
-At the same retained-position count, compare:
-\begin{itemize}
-  \item fixed AuT mean pooling;
-  \item the monotonic pre-Thinker compactor;
-  \item gated KV pooling at the best candidate layer; and
-  \item a method-faithful VoxZip reference using Whisper.
-\end{itemize}
-Distill the full-context teacher's continuation distribution and, where dimensions agree, its hidden states. Keeping the base model frozen isolates compression from broad fine-tuning.
+\heading{Aim 1: learn marginal acoustic value under a shared budget}
 
-\method{Step 3: judge the same failure modes.}
-Report teacher-logit KL, answer/task agreement, lexical and paralinguistic subgroup scores, retained positions, peak KV bytes, and prefill time. Use paired examples and identical byte budgets. Inspect errors for lost chronology, named entities, speaker identity, and emotion.
+Construct short multi-turn histories with natural and controlled transcript errors, clean and degraded audio, and lexical plus paralinguistic queries. Measure the benefit curve
 
-\heading{Decision and contribution}
+\[
+u_i(k)=\mathcal{L}(T_i)-\mathcal{L}\!\left(T_i,P_k(A_i)\right),
+\qquad k\in\{0,1,2,4,8\},
+\]
 
-Proceed with pre-Thinker compaction only if it beats fixed pooling, remains competitive with in-Thinker pooling at the same budget, and reaches parity on the paralinguistic subgroup. If KV pooling wins, move the research direction inside the Thinker. If fixed pooling wins, stop adding trainable machinery.
+where $\mathcal{L}$ combines full-sequence teacher divergence with task loss. Then learn $g_\phi$ to allocate $B$ across all segments in a history. Compare uniform allocation, random concentrated allocation, audio-only confidence, the existing linear agreement score, a nonlinear local predictor, and an oracle computed from measured $u_i(k)$. This tests the conceptual step that the preliminary fixture could not: whether independently observed content effects support joint allocation under one conversation-level constraint.
 
-The intended contribution is therefore a controlled answer about \emph{compression location}, plus an ASR-free method only if the evidence supports one. A negative result remains useful: it would identify the earliest layer at which Qwen3-Omni's speech history becomes safely compressible and prevent a deployment system from optimizing the wrong representation.
+Separately compare fixed mean pooling, method-faithful VoxZip pooling and addition, learned monotonic summarization, and learned fusion $F_\theta$. This factorial design answers a second open question: whether a gain comes from \emph{where the budget goes} or \emph{what retained positions contain}. Use held-out speakers and conversations, paired examples, and clustered uncertainty. Continue with adaptive allocation only if it beats uniform, random, and audio-only policies at equal KV bytes; retain learned fusion only if it improves on VoxZip-style pooling and addition.
 
-\end{multicols}
+\heading{Aim 2: locate the earliest safe compression boundary}
 
-\vspace{-2pt}\hrule\vspace{2pt}
-{\fontsize{6.7}{7.7}\selectfont
+Compare the strongest Aim~1 pre-Thinker method with SpeechKV-style pooling after selected early and middle Thinker layers. First profile adjacent-state similarity, effective rank, and matched-pooling damage across Audio Tower outputs and Thinker layers. Then train only the small compressor or KV gate while freezing Qwen3-Omni. Match methods on retained KV bytes, not merely position count, and report compute spent before compression.
+
+Primary outcomes are full-sequence teacher KL, lexical and paralinguistic task agreement, retained positions, peak KV bytes, prefill time, and decode time. Full audio is the quality reference; transcript-only is the zero-acoustic baseline. If in-Thinker pooling wins at the same memory budget, move the method inside the Thinker. If no compressed method preserves paralinguistic performance, increase the acoustic budget or narrow the claim to linguistic history. If fixed pooling matches learned methods, prefer the fixed method.
+
+\heading{Expected contribution}
+
+The study will produce a controlled map of \emph{what} acoustic information merits retention, \emph{how much} memory it receives, and \emph{where} it can first be compressed safely in Qwen3-Omni. The main contribution is not another global compression ratio. It is a content-dependent account of the boundary between redundant audio and acoustic evidence that text cannot replace, together with matched experiments that assign any improvement to allocation, representation, or compression location.
+
+\vspace{1pt}\hrule\vspace{2pt}
+{\fontsize{7}{8}\selectfont
 \begin{thebibliography}{9}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}
-\bibitem{voxzip} Liu et al. \href{https://arxiv.org/html/2608.08569v1}{``VoxZip: Semantic-Anchored Temporal KV Cache Compression for Long-Context Audio Inference.''} ACM MM, 2026. See Sections 3 and 5.
-\bibitem{distill} Huang et al. \href{https://arxiv.org/html/2603.26246}{``Distilling Conversations: Abstract Compression of Conversational Audio Context for LLM-based ASR.''} 2026.
-\bibitem{speechkv} Kim et al. \href{https://arxiv.org/html/2607.06827}{``Compress the Cache, Not the Speech Embedding: KV Compression for Efficient Speech LLMs.''} 2026.
-\bibitem{tokens} Bhati et al. \href{https://arxiv.org/html/2511.20973}{``Towards Audio Token Compression in Large Audio Language Models.''} 2025.
-\bibitem{audiokv} Feng et al. \href{https://arxiv.org/abs/2604.06694}{``AudioKV: Memory-Efficient LALMs via Head-Aware KV Cache Compression.''} 2026.
-\bibitem{headrouter} Li et al. \href{https://arxiv.org/abs/2604.23717}{``HeadRouter: Task-Adaptive KV Cache Compression for Large Audio Language Models.''} 2026.
+\bibitem{voxzip} Liu et al. \href{https://arxiv.org/html/2608.08569v1}{``VoxZip: Semantic-Anchored Temporal KV Cache Compression for Long-Context Audio Inference.''} ACM MM, 2026.
+\bibitem{speechkv} Kim et al. \href{https://arxiv.org/html/2607.06827v1}{``Compress the Cache, Not the Speech Embedding: KV Compression for Efficient Speech LLMs.''} 2026.
+\bibitem{clearx} CleaRx. \href{https://github.com/pvd232/CleaRx/tree/main/experiments}{Exploratory Qwen3-Omni audio-memory experiments and retained results.} September 2026.
 \end{thebibliography}
 }
 
